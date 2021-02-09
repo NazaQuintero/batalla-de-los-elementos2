@@ -4,7 +4,7 @@
 
 ### __correr el programa__:
 
-Correr en la terminal (parado sobre 'src') el siguiente comando:  ``` make run ``` 
+Correr en la terminal (parado sobre el directorio actual) el siguiente comando:  ``` make run ``` 
 
 El mismo se encargará de compilar los archivos y correr el ejecutable generado.
 
