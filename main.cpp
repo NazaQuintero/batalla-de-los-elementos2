@@ -34,7 +34,9 @@ int main() {
 
 	int opcion = menu->obtenerOpcion(TEXTO_SOLICITUD_OPCION);
 
-	menu->validarOpcion(opcion, diccionarioDePersonajes, TEXTO_SOLICITUD_OPCION);
+	int systemResult = menu->validarOpcion(opcion, diccionarioDePersonajes, TEXTO_SOLICITUD_OPCION);
+
+	cout << "El sistema ha finalizado con codigo de error: " << systemResult << "." << endl;
 
 	utilitario->guardarPersonajes(diccionarioDePersonajes);
 

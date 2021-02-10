@@ -16,6 +16,17 @@ Menu::Menu() {
 Menu::~Menu() {
 }
 
+int clearScreen() {
+	int result;
+	#ifdef __linux__
+		result = system("clear");
+	#else
+		// Assume WINDOWS
+		result = system("cls");
+	#endif
+	return result;
+}
+
 void Menu::cargarOpciones() {
 	fstream archivoDeOpciones(NOMBRE_ARCHIVO_OPCIONES, ios::in);
 
@@ -61,26 +72,31 @@ int Menu::obtenerOpcion(string texto) {
 	return this->terminal->leerNumero(texto, PRIMER_OPCION, ULTIMA_OPCION);
 }
 
-void Menu::validarOpcion(int opcion, Diccionario<string, Personaje*> *diccionarioDePersonajes, string textoSolicitud) {
+int Menu::validarOpcion(int opcion, Diccionario<string, Personaje*> *diccionarioDePersonajes, string textoSolicitud) {
+	int systemResult = 0;
 	while(opcion != ULTIMA_OPCION) {
 
-		ejecutarOpcion(opcion, diccionarioDePersonajes);
+		systemResult = ejecutarOpcion(opcion, diccionarioDePersonajes);
 
 		mostrarOpciones();
 
 		opcion = obtenerOpcion(textoSolicitud);
 	}
+	return systemResult;
 }
 
-void Menu::ejecutarOpcion(int opcion, Diccionario<string, Personaje*> *diccionarioDePersonajes) {
+int Menu::ejecutarOpcion(int opcion, Diccionario<string, Personaje*> *diccionarioDePersonajes) {
+	int systemResult = 0;
 	switch (opcion) {
 		case 1:
+			systemResult = clearScreen();
 			utilitario->agregarNuevoPersonaje(diccionarioDePersonajes);
 			break;
 		case 2:
 			utilitario->eliminarPersonaje(diccionarioDePersonajes);
 			break;
 		case 3:
+			systemResult = clearScreen();
 			utilitario->mostrarNombresDePersonajes(diccionarioDePersonajes);
 			break;
 		case 4:
@@ -90,8 +106,10 @@ void Menu::ejecutarOpcion(int opcion, Diccionario<string, Personaje*> *diccionar
 			utilitario->alimentarPersonaje(diccionarioDePersonajes);
 			break;
 		default:
+			systemResult = clearScreen();
 			cout << "La opcion ingresada no es correcta." << endl << endl;
 			break;
 	}
+	return systemResult;
 }
 

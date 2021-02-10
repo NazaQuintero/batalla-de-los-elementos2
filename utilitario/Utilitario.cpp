@@ -12,7 +12,7 @@ Utilitario::Utilitario() {
 }
 
 Utilitario::~Utilitario() {
-
+	delete this->terminal;
 }
 
 Utilitario* Utilitario::obtenerInstancia() {
