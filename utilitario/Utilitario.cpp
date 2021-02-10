@@ -92,12 +92,12 @@ void Utilitario::mostrarPersonaje(Personaje* personaje) {
 
 void Utilitario::mostrarNombresDePersonajes(Diccionario<string, Personaje*>* diccionarioDePersonajes) {
 
-	Lista<string>* claves = diccionarioDePersonajes->obtener_claves();
+	Lista<string>* claves = diccionarioDePersonajes->obtenerClaves();
 	claves->reiniciar();
 
 	cout << "~~~~~~~~~~~~ Personajes ~~~~~~~~~~~~" << endl;
 	while(claves->haySiguiente()) {
-		Personaje* personaje = diccionarioDePersonajes->obtener_dato(claves->siguiente());
+		Personaje* personaje = diccionarioDePersonajes->obtenerDato(claves->siguiente());
 		cout << personaje->obtenerNombre() << endl << endl;
 	}
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
@@ -107,7 +107,7 @@ Personaje* Utilitario::obtenerPersonaje(Diccionario<string, Personaje*>* diccion
 
 	string nombre = this->terminal->obtenerDato(TEXTO_SOLICITUD_NOMBRE);
 
-	return diccionarioDePersonajes->obtener_dato(nombre);
+	return diccionarioDePersonajes->obtenerDato(nombre);
 
 }
 
@@ -175,13 +175,13 @@ void Utilitario::alimentarPersonaje(Diccionario<string, Personaje*>* diccionario
 void Utilitario::guardarPersonajes(Diccionario<string, Personaje*>* diccionarioDePersonajes) {
 	ofstream archivo_personajes(NOMBRE_ARCHIVO_PERSONAJES, ofstream::trunc);
 
-	Lista<string>* claves = diccionarioDePersonajes->obtener_claves();
+	Lista<string>* claves = diccionarioDePersonajes->obtenerClaves();
 	claves->reiniciar();
 
 	Personaje* personaje;
 
 	while(claves->haySiguiente()) {
-		personaje = diccionarioDePersonajes->obtener_dato(claves->siguiente());
+		personaje = diccionarioDePersonajes->obtenerDato(claves->siguiente());
 		archivo_personajes << personaje->toString() << endl;
 	}
 

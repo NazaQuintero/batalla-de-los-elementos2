@@ -19,21 +19,21 @@ private:
 
 public:
 	NodoABB(K clave, T data);
-	T get_data();
-	void set_data(K clave);
-	K get_clave();
-	void set_clave(K clave);
-	void set_derecho(NodoABB<K, T> *derecho, NodoABB<K, T> *padre);
-	void set_izquierdo(NodoABB<K, T> *izquierdo, NodoABB<K, T> *padre);
-	void set_izquierdo(NodoABB<K, T> *izquierdo);
-	void set_derecho(NodoABB<K, T> *derecho);
-	void set_padre(NodoABB<K, T> *padre);
-	NodoABB<K, T>* get_derecho();
-	NodoABB<K, T>* get_izquierdo();
-	NodoABB<K, T>* get_padre();
+	T getData();
+	void setData(K clave);
+	K getClave();
+	void setClave(K clave);
+	void setDerecho(NodoABB<K, T> *derecho, NodoABB<K, T> *padre);
+	void setIzquierdo(NodoABB<K, T> *izquierdo, NodoABB<K, T> *padre);
+	void setIzquierdo(NodoABB<K, T> *izquierdo);
+	void setDerecho(NodoABB<K, T> *derecho);
+	void setPadre(NodoABB<K, T> *padre);
+	NodoABB<K, T>* getDerecho();
+	NodoABB<K, T>* getIzquierdo();
+	NodoABB<K, T>* getPadre();
 	bool esHoja();
-	bool tiene_solo_hijo_derecho();
-	bool tiene_solo_hijo_izquierdo();
+	bool tieneSoloHijoDerecho();
+	bool tieneSoloHijoIzquierdo();
 	virtual ~NodoABB<K, T>();
 };
 
@@ -47,81 +47,81 @@ NodoABB<K, T>::NodoABB(K clave, T data) {
 }
 
 template<class K, class T>
-T NodoABB<K, T>::get_data() {
+T NodoABB<K, T>::getData() {
 	return this->data;
 }
 
 template<class K, class T>
-void NodoABB<K, T>::set_data(K clave) {
+void NodoABB<K, T>::setData(K clave) {
 	this->data = data;
 }
 
 template<class K, class T>
-K NodoABB<K, T>::get_clave() {
+K NodoABB<K, T>::getClave() {
 	return this->clave;
 }
 
 template<class K, class T>
-void NodoABB<K, T>::set_clave(K clave) {
+void NodoABB<K, T>::setClave(K clave) {
 	this->clave = clave;
 }
 
 template<class K, class T>
-void NodoABB<K, T>::set_derecho(NodoABB<K, T> *derecho, NodoABB<K, T> *padre) {
+void NodoABB<K, T>::setDerecho(NodoABB<K, T> *derecho, NodoABB<K, T> *padre) {
 	this->derecho = derecho;
 	this->padre = padre;
 }
 
 template<class K, class T>
-void NodoABB<K, T>::set_derecho(NodoABB<K, T> *derecho) {
+void NodoABB<K, T>::setDerecho(NodoABB<K, T> *derecho) {
 	this->derecho = derecho;
 }
 
 template<class K, class T>
-void NodoABB<K, T>::set_izquierdo(NodoABB<K, T> *izquierdo,
+void NodoABB<K, T>::setIzquierdo(NodoABB<K, T> *izquierdo,
 		NodoABB<K, T> *padre) {
 	this->izquierdo = izquierdo;
 	this->padre = padre;
 }
 
 template<class K, class T>
-void NodoABB<K, T>::set_padre(NodoABB<K, T> *padre) {
+void NodoABB<K, T>::setPadre(NodoABB<K, T> *padre) {
 	this->padre = padre;
 }
 
 template<class K, class T>
-void NodoABB<K, T>::set_izquierdo(NodoABB<K, T> *izquierdo) {
+void NodoABB<K, T>::setIzquierdo(NodoABB<K, T> *izquierdo) {
 	this->izquierdo = izquierdo;
 }
 
 template<class K, class T>
-NodoABB<K, T>* NodoABB<K, T>::get_derecho() {
+NodoABB<K, T>* NodoABB<K, T>::getDerecho() {
 	return this->derecho;
 }
 
 template<class K, class T>
-NodoABB<K, T>* NodoABB<K, T>::get_izquierdo() {
+NodoABB<K, T>* NodoABB<K, T>::getIzquierdo() {
 	return this->izquierdo;
 }
 
 template<class K, class T>
-NodoABB<K, T>* NodoABB<K, T>::get_padre() {
+NodoABB<K, T>* NodoABB<K, T>::getPadre() {
 	return this->padre;
 }
 
 template<class K, class T>
 bool NodoABB<K, T>::esHoja() {
-	return (!this->get_izquierdo() && !this->get_derecho());
+	return (!this->getIzquierdo() && !this->getDerecho());
 }
 
 template<class K, class T>
-bool NodoABB<K, T>::tiene_solo_hijo_derecho() {
-	return (!this->get_izquierdo() && this->get_derecho() != 0);
+bool NodoABB<K, T>::tieneSoloHijoDerecho() {
+	return (!this->getIzquierdo() && this->getDerecho() != 0);
 }
 
 template<class K, class T>
-bool NodoABB<K, T>::tiene_solo_hijo_izquierdo() {
-	return (this->get_izquierdo() != 0 && !this->get_derecho());
+bool NodoABB<K, T>::tieneSoloHijoIzquierdo() {
+	return (this->getIzquierdo() != 0 && !this->getDerecho());
 }
 
 template<class K, class T>

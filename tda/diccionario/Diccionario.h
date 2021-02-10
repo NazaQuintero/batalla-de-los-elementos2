@@ -19,9 +19,9 @@ public:
 
 	Diccionario();
 
-	T obtener_dato(K clave);
+	T obtenerDato(K clave);
 
-	Lista<K>* obtener_claves();
+	Lista<K>* obtenerClaves();
 
 	bool guardar(K clave, T data);
 
@@ -41,7 +41,7 @@ Diccionario<K, T>::Diccionario() {
 }
 
 template<class K, class T>
-T Diccionario<K, T>::obtener_dato(K clave) {
+T Diccionario<K, T>::obtenerDato(K clave) {
 	if (!this->abb->buscar(clave))
 		return 0;
 
@@ -50,7 +50,7 @@ T Diccionario<K, T>::obtener_dato(K clave) {
 }
 
 template<class K, class T>
-Lista<K>* Diccionario<K, T>::obtener_claves() {
+Lista<K>* Diccionario<K, T>::obtenerClaves() {
 	return this->claves;
 }
 
@@ -79,7 +79,7 @@ T Diccionario<K, T>::borrar(K clave) {
 
 template<class K, class T>
 void Diccionario<K, T>::imprimir() {
-	this->abb->imprimir_in_order();
+	this->abb->imprimirInOrder();
 }
 
 template<class K, class T>

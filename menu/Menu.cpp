@@ -17,9 +17,9 @@ Menu::~Menu() {
 }
 
 void Menu::cargarOpciones() {
-	fstream archivo_opciones(NOMBRE_ARCHIVO_OPCIONES, ios::in);
+	fstream archivoDeOpciones(NOMBRE_ARCHIVO_OPCIONES, ios::in);
 
-	if(!archivo_opciones.is_open()) {
+	if(!archivoDeOpciones.is_open()) {
 
 		cout << "No se encontro un archivo con el nombre \"" << NOMBRE_ARCHIVO_OPCIONES << "\" ." << endl;
 
@@ -28,13 +28,13 @@ void Menu::cargarOpciones() {
 		string linea;
 
 		int i = 0;
-		while(getline(archivo_opciones, linea) && i < CANTIDAD_DE_LINEAS) {
+		while(getline(archivoDeOpciones, linea) && i < CANTIDAD_DE_LINEAS) {
 			opciones[i] = linea;
 			i++;
 		}
 
 	}
-	archivo_opciones.close();
+	archivoDeOpciones.close();
 }
 
 Menu* Menu::obtenerInstancia() {

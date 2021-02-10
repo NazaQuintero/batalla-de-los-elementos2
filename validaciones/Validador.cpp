@@ -17,9 +17,9 @@ Validador::~Validador() {
 }
 
 void Validador::cargarElementos() {
-	fstream archivo_elementos(NOMBRE_ARCHIVO_ELEMENTOS, ios::in);
+	fstream archivoDeElementos(NOMBRE_ARCHIVO_ELEMENTOS, ios::in);
 
-	if(!archivo_elementos.is_open()) {
+	if(!archivoDeElementos.is_open()) {
 
 		cout << "No se encontro un archivo con el nombre \"" << NOMBRE_ARCHIVO_ELEMENTOS << "\" ." << endl;
 
@@ -28,13 +28,13 @@ void Validador::cargarElementos() {
 		string linea;
 
 		int i = 0;
-		while(getline(archivo_elementos, linea) && i < CANTIDAD_DE_ELEMENTOS) {
+		while(getline(archivoDeElementos, linea) && i < CANTIDAD_DE_ELEMENTOS) {
 			elementos[i] = linea;
 			i++;
 		}
 
 	}
-	archivo_elementos.close();
+	archivoDeElementos.close();
 }
 
 Validador* Validador::obtenerInstancia() {
