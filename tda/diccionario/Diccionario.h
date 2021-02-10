@@ -45,7 +45,7 @@ T Diccionario<K, T>::obtenerDato(K clave) {
 	if (!this->abb->buscar(clave))
 		return 0;
 
-	return this->abb->get_dato(clave);
+	return this->abb->getDato(clave);
 
 }
 

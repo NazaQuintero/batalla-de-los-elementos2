@@ -47,7 +47,7 @@ public:
 	bool buscar(K clave);
 
 	// Busca la clave dada en el ABB y devuelve el dato.
-	T get_dato(K clave);
+	T getDato(K clave);
 
 	// Busca el valor minimo de clave existente en el ABB.
 	K obtenerMin();
@@ -138,7 +138,7 @@ bool ABB<K, T>::buscar(K clave) {
 }
 
 template<class K, class T>
-T ABB<K, T>::get_dato(K clave) {
+T ABB<K, T>::getDato(K clave) {
 	NodoABB<K, T> *nodo = buscar(this->raiz, clave);
 	if (!nodo)
 		return 0;
