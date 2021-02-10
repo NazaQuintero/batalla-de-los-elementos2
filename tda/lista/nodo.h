@@ -2,12 +2,11 @@
 #define NODO_H_INCLUDED
 
 #include <string>
-#include "../personaje/Personaje.h"
 
 using namespace std;
 
-typedef Personaje* Dato;
 
+template<class Dato>
 class Nodo {
 private:
     // atributos
@@ -40,5 +39,36 @@ public:
     // POS: devuelve el nodo siguiente al nodo pasado por parametro implicito.
     Nodo* obtenerSiguiente();
 };
+
+template<class Dato>
+Nodo<Dato>::Nodo(Dato d) {
+    dato = d;
+    siguiente = 0;
+}
+
+template<class Dato>
+Nodo<Dato>::~Nodo() {
+
+}
+
+template<class Dato>
+void Nodo<Dato>::cambiarDato(Dato d) {
+    dato = d;
+}
+
+template<class Dato>
+void Nodo<Dato>::cambiarSiguiente(Nodo* s) {
+    this->siguiente = s;
+}
+
+template<class Dato>
+Dato Nodo<Dato>::obtenerDato() {
+    return dato;
+}
+
+template<class Dato>
+Nodo<Dato>* Nodo<Dato>::obtenerSiguiente() {
+    return siguiente;
+}
 
 #endif // NODO_H_INCLUDED

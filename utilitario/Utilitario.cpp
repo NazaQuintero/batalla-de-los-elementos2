@@ -12,7 +12,7 @@ Utilitario::Utilitario() {
 }
 
 Utilitario::~Utilitario() {
-	delete this->terminal;
+
 }
 
 Utilitario* Utilitario::obtenerInstancia() {
@@ -35,7 +35,7 @@ void Utilitario::split(string str, char sep, vector<string> &resultado) {
 
 }
 
-void Utilitario::cargarPersonajes(Lista* listaDePersonajes) {
+void Utilitario::cargarPersonajes(Diccionario<string, Personaje*>* diccionarioDePersonajes) {
 
 	fstream archivo_personajes(NOMBRE_ARCHIVO_PERSONAJES, ios::in);
 
@@ -70,7 +70,13 @@ void Utilitario::cargarPersonajes(Lista* listaDePersonajes) {
 
 		datos.clear();
 
-		listaDePersonajes->alta(personaje, 1);
+		//diccionarioDePersonajes->alta(personaje, 1);
+		if(!diccionarioDePersonajes->pertenece(nombre)) {
+			diccionarioDePersonajes->guardar(nombre, personaje);
+		} else {
+			cout << "El personaje: " << nombre << " ya fue creado anteriormente." << endl;
+		}
+
 
 	}
 
@@ -84,58 +90,43 @@ void Utilitario::mostrarPersonaje(Personaje* personaje) {
 	cout << "~~~~~~~~~~~~~~~~~~~\n" << endl;
 }
 
-void Utilitario::mostrarNombresDePersonajes(Lista* listaDePersonajes) {
+void Utilitario::mostrarNombresDePersonajes(Diccionario<string, Personaje*>* diccionarioDePersonajes) {
 
-	listaDePersonajes->reiniciar();
-	
+	Lista<string>* claves = diccionarioDePersonajes->obtener_claves();
+	claves->reiniciar();
+
 	cout << "~~~~~~~~~~~~ Personajes ~~~~~~~~~~~~" << endl;
-	while(listaDePersonajes->haySiguiente()) {
-		Dato personaje = listaDePersonajes->siguiente();
+	while(claves->haySiguiente()) {
+		Personaje* personaje = diccionarioDePersonajes->obtener_dato(claves->siguiente());
 		cout << personaje->obtenerNombre() << endl << endl;
 	}
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
 }
 
-int Utilitario::obtenerPosicionPersonaje(Lista* listaDePersonajes) {
+Personaje* Utilitario::obtenerPersonaje(Diccionario<string, Personaje*>* diccionarioDePersonajes) {
 
-	int pos = 0;
 	string nombre = this->terminal->obtenerDato(TEXTO_SOLICITUD_NOMBRE);
 
-	bool encontrado = false;
-	listaDePersonajes->reiniciar();
-
-	Personaje* personaje;
-
-	while (listaDePersonajes->haySiguiente() && !encontrado) {
-		personaje = listaDePersonajes->siguiente();
-		encontrado = personaje->obtenerNombre() == nombre;
-		pos++;
-	}
-
-	if(!encontrado) {
-		pos = -1;
-	}
-
-	return pos;
+	return diccionarioDePersonajes->obtener_dato(nombre);
 
 }
 
-void Utilitario::buscarPersonajePorNombre(Lista* listaDePersonajes) {
+void Utilitario::buscarPersonajePorNombre(Diccionario<string, Personaje*>* diccionarioDePersonajes) {
 
-	int pos = obtenerPosicionPersonaje(listaDePersonajes);
 
-	Personaje* personaje;
+	Personaje* personaje = obtenerPersonaje(diccionarioDePersonajes);
 
-	if(pos > 0) {
-		personaje = listaDePersonajes->consulta(pos);
-		mostrarPersonaje(personaje);
+	if (!personaje) {
+		cout << "El Personaje ingresado no existe." << endl << endl;
 	} else {
-		cout << "El Personaje ingresado no se encuentra en la lista." << endl << endl;
+		mostrarPersonaje(personaje);
 	}
 
 }
 
-void Utilitario::agregarNuevoPersonaje(Lista* listaDePersonajes) {
+
+
+void Utilitario::agregarNuevoPersonaje(Diccionario<string, Personaje*>* diccionarioDePersonajes) {
 	string elemento, nombre;
 
 	FabricaDePersonaje fabricaDePersonaje;
@@ -146,43 +137,52 @@ void Utilitario::agregarNuevoPersonaje(Lista* listaDePersonajes) {
 
 	nombre = this->terminal->obtenerDato(TEXTO_SOLICITUD_NOMBRE);
 
-	Personaje* personaje = fabricaDePersonaje.obtenerPersonaje(elemento, nombre);
+	Personaje* personaje;
+	if(!diccionarioDePersonajes->pertenece(nombre)) {
+		personaje = fabricaDePersonaje.obtenerPersonaje(elemento, nombre);
+		diccionarioDePersonajes->guardar(nombre, personaje);
+	} else {
+		cout << "El Personaje: " << nombre << ", ya existe." << endl << endl;
+	}
 
-	listaDePersonajes->alta(personaje, 1);
 }
 
-void Utilitario::eliminarPersonaje(Lista* listaDePersonajes) {
+void Utilitario::eliminarPersonaje(Diccionario<string, Personaje*>* diccionarioDePersonajes) {
 
-	int pos = obtenerPosicionPersonaje(listaDePersonajes);
+	string nombre = this->terminal->obtenerDato(TEXTO_SOLICITUD_NOMBRE);
 
-	if(pos > 0) {
-		Personaje* personaje = listaDePersonajes->consulta(pos);
+	Personaje* personaje = diccionarioDePersonajes->borrar(nombre);
+
+	if(!personaje) {
+		cout << "El Personaje ingresado no existe." << endl << endl;
+	} else {
 		cout << "Se ha eliminado al personaje: " << personaje->obtenerNombre() << endl << endl;
-		listaDePersonajes->baja(pos);
-	} else {
-		cout << "El Personaje ingresado no existe." << endl << endl;
 	}
 
 }
 
-void Utilitario::alimentarPersonaje(Lista* listaDePersonajes) {
-	int pos = obtenerPosicionPersonaje(listaDePersonajes);
+void Utilitario::alimentarPersonaje(Diccionario<string, Personaje*>* diccionarioDePersonajes) {
 
-	if(pos > 0) {
-		Personaje* personaje = listaDePersonajes->consulta(pos);
+	Personaje* personaje = obtenerPersonaje(diccionarioDePersonajes);
+
+	if(!personaje) {
+		cout << "El Personaje ingresado no existe." << endl << endl;
+	} else {
 		cout << personaje->alimentar() << endl << endl;
-	} else {
-		cout << "El Personaje ingresado no existe." << endl << endl;
 	}
 }
 
-void Utilitario::guardarPersonajes(Lista* listaDePersonajes) {
+void Utilitario::guardarPersonajes(Diccionario<string, Personaje*>* diccionarioDePersonajes) {
 	ofstream archivo_personajes(NOMBRE_ARCHIVO_PERSONAJES, ofstream::trunc);
 
-	listaDePersonajes->reiniciar();
+	Lista<string>* claves = diccionarioDePersonajes->obtener_claves();
+	claves->reiniciar();
 
-	while(listaDePersonajes->haySiguiente()) {
-		archivo_personajes << listaDePersonajes->siguiente()->toString() << endl;
+	Personaje* personaje;
+
+	while(claves->haySiguiente()) {
+		personaje = diccionarioDePersonajes->obtener_dato(claves->siguiente());
+		archivo_personajes << personaje->toString() << endl;
 	}
 
 	archivo_personajes.close();

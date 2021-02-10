@@ -14,7 +14,8 @@
 #include <vector>
 #include <sstream>
 
-#include "../tda/lista.h"
+//#include "../tda/lista/lista.h"
+#include "../tda/diccionario/Diccionario.h"
 #include "../personaje/FabricaDePersonaje.h"
 #include "../terminal/Terminal.h"
 
@@ -54,9 +55,9 @@ public:
 
 	/**
 	 * PRE:
-	 * POS: Carga en 'listaDePersonajes' la instancia del personajes correspondiente leido de 'personajes.csv'.
+	 * POS: Carga en 'diccionarioDePersonajes' la instancia del personajes correspondiente leido de 'personajes.csv'.
 	 */
-	void cargarPersonajes(Lista* listaDePersonajes);
+	void cargarPersonajes(Diccionario<string, Personaje*>* diccionarioDePersonajes);
 
 	/**
 	 * PRE: personaje != null
@@ -65,49 +66,49 @@ public:
 	void mostrarPersonaje(Personaje* personaje);
 
 	/**
-	 * PRE: listaDePersonajes != null
-	 * POS: Muestra por pantalla el nombre de cada personaje de 'listaDePersonajes'.
+	 * PRE: diccionarioDePersonajes != null
+	 * POS: Muestra por pantalla el nombre de cada personaje de 'diccionarioDePersonajes'.
 	 */
-	void mostrarNombresDePersonajes(Lista* listaDePersonajes);
+	void mostrarNombresDePersonajes(Diccionario<string, Personaje*>* diccionarioDePersonajes);
 
 	/**
-	 * PRE: listaDePersonajes != null
-	 * POS: Devuelve la posicion en 'listaDePersonajes' del personaje ingresado por consola por el usuario.
-	 */
-	int obtenerPosicionPersonaje(Lista* listaDePersonajes);
-
-	/**
-	 * PRE: listaDePersonajes != null
-	 * POS: Muestra por pantalla los datos del personaje en caso que se encuentre en 'listaDePersonajes'.
+	 * PRE: diccionarioDePersonajes != null
+	 * POS: Muestra por pantalla los datos del personaje en caso que se encuentre en 'diccionarioDePersonajes'.
 	 * Muestra por pantalla un mensaje de error caso contrario.
 	 */
-	void buscarPersonajePorNombre(Lista* listaDePersonajes);
+	void buscarPersonajePorNombre(Diccionario<string, Personaje*>* diccionarioDePersonajes);
+
+	/**
+	 * PRE: diccionarioDePersonajes != null
+	 * POS: Devuelve el Personaje ingresado por consola por el usuario en caso de que exista, 0 caso contrario.
+	 */
+	Personaje* obtenerPersonaje(Diccionario<string, Personaje*>* diccionarioDePersonajes);
 
 	/**
 	 * PRE:
-	 * POS: Agrega en 'listaDePersonajes' el personaje que se creara con los datos ingresados por consola por el usuario.
+	 * POS: Agrega en 'diccionarioDePersonajes' el personaje que se creara con los datos ingresados por consola por el usuario.
 	 */
-	void agregarNuevoPersonaje(Lista* listaDePersonajes);
+	void agregarNuevoPersonaje(Diccionario<string, Personaje*>* diccionarioDePersonajes);
 
 	/**
-	 * PRE: listaDePersonajes != null
-	 * POS: Se dara de baja de la 'listaDePersonajes' el personaje correspondiente al nombre ingresado por consola
+	 * PRE: diccionarioDePersonajes != null
+	 * POS: Se dara de baja de la 'diccionarioDePersonajes' el personaje correspondiente al nombre ingresado por consola
 	 * por el usuario.
 	 */
-	void eliminarPersonaje(Lista* listaDePersonajes);
+	void eliminarPersonaje(Diccionario<string, Personaje*>* diccionarioDePersonajes);
 
 	/**
-	 * PRE: listaDePersonajes != null
+	 * PRE: diccionarioDePersonajes != null
 	 * POS: Se alimentara al personaje correspondiente al nombre ingresado por consola por el usuario.
 	 * Muestra un mensaje de error en caso de que el personaje no se encuentre en la lista.
 	 */
-	void alimentarPersonaje(Lista* listaDePersonajes);
+	void alimentarPersonaje(Diccionario<string, Personaje*>* diccionarioDePersonajes);
 
 	/**
 	 * PRE:
-	 * POS: Escribe en 'personajes.csv' los personajes contenidos en 'listaDePersonajes'.
+	 * POS: Escribe en 'personajes.csv' los personajes contenidos en 'diccionarioDePersonajes'.
 	 */
-	void guardarPersonajes(Lista* listaDePersonajes);
+	void guardarPersonajes(Diccionario<string, Personaje*>* diccionarioDePersonajes);
 
 
 	// Destructor

@@ -22,11 +22,11 @@ int main() {
 
 	srand(time(0));
 
-	Lista* listaDePersonajes = new Lista();
+	Diccionario<string, Personaje*> *diccionarioDePersonajes = new Diccionario<string, Personaje*>();
 
 	Utilitario* utilitario = Utilitario::obtenerInstancia();
 
-	utilitario->cargarPersonajes(listaDePersonajes);
+	utilitario->cargarPersonajes(diccionarioDePersonajes);
 
 	Menu* menu = Menu::obtenerInstancia();
 
@@ -34,11 +34,11 @@ int main() {
 
 	int opcion = menu->obtenerOpcion(TEXTO_SOLICITUD_OPCION);
 
-	menu->validarOpcion(opcion, listaDePersonajes, TEXTO_SOLICITUD_OPCION);
+	menu->validarOpcion(opcion, diccionarioDePersonajes, TEXTO_SOLICITUD_OPCION);
 
-	utilitario->guardarPersonajes(listaDePersonajes);
+	utilitario->guardarPersonajes(diccionarioDePersonajes);
 
-	delete listaDePersonajes;
+	delete diccionarioDePersonajes;
 	delete menu;
 	delete utilitario;
 

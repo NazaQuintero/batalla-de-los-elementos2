@@ -61,10 +61,10 @@ int Menu::obtenerOpcion(string texto) {
 	return this->terminal->leerNumero(texto, PRIMER_OPCION, ULTIMA_OPCION);
 }
 
-void Menu::validarOpcion(int opcion, Lista* listaDePersonajes, string textoSolicitud) {
+void Menu::validarOpcion(int opcion, Diccionario<string, Personaje*> *diccionarioDePersonajes, string textoSolicitud) {
 	while(opcion != ULTIMA_OPCION) {
 
-		ejecutarOpcion(opcion, listaDePersonajes);
+		ejecutarOpcion(opcion, diccionarioDePersonajes);
 
 		mostrarOpciones();
 
@@ -72,22 +72,22 @@ void Menu::validarOpcion(int opcion, Lista* listaDePersonajes, string textoSolic
 	}
 }
 
-void Menu::ejecutarOpcion(int opcion, Lista* listaDePersonajes) {
+void Menu::ejecutarOpcion(int opcion, Diccionario<string, Personaje*> *diccionarioDePersonajes) {
 	switch (opcion) {
 		case 1:
-			utilitario->agregarNuevoPersonaje(listaDePersonajes);
+			utilitario->agregarNuevoPersonaje(diccionarioDePersonajes);
 			break;
 		case 2:
-			utilitario->eliminarPersonaje(listaDePersonajes);
+			utilitario->eliminarPersonaje(diccionarioDePersonajes);
 			break;
 		case 3:
-			utilitario->mostrarNombresDePersonajes(listaDePersonajes);
+			utilitario->mostrarNombresDePersonajes(diccionarioDePersonajes);
 			break;
 		case 4:
-			utilitario->buscarPersonajePorNombre(listaDePersonajes);
+			utilitario->buscarPersonajePorNombre(diccionarioDePersonajes);
 			break;
 		case 5:
-			utilitario->alimentarPersonaje(listaDePersonajes);
+			utilitario->alimentarPersonaje(diccionarioDePersonajes);
 			break;
 		default:
 			cout << "La opcion ingresada no es correcta." << endl << endl;

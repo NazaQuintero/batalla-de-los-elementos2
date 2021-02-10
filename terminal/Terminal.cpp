@@ -12,7 +12,7 @@ Terminal::Terminal() {
 }
 
 Terminal::~Terminal() {
-	delete this->validador;
+
 }
 
 Terminal* Terminal::obtenerInstancia() {

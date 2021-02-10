@@ -63,13 +63,13 @@ public:
 	 * PRE: listaDePersonajes != null, 1 <= opcion <= 6.
 	 * POS: Ejecuta la opcion y solicita el ingreso de otra opcion mientras opcion != 6.
 	 */
-	void validarOpcion(int opcion, Lista* listaDePersonajes, string textoSolicitud);
+	void validarOpcion(int opcion, Diccionario<string, Personaje*> *diccionarioDePersonajes, string textoSolicitud);
 
 	/**
 	 * PRE: listaDePersonajes != null
 	 * POS: Ejecuta la opcion.
 	 */
-	void ejecutarOpcion(int opcion, Lista* listaDePersonajes);
+	void ejecutarOpcion(int opcion, Diccionario<string, Personaje*> *diccionarioDePersonajes);
 
 
 
