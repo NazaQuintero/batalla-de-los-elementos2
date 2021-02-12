@@ -19,3 +19,5 @@ Para borrar los archivos '.o' correr el siguiente comando: ``` make clean ```
 ### __correr el programa con valgrind__:
 
 Para ejecutar el programa con valgrind correr el siguiente comando: ```make valgrind```
+
+Agrego cambio bobo
