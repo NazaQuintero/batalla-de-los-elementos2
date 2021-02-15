@@ -15,6 +15,8 @@ class Volcan: public Casillero {
     // Constructor
     Volcan(int posX, int posY);
 
+    string getTerreno();
+
     // Destructor
     ~Volcan();
 };

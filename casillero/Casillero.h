@@ -32,6 +32,8 @@ public:
 	 * TO DO:
 	 * Definir color, setColor()
 	*/ 
+
+	virtual string getTerreno() = 0;
 	
 	void setColor(string color);
 
@@ -56,7 +58,8 @@ public:
 	void setTerreno(Terreno terreno);
 
 	// Devuleve el tipo de terreno del casillero
-	Terreno getTerreno();
+	// Terreno getTerreno();
+
 
 	// Destructor
 	virtual ~Casillero();

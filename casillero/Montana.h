@@ -15,6 +15,8 @@ class Montana: public Casillero {
     // Constructor
     Montana(int posX, int posY);
 
+    string getTerreno();
+
     // Destructor
     ~Montana();
 };

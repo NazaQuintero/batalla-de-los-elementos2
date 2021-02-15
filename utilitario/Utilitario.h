@@ -35,9 +35,6 @@ private:
 	// Atributo privado
 	Terminal* terminal;
 
-	// Metodo privado
-	void split(string cadena, char separador, vector<string> &resultado);
-
 	// Constructor
 	Utilitario();
 
@@ -52,6 +49,8 @@ public:
 	 * POS: Devuelve unica instancia de Utilitario.
 	 */
 	static Utilitario* obtenerInstancia();
+
+	void split(string cadena, char separador, vector<string> &resultado);
 
 	/**
 	 * PRE:

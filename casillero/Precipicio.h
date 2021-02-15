@@ -15,6 +15,8 @@ class Precipicio: public Casillero {
     // Constructor
     Precipicio(int posX, int posY);
 
+    string getTerreno();
+
     // Destructor
     ~Precipicio();
 };

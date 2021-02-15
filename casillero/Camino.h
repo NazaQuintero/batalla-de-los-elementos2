@@ -15,6 +15,8 @@ class Camino: public Casillero {
     // Constructor
     Camino(int posX, int posY);
 
+    string getTerreno();
+
     // Destructor
     ~Camino();
 };

@@ -59,9 +59,9 @@ void Casillero::setTerreno(Terreno terreno) {
     this->terreno = terreno;
 }
 
-Terreno Casillero::getTerreno() {
-    return this->terreno;
-}
+// Terreno Casillero::getTerreno() {
+//     return this->terreno;
+// }
 
 Casillero::~Casillero() {
 

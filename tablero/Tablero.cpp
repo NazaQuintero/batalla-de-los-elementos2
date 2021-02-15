@@ -17,12 +17,11 @@ Tablero::Tablero() {
 	vector<string> tiposDeTerreno;
 
     FabricaDeCasillero fabricaDeCasillero;
+    int j = 0;
 
     while(archivo_mapa >> linea) {
 
         this->utilitario->split(linea, ',', tiposDeTerreno);
-
-        int j = 0;
 
         for (int i = 0; i < CANTIDAD_DE_CASILLEROS; i++) {
             tipoDeTerreno = tiposDeTerreno[i];
@@ -37,10 +36,19 @@ Tablero::Tablero() {
 
 void Tablero::posicionarPersonaje(int posX, int posY, Personaje* personaje) {
 
-    Casillero casillero = this->matrizCasilleros[posX][posY];
+    Casillero* casillero = this->matrizCasilleros[posX][posY];
     
-    casillero.setPersonaje(personaje);
+    casillero->setPersonaje(personaje);
 
+}
+
+void Tablero::mostrarTablero() {
+    for (size_t i = 0; i < CANTIDAD_DE_CASILLEROS; i++) {
+        for (size_t j = 0; j < CANTIDAD_DE_CASILLEROS; j++) {
+            cout << this->matrizCasilleros[i][j]->getTerreno() << " | ";
+        }
+        cout << endl;
+    }    
 }
 
 Tablero::~Tablero() {

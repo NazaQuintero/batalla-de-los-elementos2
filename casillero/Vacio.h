@@ -15,6 +15,8 @@ class Vacio: public Casillero {
     // Constructor
     Vacio(int posX, int posY);
 
+    string getTerreno();
+
     // Destructor
     ~Vacio();
 };

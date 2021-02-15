@@ -14,7 +14,7 @@ const string NOMBRE_ARCHIVO_MAPA = "mapa.csv";
 
 class Tablero {
     private:
-        Casillero matrizCasilleros[CANTIDAD_DE_CASILLEROS][CANTIDAD_DE_CASILLEROS];
+        Casillero* matrizCasilleros[CANTIDAD_DE_CASILLEROS][CANTIDAD_DE_CASILLEROS];
         int cantidadDeCasilleros;
         Utilitario* utilitario;
 
@@ -27,6 +27,8 @@ class Tablero {
 
         // Posiciona al personaje en el casillero con posicion X e Y
         void posicionarPersonaje(int posX, int posY, Personaje* personaje);
+
+        void mostrarTablero();
 
         // Destructor
         ~Tablero();

@@ -17,6 +17,8 @@ class Lago: public Casillero {
     // Constructor
     Lago(int posX, int posY);
 
+    string getTerreno();
+
     // Destructor
     ~Lago();
 };
