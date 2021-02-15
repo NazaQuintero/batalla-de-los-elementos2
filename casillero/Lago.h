@@ -9,6 +9,8 @@ using namespace std;
 
 const Terreno TERRENO_LAGO = LAGO;
 
+const string COLOR_LAGO = "celeste";
+
 class Lago: public Casillero {
     public:
 

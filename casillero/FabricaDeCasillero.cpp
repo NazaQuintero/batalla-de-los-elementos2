@@ -9,31 +9,31 @@ FabricaDeCasillero::FabricaDeCasillero() {
 
 }
 
-Casillero* FabricaDeCasillero::obtenerCasillero(Terreno terreno, int posX, int posY) {
+Casillero* FabricaDeCasillero::obtenerCasillero(string terreno, int posX, int posY) {
 
 	Casillero* casillero;
 
-	if (terreno == CAMINO) {
+	if (terreno == "Camino") {
 
 		casillero = new Camino (posX, posY);
 
-	} else if (terreno == LAGO) {
+	} else if (terreno == "Lago") {
 
 		casillero = new Lago (posX, posY);
 
-	} else if (terreno == MONTANA) {
+	} else if (terreno == "Montana") {
 
 		casillero = new Montana (posX, posY);
 
-	} else if (terreno == PRECIPICIO) {
+	} else if (terreno == "Precipicio") {
 
 		casillero = new Precipicio (posX, posY);
 
-	} else if (terreno == VACIO) {
+	} else if (terreno == "Vacio") {
 
 		casillero = new Vacio( posX, posY);
 
-	} else if (terreno == VOLCAN) {
+	} else if (terreno == "Volcan") {
 
 		casillero = new Volcan(posX, posY);
 

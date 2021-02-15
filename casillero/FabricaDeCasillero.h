@@ -30,7 +30,7 @@ public:
 	 * PRE: El terreno es un terreno valido.
 	 * POS: Devuelve un puntero que apuntara a una instancia de la clase correspondiente al terreno.
 	 */
-	Casillero* obtenerCasillero(Terreno terreno, int posX, int posY);
+	Casillero* obtenerCasillero(string terreno, int posX, int posY);
 };
 
 #endif /* CASILLERO_FABRICADECASILLERO_H_ */
