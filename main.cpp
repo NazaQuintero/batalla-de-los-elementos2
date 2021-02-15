@@ -10,39 +10,25 @@
 #include "terminal/Terminal.h"
 #include "validaciones/Validador.h"
 #include "utilitario/Utilitario.h"
+// pruebas
+#include "tablero/Tablero.h"
 
-Menu* Menu::menu = 0;
-Terminal* Terminal::terminal = 0;
-Validador* Validador::validador = 0;
+// Menu* Menu::menu = 0;
+// Terminal* Terminal::terminal = 0;
+// Validador* Validador::validador = 0;
 Utilitario* Utilitario::utilitario = 0;
+
+
+
 
 const string TEXTO_SOLICITUD_OPCION = "Por favor, ingrese una opcion para continuar:";
 
 int main() {
 
-	srand(time(0));
+	Tablero* tablero = new Tablero();
 
-	Diccionario<string, Personaje*> *diccionarioDePersonajes = new Diccionario<string, Personaje*>();
+	tablero->mostrarTablero();
 
-	Utilitario* utilitario = Utilitario::obtenerInstancia();
-
-	utilitario->cargarPersonajes(diccionarioDePersonajes);
-
-	Menu* menu = Menu::obtenerInstancia();
-
-	menu->mostrarOpciones();
-
-	int opcion = menu->obtenerOpcion(TEXTO_SOLICITUD_OPCION);
-
-	int systemResult = menu->validarOpcion(opcion, diccionarioDePersonajes, TEXTO_SOLICITUD_OPCION);
-
-	cout << "El sistema ha finalizado con codigo de error: " << systemResult << "." << endl;
-
-	utilitario->guardarPersonajes(diccionarioDePersonajes);
-
-	delete diccionarioDePersonajes;
-	delete menu;
-	delete utilitario;
 
 	return 0;
 }
