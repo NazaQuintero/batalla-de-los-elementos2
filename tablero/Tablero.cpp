@@ -14,20 +14,19 @@ Tablero::Tablero() {
     string linea;
     string tipoDeTerreno;
 
-	vector<string> tiposDeTerreno;
-
     FabricaDeCasillero fabricaDeCasillero;
     int j = 0;
 
     while(archivo_mapa >> linea) {
+    	vector<string> tiposDeTerreno;
 
         this->utilitario->split(linea, ',', tiposDeTerreno);
 
         for (int i = 0; i < CANTIDAD_DE_CASILLEROS; i++) {
             tipoDeTerreno = tiposDeTerreno[i];
 
-            Casillero* casillero = fabricaDeCasillero.obtenerCasillero(tipoDeTerreno, i, j);
-            this->matrizCasilleros[i][j] = casillero;
+            Casillero* casillero = fabricaDeCasillero.obtenerCasillero(tipoDeTerreno, j, i);
+            this->matrizCasilleros[j][i] = casillero;
         }
         j++;
     }
