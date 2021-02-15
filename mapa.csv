@@ -1,0 +1,8 @@
+Lago,Lago,Precipicio,Precipicio,Precipicio,Vacio,Volcan,Volcan
+Lago,Lago,Precipicio,Vacio,Volcan,Volcan,Volcan,Volcan
+Precipicio,Volcan,Volcan,Volcan,Volcan,Precipicio,Precipicio,Precipicio
+Volcan,Camino,Camino,Camino,Lago,Vacio,Camino,Camino
+Camino,Camino,Vacio,Camino,Camino,Camino,Camino,Precipicio
+Camino,Camino,Camino,Vacio,Montana,Montana,Montana,Precipicio
+Precipicio,Montana,Montana,Montana,Montana,Lago,Lago,Lago
+Precipicio,Precipicio,Montana,Precipicio,Vacio,Lago,Lago,Lago
