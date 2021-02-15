@@ -33,6 +33,7 @@ Tablero::Tablero() {
 
 }
 
+
 void Tablero::posicionarPersonaje(int posX, int posY, Personaje* personaje) {
 
     Casillero* casillero = this->matrizCasilleros[posX][posY];

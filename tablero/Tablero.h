@@ -23,7 +23,7 @@ class Tablero {
         // Constructor
         Tablero();
 
-        void cargarMatriz();
+        //void cargarMatriz();
 
         // Posiciona al personaje en el casillero con posicion X e Y
         void posicionarPersonaje(int posX, int posY, Personaje* personaje);
