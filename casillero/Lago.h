@@ -7,7 +7,7 @@
 
 using namespace std;
 
-const Terreno TERRENO_LAGO = lago;
+const Terreno TERRENO_LAGO = LAGO;
 
 class Lago: public Casillero {
     public:

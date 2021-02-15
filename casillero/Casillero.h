@@ -7,7 +7,7 @@
 
 using namespace std;
 
-enum Terreno { lago, volcan, precipicio, montana, camino, vacio, };
+enum Terreno { LAGO, VOLCAN, PRECIPICIO, MONTANA, CAMINO, VACIO };
 
 class Casillero {
 

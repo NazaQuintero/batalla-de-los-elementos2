@@ -7,11 +7,11 @@
 
 using namespace std;
 
-const int CANTIDAD_DE_VERTICES = 8;
+const int CANTIDAD_DE_CASILLEROS = 8;
 
 class Tablero {
     private:
-        Casillero** matrizCasilleros[CANTIDAD_DE_VERTICES][CANTIDAD_DE_VERTICES];
+        Casillero** matrizCasilleros[CANTIDAD_DE_CASILLEROS][CANTIDAD_DE_CASILLEROS];
         int cantidadDeVertices;
 
     public:

@@ -13,27 +13,27 @@ Casillero* FabricaDeCasillero::obtenerCasillero(Terreno terreno, int posX, int p
 
 	Casillero* casillero;
 
-	if (terreno == camino) {
+	if (terreno == CAMINO) {
 
 		casillero = new Camino (posX, posY);
 
-	} else if (terreno == lago) {
+	} else if (terreno == LAGO) {
 
 		casillero = new Lago (posX, posY);
 
-	} else if (terreno == montana) {
+	} else if (terreno == MONTANA) {
 
 		casillero = new Montana (posX, posY);
 
-	} else if (terreno == precipicio) {
+	} else if (terreno == PRECIPICIO) {
 
 		casillero = new Precipicio (posX, posY);
 
-	} else if (terreno == vacio) {
+	} else if (terreno == VACIO) {
 
 		casillero = new Vacio( posX, posY);
 
-	} else if (terreno == volcan) {
+	} else if (terreno == VOLCAN) {
 
 		casillero = new Volcan(posX, posY);
 
