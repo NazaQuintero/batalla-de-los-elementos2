@@ -41,9 +41,9 @@ template<class K, class T>
 NodoABB<K, T>::NodoABB(K clave, T data) {
 	this->clave = clave;
 	this->data = data;
-	this->izquierdo = 0;
-	this->derecho = 0;
-	this->padre = 0;
+	this->izquierdo = nullptr;
+	this->derecho = nullptr;
+	this->padre = nullptr;
 }
 
 template<class K, class T>

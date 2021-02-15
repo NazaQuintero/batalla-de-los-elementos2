@@ -296,6 +296,7 @@ template<class K, class T>
 void ABB<K, T>::borrarTodo(NodoABB<K, T> *nodo) {
 	if (!nodo)
 		return;
+	
 	this->borrarTodo(nodo->getIzquierdo());
 	this->borrarTodo(nodo->getDerecho());
 	delete nodo;
