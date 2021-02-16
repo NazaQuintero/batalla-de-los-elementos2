@@ -36,6 +36,13 @@ public:
 	string obtenerElemento();
 
 	string alimentar();
+
+	void defender();
+
+	void atacar(int posX, int posY);
+
+	void mover();
+	
 };
 
 #endif /* PERSONAJE_AGUA_H_ */

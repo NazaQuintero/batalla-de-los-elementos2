@@ -37,6 +37,9 @@ public:
 
 	virtual string obtenerElemento() = 0;
 	virtual string alimentar() = 0;
+	virtual void atacar() = 0;
+	virtual void defender() = 0;
+	virtual void mover() = 0;
 
 	void asignarNombre(string nombre);
 	string obtenerNombre();
