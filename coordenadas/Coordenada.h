@@ -14,6 +14,8 @@ private:
     int posY;
 
 public:
+
+    Coordenada();
 	// Constructor
 	Coordenada(int posX, int posY);
 

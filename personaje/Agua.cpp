@@ -30,9 +30,9 @@ string Agua::obtenerElemento() {
 	return "agua";
 }
 
-void Agua::atacar(int posX, int posY){
+/*void Agua::atacar(int posX, int posY){
 		
-}
+}*/
 
 string Agua::alimentar() {
 

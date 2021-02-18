@@ -3,6 +3,8 @@
 Casillero::Casillero(int posX, int posY) {
     this->pos [0] = posX;
     this->pos [1] = posY;
+    this->personaje = 0;
+    this->terreno = LAGO;
 }
 
 void Casillero::setColor(string color) {

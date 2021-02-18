@@ -6,15 +6,17 @@
 #include "../casillero/FabricaDeCasillero.h"
 #include "../casillero/Casillero.h"
 #include "../utilitario/Utilitario.h"
+#include "../personaje/Personaje.h"
 
 using namespace std;
 
-const int CANTIDAD_DE_CASILLEROS = 8;
+const int CANTIDAD_DE_CASILLEROS_X_FILA = 8;
+const int CANTIDAD_DE_CASILLEROS_X_COLUMNA = 8;
 const string NOMBRE_ARCHIVO_MAPA = "mapa.csv";
 
 class Tablero {
     private:
-        Casillero* matrizCasilleros[CANTIDAD_DE_CASILLEROS][CANTIDAD_DE_CASILLEROS];
+        Casillero** matrizCasilleros;
         int cantidadDeCasilleros;
         Utilitario* utilitario;
 
@@ -27,6 +29,11 @@ class Tablero {
 
         // Posiciona al personaje en el casillero con posicion X e Y
         void posicionarPersonaje(int posX, int posY, Personaje* personaje);
+
+        // Retorna la matriz de casilleros
+        Casillero** getCasilleros();
+
+        int getCantidadDeCasillerosPorFila();
 
         void mostrarTablero();
 

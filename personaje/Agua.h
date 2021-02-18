@@ -37,11 +37,11 @@ public:
 
 	string alimentar();
 
-	void defender();
+	/*void defender();
 
 	void atacar(int posX, int posY);
 
-	void mover();
+	void mover();*/
 	
 };
 

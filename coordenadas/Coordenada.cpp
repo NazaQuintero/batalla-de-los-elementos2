@@ -1,5 +1,10 @@
 #include "Coordenada.h"
 
+Coordenada::Coordenada() {
+	this->posX = 0;
+	this->posY = 0;
+}
+
 Coordenada::Coordenada(int posX, int posY) {
     this->posX = posX;
     this->posY = posY;
