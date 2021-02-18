@@ -3,17 +3,19 @@
 
 #include "./Arista.h"
 #include "./Vertice.h"
-#include "./lista.h"
 #include <iostream>
+
+using namespace std;
 
 const int CANTIDAD_VERTICES = 8;
 
-template<class T>
+const int CANTIDAD_ARISTAS = CANTIDAD_VERTICES * CANTIDAD_VERTICES;
+
+template<class T, class K>
 class Grafo {
 private:
-	Arista<T>* matrizDeAyacencia [][]; //relacion entre vertices
-    Vertice<T>* matrizDeVertices [][]; //referencia a cada vertice
-    Vertice<T>* matrizDeRecorridoMinimo [][];
+	Vertice<T>* matrizDeVertices[CANTIDAD_VERTICES][CANTIDAD_VERTICES];
+	Arista<K>* matrizDeAyacencia[CANTIDAD_ARISTAS][CANTIDAD_ARISTAS]; //relacion entre vertices
     
 public: 
     //Crea un grafo vacio
@@ -22,87 +24,59 @@ public:
     //Destructor
     ~Grafo();
 
-    //Inserta en el grafo el nodo recibido como argumento
-    //PRE: Grafo != null 
-    //POS: Se inserta el nuevo nodo en el grafo.
-    insertarNodo(T data);
-    
-    //Inserta en el grafo la arista recibida como argumento
-    //PRE: Grafo != null 
-    //POS: Se inserta la arista al grafo.
-    insertarArista(int peso);
+    void insertarVertice(T data, int posX, int posY);
 
-    //Elimina del grafo un nodo recibido como argumento
-    //PRE: Grafo != null.
-    //POS: El grafo queda modificado por la eliminación de la arista
-    eliminarNodo();
+    bool existeVertice(int posX, int posY);
 
-    //Elimina del grafo una arista recibida como argumento
-    //PRE: Grafo != null.
-    //POS: El grafo queda modificado por la eliminación de la arista
-    eliminarArista();
+    void borrarVertice(int posX, int posY);
 
-    //Recibe una arista y retorna un valor logico indicando si la arista existe en el grafo
-    //PRE: Grafo != null
-    //POS: arista es un valor válido
-    existeArista();
-    
-    //Recibe una arista y retorna un booleano indicando si el nodo existe o no en el grafo.
-    //PRE: Grafo != null
-    //POS: nodo es un valor válido
-    existeNodo();
-    
-    // Recorrido en anchura
-    void BFS();
+    void insertarArista(K peso, int posX, int posY);
 
-    Vertice<T>** floydWarshall(int desde[], int hasta[]);
+    bool existeArista(int posX, int posY);
+
+    void borrarArista(int posX, int posY);
+
+    void imprimirMatrizDeVertices();
+
+    void imprimirMatrizDeAristas();
+
+    K** floydWarshall(int desde[], int hasta[]);
     
 };
 
+template<class T, class K>
+Grafo<T, K>::Grafo() {
+	for(int i = 0; i < CANTIDAD_VERTICES; i++) {
+		for(int j = 0; j < CANTIDAD_VERTICES; j++) {
+			this->matrizDeVertices[i][j] = 0;
+		}
+	}
 
-template<class T>
-Grafo<T>::Grafo(){
-    Vertice<T>** matrizDeVertices;
-    matrizDeVertices = new T*[CANTIDAD_VERTICES];
-    
-    for(int i = 0; i < CANTIDAD_VERTICES; i++)
-        matrizDeVertices[i] = new T[CANTIDAD_VERTICES];
-
-    Arista<T>** matrizDeAyacencia;
-    matrizDeAyacencia = new T*[CANTIDAD_VERTICES];
-    
-    for(int i = 0; i < CANTIDAD_VERTICES; i++)
-        matrizDeAyacencia[i] = new T[CANTIDAD_VERTICES];
-    
-}
-
-template<class T>
-Grafo<T>::~Grafo(){
-    for(int i = 0; i < CANTIDAD_VERTICES; i++)
-        delete[] matrizDeVertices[i];
-    
-    delete[] matrizDeVertices;
-
-    for(int i = 0; i < CANTIDAD_VERTICES; i++)
-        delete[] matrizDeAyacencia[i];
-    
-    delete[] matrizDeAyacencia;
-}
-
-template<class T>
-Vertice<T>** Grafo<T>:: floydWarshall(int posDesde[], int posHasta[]) {
+	for(int i = 0; i < CANTIDAD_ARISTAS; i++) {
+		for(int j = 0; j < CANTIDAD_ARISTAS; j++) {
+			this->matrizDeAyacencia[i][j] = 0;
+		}
+	}
+};
 
 
-    Vertice<T>* pesos = this->matrizDeRecorridoMinimo;
-    for(int i = 0; i < CANTIDAD_VERTICES, i++){
+
+
+// TODO: ver si se puede reutilizar la clase Coordenada
+template<class T, class K>
+K** Grafo<T, K>:: floydWarshall(int posDesde[], int posHasta[]) {
+
+    K* pesos [CANTIDAD_ARISTAS][CANTIDAD_ARISTAS];
+
+    for(int i = 0; i < CANTIDAD_ARISTAS; i++){
         //Inicializa diagonal principal en infinito
-        distancia[i][i] == 999999;
+    	*(pesos[i][i]) == 999999;
     }
     
-    for(int k = 0; k < CANTIDAD_VERTICES, k++){
-        for(int i = 0; i < CANTIDAD_VERTICES, i++){
-            for(int j = 0; j < CANTIDAD_VERTICES, j++){
-                int peso = pesos[i][k] + pesos[k][j];
+    for(int k = 0; k < CANTIDAD_ARISTAS; k++){
+        for(int i = 0; i < CANTIDAD_ARISTAS; i++){
+            for(int j = 0; j < CANTIDAD_ARISTAS; j++){
+                K peso = *(pesos[i][k]) + *(pesos[k][j]);
                 //Compara si se encuentra un peso menor al de la matriz
                 if (peso < pesos[i][j])
                     pesos[i][j] = peso;
@@ -111,6 +85,77 @@ Vertice<T>** Grafo<T>:: floydWarshall(int posDesde[], int posHasta[]) {
     }
 
     return pesos;
+
+}
+
+template<class T, class K>
+void Grafo<T, K>::insertarVertice(T data, int posX, int posY) {
+	Vertice<T>* vertice = new Vertice<T>(data);
+	this->matrizDeVertices[posX][posY] = vertice;
+}
+
+template<class T, class K>
+bool Grafo<T, K>::existeVertice(int posX, int posY) {
+	return this->matrizDeVertices[posX][posY] != 0;
+}
+
+template<class T, class K>
+void Grafo<T, K>::borrarVertice(int posX, int posY) {
+	if(existeVertice(posX, posY))
+		delete this->matrizDeVertices[posX][posY];
+}
+
+template<class T, class K>
+void Grafo<T, K>::insertarArista(K peso, int posX, int posY) {
+	Arista<K>* arista = new Arista<K>(peso);
+	this->matrizDeAyacencia[posX][posY] = arista;
+}
+
+template<class T, class K>
+bool Grafo<T, K>::existeArista(int posX, int posY) {
+	return this->matrizDeAyacencia[posX][posY] != 0;
+}
+
+template<class T, class K>
+void Grafo<T, K>::borrarArista(int posX, int posY) {
+	if(existeArista(posX, posY))
+		delete this->matrizDeAyacencia[posX][posY];
+}
+
+template<class T, class K>
+void Grafo<T, K>::imprimirMatrizDeVertices() {
+    for (int i = 0; i < CANTIDAD_VERTICES; i++) {
+        for (int j = 0; j < CANTIDAD_VERTICES; j++) {
+            cout << this->matrizDeVertices[i][j]->getData() << " | ";
+        }
+        cout << endl;
+    }
+}
+
+template<class T, class K>
+void Grafo<T, K>::imprimirMatrizDeAristas() {
+    for (int i = 0; i < CANTIDAD_ARISTAS; i++) {
+        for (int j = 0; j < CANTIDAD_ARISTAS; j++) {
+            cout << this->matrizDeAyacencia[i][j]->getPeso() << " | ";
+        }
+        cout << endl;
+    }
+}
+
+template<class T, class K>
+Grafo<T, K>::~Grafo(){
+
+    for(int i = 0; i < CANTIDAD_VERTICES; i++) {
+    	for(int j = 0; j < CANTIDAD_VERTICES; j++) {
+    		borrarVertice(i, j);
+    	}
+    }
+
+    for(int i = 0; i < CANTIDAD_ARISTAS; i++) {
+		for(int j = 0; j < CANTIDAD_ARISTAS; j++) {
+			borrarArista(i, j);
+		}
+	}
 
 }
 

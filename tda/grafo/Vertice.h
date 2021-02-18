@@ -1,65 +1,59 @@
+/*
+ * Vertice.h
+ *
+ *  Created on: Feb 17, 2021
+ *      Author: nazaquintero
+ */
+
 #ifndef VERTICE_H_
 #define VERTICE_H_
 
 template<class T>
 class Vertice {
 private:
-    T data;
-    bool visitado;
+	T data;
 
-    
 public:
-    // Crea un vertice
+	Vertice();
+    // Crea la arista
     Vertice(T data);
 
-    // Destruye el vertice
-    ~Vertice();
-
-    // Destructortemplate<class K>
-void Arista<K>::setPeso(int peso){
-    this->peso = peso;
-} 
-
-    // Agrega la data al vertice
+    // Guarda el data de la arista
     void setData(T data);
 
-    void setVisitado();
-
+    // Devuelve el data de la arista
     T getData();
 
-    bool fueVisitado();
-	
+    // Destructor
+    ~Vertice();
+
 };
 
 template<class T>
+Vertice<T>::Vertice(){
+
+}
+
+template<class T>
+Vertice<T>::Vertice(T data){
+    this->data = data;
+}
+
+template<class T>
 Vertice<T>::~Vertice() {
-    
+
 }
 
 template<class T>
-Vertice<T>::Vertice(T data) {
-    this->visitado = false;
+void Vertice<T>::setData(T data){
     this->data = data;
 }
 
 template<class T>
-void Vertice<T>::setData(T data) {
-    this->data = data;
-}
-
-template<class T>
-void Vertice<T>::setVisitado() {
-    this->visitado = !this->visitado;
-}
-
-template<class T>
-T Vertice<T>::getData() {
+T Vertice<T>::getData(){
     return this->data;
 }
 
-template<class T>
-bool Vertice<T>:: fueVisitado(){
-    return this->visitado == true;
-}
+
 
 #endif /* VERTICE_H_ */

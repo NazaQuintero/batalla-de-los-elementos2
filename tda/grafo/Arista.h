@@ -4,17 +4,18 @@
 template<class K>
 class Arista {
 private:
-	int peso;
+	K peso;
     
 public:
+	Arista();
     // Crea la arista
-    Arista(int peso);
+    Arista(K peso);
 
     // Guarda el peso de la arista
-    void setPeso(int peso);
+    void setPeso(K peso);
 
     // Devuelve el peso de la arista
-    int getPeso();
+    K getPeso();
 
     // Destructor
     ~Arista();
@@ -22,7 +23,12 @@ public:
 };
 
 template<class K>
-Arista<K>::Arista(int peso){
+Arista<K>::Arista(){
+
+}
+
+template<class K>
+Arista<K>::Arista(K peso){
     this->peso = peso;
 }
 
@@ -32,12 +38,12 @@ Arista<K>::~Arista() {
 }
 
 template<class K>
-void Arista<K>::setPeso(int peso){
+void Arista<K>::setPeso(K peso){
     this->peso = peso;
 }
 
 template<class K>
-int Arista<K>::getPeso(){
+K Arista<K>::getPeso(){
     return this->peso;
 }
 
