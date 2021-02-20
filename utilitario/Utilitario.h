@@ -109,6 +109,7 @@ public:
 	 */
 	void guardarPersonajes(Diccionario<string, Personaje*>* diccionarioDePersonajes);
 
+	void imprimirPersonaje(Personaje* personaje);
 
 	// Destructor
 	virtual ~Utilitario();

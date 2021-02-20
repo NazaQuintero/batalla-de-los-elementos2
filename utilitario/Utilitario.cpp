@@ -90,6 +90,23 @@ void Utilitario::mostrarPersonaje(Personaje* personaje) {
 	cout << "~~~~~~~~~~~~~~~~~~~\n" << endl;
 }
 
+void Utilitario::imprimirPersonaje(Personaje* personaje) {
+
+	string nombrePersonaje = personaje->obtenerNombre();
+
+	if(personaje->obtenerElemento() == "fuego")
+		cout << "\x1B[1;31m" << nombrePersonaje << "\033[0m\t\t";
+	
+	else if(personaje->obtenerElemento() == "agua")
+		cout << "\x1B[1;36m" << nombrePersonaje << "\033[0m\t\t";
+
+	else if(personaje->obtenerElemento() == "tierra")
+		cout << "\x1B[1;33m" << nombrePersonaje << "\033[0m\t\t";
+
+	else if(personaje->obtenerElemento() == "aire")
+		cout << "\x1B[1;92m" << nombrePersonaje << "\033[0m\t\t";
+}
+
 void Utilitario::mostrarNombresDePersonajes(Diccionario<string, Personaje*>* diccionarioDePersonajes) {
 
 	Lista<string>* claves = diccionarioDePersonajes->obtenerClaves();
@@ -98,7 +115,8 @@ void Utilitario::mostrarNombresDePersonajes(Diccionario<string, Personaje*>* dic
 	cout << "~~~~~~~~~~~~ Personajes ~~~~~~~~~~~~" << endl;
 	while(claves->haySiguiente()) {
 		Personaje* personaje = diccionarioDePersonajes->obtenerDato(claves->siguiente());
-		cout << personaje->obtenerNombre() << endl << endl;
+		imprimirPersonaje(personaje);
+		//cout << personaje->obtenerNombre() << endl << endl;
 	}
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
 }
