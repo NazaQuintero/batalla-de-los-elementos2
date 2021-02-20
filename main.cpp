@@ -6,43 +6,103 @@
 // Description : Batalla de los elementos C++, Ansi-style
 //============================================================================
 
-#include "menu/Menu.h"
+#include "./Grafo.h"
+#include "tablero/Tablero.h"
+#include "casillero/Casillero.h"
+#include "tda/diccionario/Diccionario.h"
+
 #include "terminal/Terminal.h"
 #include "validaciones/Validador.h"
 #include "utilitario/Utilitario.h"
+#include "tda/matriz/Matriz.h"
 
-Menu* Menu::menu = 0;
+using namespace std;
+
 Terminal* Terminal::terminal = 0;
 Validador* Validador::validador = 0;
 Utilitario* Utilitario::utilitario = 0;
 
-const string TEXTO_SOLICITUD_OPCION = "Por favor, ingrese una opcion para continuar:";
+const string COSTOS_AGUA = "costosAgua.csv";
+const string COSTOS_AIRE = "costosAire.csv";
+const string COSTOS_FUEGO = "costosFuego.csv";
+const string COSTOS_TIERRA = "costosTierra.csv";
 
 int main() {
 
-	srand(time(0));
+	Tablero* tablero = new Tablero();
 
-	Diccionario<string, Personaje*> *diccionarioDePersonajes = new Diccionario<string, Personaje*>();
+	tablero->mostrarTablero();
 
-	Utilitario* utilitario = Utilitario::obtenerInstancia();
+	Matriz<Casillero*>* casilleros = tablero->getCasilleros();
 
-	utilitario->cargarPersonajes(diccionarioDePersonajes);
+	cout << "##########################################################" << endl << endl << endl;
 
-	Menu* menu = Menu::obtenerInstancia();
 
-	menu->mostrarOpciones();
+	cout << "################ PRUEBA  GET CASILLEROS ##################" << endl;
 
-	int opcion = menu->obtenerOpcion(TEXTO_SOLICITUD_OPCION);
+	int cantidadDeCasilleros = tablero->getCantidadDeCasillerosPorFila();
 
-	int systemResult = menu->validarOpcion(opcion, diccionarioDePersonajes, TEXTO_SOLICITUD_OPCION);
+	for(int i = 0; i < cantidadDeCasilleros; i++) {
+		for(int j = 0; j < cantidadDeCasilleros; j++) {
+			cout << casilleros->obtener(i, j)->getTerreno() << " | ";
+		}
+		cout << endl;
+	}
 
-	cout << "El sistema ha finalizado con codigo de error: " << systemResult << "." << endl;
+	cout << "############### END PRUEBA  GET CASILLEROS ##################" << endl;
 
-	utilitario->guardarPersonajes(diccionarioDePersonajes);
+	/*cout << "Terreno: " << casillero->getTerreno() << endl;*/
 
-	delete diccionarioDePersonajes;
-	delete menu;
-	delete utilitario;
+
+
+	cout << "La cantidad de casilleros es: " << cantidadDeCasilleros << endl << endl << endl;
+
+
+	cout << "###################### PRUEBA GRAFO AGUA #########################" << endl;
+
+
+    Grafo<Casillero*, int>* grafoAgua = new Grafo<Casillero*, int>(COSTOS_AGUA);
+
+    for(int i = 0; i < cantidadDeCasilleros; i++) {
+		for(int j = 0; j < cantidadDeCasilleros; j++) {
+			grafoAgua->insertarVertice(casilleros->obtener(i, j), i, j);
+		}
+	}
+
+    cout << "###################### PRINTING VERTIX MATRIX #########################" << endl;
+    grafoAgua->imprimirMatrizDeVertices();
+    cout << "################### END PRINTING VERTIX MATRIX #########################" << endl << endl;
+
+    int cantidadDeAristas = cantidadDeCasilleros * cantidadDeCasilleros;
+
+    Diccionario<string, int>* costosAgua = grafoAgua->obtenerCostos();
+
+    cout << "###################### PRINTING EDGES MATRIX #########################" << endl;
+
+    int k = 0;
+    for(int i = 0; i < cantidadDeCasilleros; i++) {
+		for(int j = 0; j < cantidadDeCasilleros; j++) {
+			string terreno = casilleros->obtener(i, j)->getTerreno();
+			cout << "Terreno: " << terreno ;
+			int peso = costosAgua->obtenerDato(terreno);
+			cout << ", peso: " <<  peso << " | ";
+		}
+		cout << endl;
+	}
+    cout << "################### END PRINTING EDGES MATRIX #########################" << endl << endl;
+
+	cout << "#################### END PRUEBA GRAFO AGUA ###########################" << endl << endl;
+
+	/*grafo2->imprimirMatrizDeAristas();*/
+
+	delete tablero;
+
+	delete grafoAgua;
+
+	/*for(int i = 0; i < CANTIDAD_ARISTAS; i ++)
+		delete[] matrizDeAristas[i];
+	delete[] matrizDeAristas;*/
+
 
 	return 0;
 }

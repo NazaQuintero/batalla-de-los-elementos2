@@ -5,11 +5,7 @@ Tablero::Tablero() {
     this->utilitario = Utilitario::obtenerInstancia();
 
 
-    this->matrizCasilleros = new Casillero* [CANTIDAD_DE_CASILLEROS_X_FILA];
-
-    for(int i = 0; i < CANTIDAD_DE_CASILLEROS_X_FILA; i++) {
-    	this->matrizCasilleros[i] = new Casillero[CANTIDAD_DE_CASILLEROS_X_COLUMNA];
-    }
+    this->matrizCasilleros = new Matriz<Casillero*>(CANTIDAD_DE_CASILLEROS_X_FILA, CANTIDAD_DE_CASILLEROS_X_COLUMNA);
 
     fstream archivo_mapa(NOMBRE_ARCHIVO_MAPA, ios::in);
 
@@ -32,24 +28,25 @@ Tablero::Tablero() {
             tipoDeTerreno = tiposDeTerreno[i];
 
             Casillero* casillero = fabricaDeCasillero.obtenerCasillero(tipoDeTerreno, j, i);
-            this->matrizCasilleros[j][i] = casillero;
+            this->matrizCasilleros->insertar(casillero, i, j);
         }
         j++;
     }
+    archivo_mapa.close();
 
 }
 
 
 void Tablero::posicionarPersonaje(int posX, int posY, Personaje* personaje) {
 
-    Casillero* casillero = this->matrizCasilleros[posX][posY];
+    Casillero* casillero = this->matrizCasilleros->obtener(posX, posY);
     
     casillero->setPersonaje(personaje);
 
 }
 
-Casillero** Tablero::getCasilleros() {
-    return this->matrizCasilleros[CANTIDAD_DE_CASILLEROS_X_FILA];
+Matriz<Casillero*>* Tablero::getCasilleros() {
+    return this->matrizCasilleros;
 }
 
 int Tablero::getCantidadDeCasillerosPorFila() {
@@ -57,14 +54,19 @@ int Tablero::getCantidadDeCasillerosPorFila() {
 }
 
 void Tablero::mostrarTablero() {
-    for (size_t i = 0; i < CANTIDAD_DE_CASILLEROS_X_FILA; i++) {
-        for (size_t j = 0; j < CANTIDAD_DE_CASILLEROS_X_COLUMNA; j++) {
-            cout << this->matrizCasilleros[i][j].getTerreno() << " | ";
+    for (int i = 0; i < CANTIDAD_DE_CASILLEROS_X_FILA; i++) {
+        for (int j = 0; j < CANTIDAD_DE_CASILLEROS_X_COLUMNA; j++) {
+            cout << this->matrizCasilleros->obtener(i, j)->getTerreno() << " | ";
         }
         cout << endl;
     }    
 }
 
 Tablero::~Tablero() {
-    
+    for(int i = 0; i < CANTIDAD_DE_CASILLEROS_X_FILA; i++) {
+    	for(int j = 0; j < CANTIDAD_DE_CASILLEROS_X_COLUMNA; j++) {
+    		delete this->matrizCasilleros->obtener(i, j);
+    	}
+    }
+    delete this->matrizCasilleros;
 }
