@@ -92,6 +92,18 @@ int main() {
 
     cout << "################### END PRINTING EDGES MATRIX #########################" << endl << endl;
 
+
+
+
+    cout << "################### PRINTING PATHS MATRIX #########################" << endl;
+
+    grafoAgua->inicializarMatrizDeRecorrido();
+
+    grafoAgua->imprimirMatrizDeRecorridos();
+
+    cout << "################### END PRINTING EDGES MATRIX #########################" << endl << endl;
+
+
 	cout << "#################### END PRUEBA GRAFO AGUA ###########################" << endl << endl;
 
 

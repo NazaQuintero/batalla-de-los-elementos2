@@ -24,6 +24,7 @@ private:
 	Diccionario<string, int>* diccionarioDeCostos;
 	Lista<Vertice<T, K>*>* listaDeVertices; // es necesario tener la referencia a los vertices ?
 	Matriz<Arista<K>*>* matrizDeAyacencia; //relacion entre vertices
+	Matriz<Vertice<T, K>*>* matrizDeRecorridos;
 
 	void borrarVertices();
 	void borrarAristas();
@@ -61,6 +62,10 @@ public:
 
     void imprimirCostos();
 
+    void inicializarMatrizDeRecorrido();
+
+    void imprimirMatrizDeRecorridos();
+
     void generarMatrizDeAdyacencia();
 
     void imprimirMatrizDeAristas();
@@ -75,6 +80,7 @@ Grafo<T, K>::Grafo() {
 	this->diccionarioDeCostos = new Diccionario<string, int>();
 	this->listaDeVertices = new Lista<Vertice<T, K>*>();
 	this->matrizDeAyacencia = new Matriz<Arista<K>*>(CANTIDAD_ARISTAS, CANTIDAD_ARISTAS);
+	this->matrizDeRecorridos = new Matriz<Vertice<T, K>*>(CANTIDAD_ARISTAS, CANTIDAD_ARISTAS);
 };
 
 template<class T, class K>
@@ -83,6 +89,7 @@ Grafo<T, K>::Grafo(string nombreDeArchivoDeCostos) {
 	this->diccionarioDeCostos = new Diccionario<string, int>();
 	this->listaDeVertices = new Lista<Vertice<T, K>*>();
 	this->matrizDeAyacencia = new Matriz<Arista<K>*>(CANTIDAD_ARISTAS, CANTIDAD_ARISTAS);
+	this->matrizDeRecorridos = new Matriz<Vertice<T, K>*>(CANTIDAD_ARISTAS, CANTIDAD_ARISTAS);
 
 	fstream archivo_costos(nombreDeArchivoDeCostos, ios::in);
 
@@ -241,6 +248,19 @@ void Grafo<T, K>::imprimirCostos() {
 }
 
 template<class T, class K>
+void Grafo<T, K>::inicializarMatrizDeRecorrido() {
+	for(int i = 0; i < CANTIDAD_ARISTAS; i++) {
+		for(int j = 0; j < CANTIDAD_ARISTAS; j++) {
+			if(i != j) {
+				this->matrizDeRecorridos->insertar(this->listaDeVertices->consulta(i+1), j, i);
+			} else {
+				this->matrizDeRecorridos->insertar(nullptr, j, i);
+			}
+		}
+	}
+}
+
+template<class T, class K>
 void Grafo<T, K>::generarMatrizDeAdyacencia() {
 
 	for(int i = 0; i < CANTIDAD_ARISTAS; i++) {
@@ -255,7 +275,7 @@ void Grafo<T, K>::generarMatrizDeAdyacencia() {
 					insertarArista(99999, i, j);
 				}
 			} else {
-				insertarArista(99999, i, j);
+				insertarArista(0, i, j);
 			}
 		}
 	}
@@ -267,6 +287,20 @@ void Grafo<T, K>::imprimirMatrizDeAristas() {
     for (int i = 0; i < CANTIDAD_ARISTAS; i++) {
         for (int j = 0; j < CANTIDAD_ARISTAS; j++) {
             cout << this->matrizDeAyacencia->obtener(i, j)->getPeso() << " | ";
+        }
+        cout << endl;
+    }
+}
+
+template<class T, class K>
+void Grafo<T, K>::imprimirMatrizDeRecorridos() {
+    for (int i = 0; i < CANTIDAD_ARISTAS; i++) {
+        for (int j = 0; j < CANTIDAD_ARISTAS; j++) {
+        	if(i != j) {
+        		cout << this->matrizDeRecorridos->obtener(i, j)->getData()->getTerreno() << " | ";
+        	} else {
+        		cout << this->matrizDeRecorridos->obtener(i, j) << " | ";
+        	}
         }
         cout << endl;
     }
