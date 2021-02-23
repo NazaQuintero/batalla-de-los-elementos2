@@ -1,6 +1,8 @@
 #ifndef MATRIZ_H_INCLUDED
 #define MATRIZ_H_INCLUDED
 
+using namespace std;
+
 
 template<class Dato>
 class Matriz {
@@ -20,6 +22,8 @@ public:
     void insertar(Dato dato, int posX, int posY);
 
     Dato obtener(int posX, int posY);
+
+    void imprimir();
 
     ~Matriz();
 
@@ -55,6 +59,16 @@ void Matriz<Dato>::insertar(Dato dato, int posX, int posY) {
 template<class Dato>
 Dato Matriz<Dato>::obtener(int posX, int posY) {
 	return this->datos[posX][posY];
+}
+
+template<class Dato>
+void Matriz<Dato>::imprimir() {
+	for(int i = 0; i < cantidadDeFilas; i++) {
+		for(int j = 0; j < cantidadDeColumnas; j++) {
+			cout << this->datos[i][j] << " | ";
+		}
+		cout << endl;
+	}
 }
 
 template<class Dato>

@@ -28,7 +28,8 @@ Tablero::Tablero() {
             tipoDeTerreno = tiposDeTerreno[i];
 
             Casillero* casillero = fabricaDeCasillero.obtenerCasillero(tipoDeTerreno, j, i);
-            this->matrizCasilleros->insertar(casillero, i, j);
+
+            this->matrizCasilleros->insertar(casillero, j, i);
         }
         j++;
     }

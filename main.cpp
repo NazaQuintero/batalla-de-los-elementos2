@@ -10,6 +10,7 @@
 #include "tablero/Tablero.h"
 #include "casillero/Casillero.h"
 #include "tda/diccionario/Diccionario.h"
+#include "tda/lista/lista.h"
 
 #include "terminal/Terminal.h"
 #include "validaciones/Validador.h"
@@ -63,37 +64,58 @@ int main() {
 
     Grafo<Casillero*, int>* grafoAgua = new Grafo<Casillero*, int>(COSTOS_AGUA);
 
+    Diccionario<string, int>* costosAgua = grafoAgua->obtenerCostos();
+
     for(int i = 0; i < cantidadDeCasilleros; i++) {
 		for(int j = 0; j < cantidadDeCasilleros; j++) {
-			grafoAgua->insertarVertice(casilleros->obtener(i, j), i, j);
+			string terreno = casilleros->obtener(i, j)->getTerreno();
+			int peso = costosAgua->obtenerDato(terreno);
+			grafoAgua->insertarVertice(casilleros->obtener(i, j), peso/*, i, j*/);
 		}
 	}
 
     cout << "###################### PRINTING VERTIX MATRIX #########################" << endl;
-    grafoAgua->imprimirMatrizDeVertices();
+    grafoAgua->imprimirVertices();
     cout << "################### END PRINTING VERTIX MATRIX #########################" << endl << endl;
+
+    cout << "###################### PRINTING VERTIX COSTS #########################" << endl;
+	grafoAgua->imprimirCostos();
+	cout << "################### END PRINTING VERTIX COSTS #########################" << endl << endl;
 
     int cantidadDeAristas = cantidadDeCasilleros * cantidadDeCasilleros;
 
-    Diccionario<string, int>* costosAgua = grafoAgua->obtenerCostos();
+    Lista<Vertice<Casillero*, int>*>* listaDeVertices = grafoAgua->obtenerListaDeVertices();
+
+    /*int w = 0;*/
+    for(int i = 0; i < cantidadDeAristas; i++) {
+    	for(int j = 0; j < cantidadDeAristas; j++) {
+    		if(i != j) {
+    			Vertice<Casillero*, int>* vertice1 = listaDeVertices->consulta(i+1);
+    			Vertice<Casillero*, int>* vertice2 = listaDeVertices->consulta(j+1);
+    			// si son adyacentes, entonces inserto el peso
+    			if(grafoAgua->sonAdyacentes(vertice1, vertice2)) {
+    				grafoAgua->insertarArista(vertice1->getPeso(), i, j);  // dado 2 vertices del grafo, decidir si son adyacentes o no
+    			} else {
+    				grafoAgua->insertarArista(99999, i, j);
+    			}
+    		} else {
+    			grafoAgua->insertarArista(99999, i, j);
+    		}
+    		/*w++;*/
+    	}
+    	/*w = 0;*/
+    }
 
     cout << "###################### PRINTING EDGES MATRIX #########################" << endl;
 
-    int k = 0;
-    for(int i = 0; i < cantidadDeCasilleros; i++) {
-		for(int j = 0; j < cantidadDeCasilleros; j++) {
-			string terreno = casilleros->obtener(i, j)->getTerreno();
-			cout << "Terreno: " << terreno ;
-			int peso = costosAgua->obtenerDato(terreno);
-			cout << ", peso: " <<  peso << " | ";
-		}
-		cout << endl;
-	}
+
+
+    grafoAgua->imprimirMatrizDeAristas();
+
     cout << "################### END PRINTING EDGES MATRIX #########################" << endl << endl;
 
 	cout << "#################### END PRUEBA GRAFO AGUA ###########################" << endl << endl;
 
-	/*grafo2->imprimirMatrizDeAristas();*/
 
 	delete tablero;
 

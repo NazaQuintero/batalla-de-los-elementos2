@@ -9,6 +9,7 @@
 #include "tda/matriz/Matriz.h"
 #include "utilitario/Utilitario.h"
 #include "tda/diccionario/Diccionario.h"
+#include "tda/lista/lista.h"
 
 using namespace std;
 
@@ -21,7 +22,7 @@ class Grafo {
 private:
 	Utilitario* utilitario;
 	Diccionario<string, int>* diccionarioDeCostos;
-	Matriz<Vertice<T>*>* matrizDeVertices; // es necesario tener la referencia a los vertices ?
+	Lista<Vertice<T, K>*>* listaDeVertices; // es necesario tener la referencia a los vertices ?
 	Matriz<Arista<K>*>* matrizDeAyacencia; //relacion entre vertices
 
 	void borrarVertices();
@@ -36,11 +37,15 @@ public:
     //Destructor
     ~Grafo();
 
-    void insertarVertice(T data, int posX, int posY);
+    void insertarVertice(T data, K peso/*, int posX, int posY*/);
 
-    bool existeVertice(int posX, int posY);
+    bool existeVertice(int posX/*, int posY*/);
 
-    void borrarVertice(int posX, int posY);
+    Vertice<T, K>* obtenerVertice(int pos);
+
+    Lista<Vertice<T, K>*>* obtenerListaDeVertices();
+
+    void borrarVertice(int posX/*, int posY*/);
 
     void insertarArista(K peso, int posX, int posY);
 
@@ -48,9 +53,13 @@ public:
 
     void borrarArista(int posX, int posY);
 
+    bool sonAdyacentes(Vertice<T, K>* vertice1, Vertice<T, K>* vertice2);
+
     Diccionario<string, int>* obtenerCostos();
 
-    void imprimirMatrizDeVertices();
+    void imprimirVertices();
+
+    void imprimirCostos();
 
     void imprimirMatrizDeAristas();
 
@@ -62,7 +71,7 @@ template<class T, class K>
 Grafo<T, K>::Grafo() {
 	this->utilitario = Utilitario::obtenerInstancia();
 	this->diccionarioDeCostos = new Diccionario<string, int>();
-	this->matrizDeVertices = new Matriz<Vertice<T>*>(CANTIDAD_VERTICES, CANTIDAD_VERTICES);
+	this->listaDeVertices = new Lista<Vertice<T, K>*>();
 	this->matrizDeAyacencia = new Matriz<Arista<K>*>(CANTIDAD_ARISTAS, CANTIDAD_ARISTAS);
 };
 
@@ -70,7 +79,7 @@ template<class T, class K>
 Grafo<T, K>::Grafo(string nombreDeArchivoDeCostos) {
 	this->utilitario = Utilitario::obtenerInstancia();
 	this->diccionarioDeCostos = new Diccionario<string, int>();
-	this->matrizDeVertices = new Matriz<Vertice<T>*>(CANTIDAD_VERTICES, CANTIDAD_VERTICES);
+	this->listaDeVertices = new Lista<Vertice<T, K>*>();
 	this->matrizDeAyacencia = new Matriz<Arista<K>*>(CANTIDAD_ARISTAS, CANTIDAD_ARISTAS);
 
 	fstream archivo_costos(nombreDeArchivoDeCostos, ios::in);
@@ -91,10 +100,7 @@ Grafo<T, K>::Grafo(string nombreDeArchivoDeCostos) {
 		terreno = terrenoYCosto[0];
 		costoStr = terrenoYCosto[1];
 		int costo = stoi(costoStr);
-		cout << "El costo de: " << terreno << " es: " << costo << endl;
 		this->diccionarioDeCostos->guardar(terreno, costo);
-
-		cout << "Se guardo: " << this->diccionarioDeCostos->obtenerDato(terreno) << endl;
 	}
 
 
@@ -130,26 +136,40 @@ K** Grafo<T, K>:: floydWarshall(int posDesde[], int posHasta[]) {
 }
 
 template<class T, class K>
-void Grafo<T, K>::insertarVertice(T data, int posX, int posY) {
-	Vertice<T>* vertice = new Vertice<T>(data);
-	this->matrizDeVertices->insertar(vertice, posX, posY);
+void Grafo<T, K>::insertarVertice(T data, K peso/*, int posX, int posY*/) {
+	Vertice<T, K>* vertice = new Vertice<T, K>(data, peso);
+	int largo = this->listaDeVertices->obtenerCantidad();
+	this->listaDeVertices->alta(vertice, largo + 1);
 }
 
 template<class T, class K>
-bool Grafo<T, K>::existeVertice(int posX, int posY) {
-	Vertice<T>* vertice = this->matrizDeVertices->obtener(posX, posY);
+bool Grafo<T, K>::existeVertice(int posX/*, int posY*/) {
+	/*Vertice<T>* vertice = this->matrizDeVertices->obtener(posX, posY);*/
+	Vertice<T, K>* vertice = this->listaDeVertices->consulta(posX);
 	return vertice != 0;
 }
 
 template<class T, class K>
-void Grafo<T, K>::borrarVertice(int posX, int posY) {
-	if(existeVertice(posX, posY))
-		delete this->matrizDeVertices->obtener(posX, posY);
+Vertice<T, K>* Grafo<T, K>::obtenerVertice(int pos) {
+	return this->listaDeVertices->consulta(pos);
+}
+
+template<class T, class K>
+Lista<Vertice<T, K>*>* Grafo<T, K>::obtenerListaDeVertices() {
+	return this->listaDeVertices;
+}
+
+template<class T, class K>
+void Grafo<T, K>::borrarVertice(int posX/*, int posY*/) {
+	if(existeVertice(posX/*, posY*/))
+		/*delete this->matrizDeVertices->obtener(posX, posY);*/
+		this->listaDeVertices->baja(posX);
 }
 
 template<class T, class K>
 void Grafo<T, K>::insertarArista(K peso, int posX, int posY) {
 	Arista<K>* arista = new Arista<K>(peso);
+	/*cout << "Peso al insertar Arista: " << arista->getPeso() << endl;*/
 	this->matrizDeAyacencia->insertar(arista, posX, posY);
 }
 
@@ -166,18 +186,56 @@ void Grafo<T, K>::borrarArista(int posX, int posY) {
 }
 
 template<class T, class K>
+bool Grafo<T, K>::sonAdyacentes(Vertice<T, K>* vertice1, Vertice<T, K>* vertice2) {
+	bool sonAdyacentes = false;
+	int* posVertice1 = vertice1->getData()->getPos();
+	int* posVertice2 = vertice2->getData()->getPos();
+
+	if(posVertice1[0] + 1 == posVertice2[0] || posVertice1[0] - 1 == posVertice2[0]) {
+		if(posVertice1[1] == posVertice2[1]) {
+			sonAdyacentes = true;
+		}
+	} else if (posVertice1[1] + 1 == posVertice2[1] || posVertice1[1] - 1 == posVertice2[1]) {
+		if(posVertice1[0] == posVertice2[0]) {
+			sonAdyacentes = true;
+		}
+	}
+	return sonAdyacentes;
+}
+
+template<class T, class K>
 Diccionario<string, int>* Grafo<T, K>::obtenerCostos() {
 	return this->diccionarioDeCostos;
 }
 
 template<class T, class K>
-void Grafo<T, K>::imprimirMatrizDeVertices() {
-    for (int i = 0; i < CANTIDAD_VERTICES; i++) {
-        for (int j = 0; j < CANTIDAD_VERTICES; j++) {
-            cout << this->matrizDeVertices->obtener(i, j)->getData() << " | ";
-        }
-        cout << endl;
-    }
+void Grafo<T, K>::imprimirVertices() {
+	int cont = 0;
+	this->listaDeVertices->reiniciar();
+	while(this->listaDeVertices->haySiguiente()) {
+		cout << this->listaDeVertices->siguiente()->getData()->getTerreno() << " | ";
+		if (cont < CANTIDAD_VERTICES - 1) {
+			cont++;
+		} else {
+			cout << endl;
+			cont = 0;
+		}
+	}
+}
+
+template<class T, class K>
+void Grafo<T, K>::imprimirCostos() {
+	int cont = 0;
+	this->listaDeVertices->reiniciar();
+	while(this->listaDeVertices->haySiguiente()) {
+		cout << this->listaDeVertices->siguiente()->getPeso() << " | ";
+		if (cont < CANTIDAD_VERTICES - 1) {
+			cont++;
+		} else {
+			cout << endl;
+			cont = 0;
+		}
+	}
 }
 
 template<class T, class K>
@@ -192,10 +250,8 @@ void Grafo<T, K>::imprimirMatrizDeAristas() {
 
 template<class T, class K>
 void Grafo<T, K>::borrarVertices() {
-	for(int i = 0; i < CANTIDAD_VERTICES; i++) {
-		for(int j = 0; j < CANTIDAD_VERTICES; j++) {
-			borrarVertice(i, j);
-		}
+	for(int i = 0; i < this->listaDeVertices->obtenerCantidad(); i++) {
+		borrarVertice(i/*, j*/);
 	}
 }
 
@@ -212,7 +268,7 @@ template<class T, class K>
 Grafo<T, K>::~Grafo(){
 
 	this->borrarVertices();
-	delete this->matrizDeVertices;
+	delete this->listaDeVertices;
 
 	/*this->borrarAristas();*/
 	delete this->matrizDeAyacencia;
