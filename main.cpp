@@ -104,6 +104,15 @@ int main() {
     cout << "################### END PRINTING EDGES MATRIX #########################" << endl << endl;
 
 
+    cout << "################### PRINTING FLOYD WARSHAKK RESULT #########################" << endl;
+
+    grafoAgua->floydWarshall();
+
+    grafoAgua->imprimirMatrizDeAristas();
+
+    cout << "################### END PRINTING FLOYD WARSHAKK RESULT #########################" << endl << endl;
+
+
 	cout << "#################### END PRUEBA GRAFO AGUA ###########################" << endl << endl;
 
 

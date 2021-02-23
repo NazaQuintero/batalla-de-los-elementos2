@@ -70,7 +70,7 @@ public:
 
     void imprimirMatrizDeAristas();
 
-    K** floydWarshall(int desde[], int hasta[]);
+    void floydWarshall();
     
 };
 
@@ -120,27 +120,17 @@ Grafo<T, K>::Grafo(string nombreDeArchivoDeCostos) {
 
 // TODO: ver si se puede reutilizar la clase Coordenada
 template<class T, class K>
-K** Grafo<T, K>:: floydWarshall(int posDesde[], int posHasta[]) {
+void Grafo<T, K>:: floydWarshall() {
 
-    K* pesos [CANTIDAD_ARISTAS][CANTIDAD_ARISTAS];
-
-    for(int i = 0; i < CANTIDAD_ARISTAS; i++){
-        //Inicializa diagonal principal en infinito
-    	*(pesos[i][i]) == 999999;
-    }
-    
-    for(int k = 0; k < CANTIDAD_ARISTAS; k++){
-        for(int i = 0; i < CANTIDAD_ARISTAS; i++){
-            for(int j = 0; j < CANTIDAD_ARISTAS; j++){
-                K peso = *(pesos[i][k]) + *(pesos[k][j]);
-                //Compara si se encuentra un peso menor al de la matriz
-                if (peso < pesos[i][j])
-                    pesos[i][j] = peso;
-            }
-        }
-    }
-
-    return pesos;
+	for (int k = 0; k < CANTIDAD_VERTICES; k++){ //por cada nodo intermedio k
+		for (int i = 0; i < CANTIDAD_VERTICES; i++){
+			for (int j = 0; j < CANTIDAD_VERTICES; j++){ //miramos todas las parejas de nodos
+				int peso =  min(this->matrizDeAyacencia->obtener(i, j)->getPeso(), this->matrizDeAyacencia->obtener(i,k)->getPeso() + this->matrizDeAyacencia->obtener(k,j)->getPeso());
+				this->matrizDeAyacencia->obtener(i, j)->setPeso(peso);
+				//Si pasando por k mejoramos el resultado, lo actualizamos
+			}
+		}
+	}
 
 }
 
