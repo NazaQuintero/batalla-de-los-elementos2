@@ -82,29 +82,7 @@ int main() {
 	grafoAgua->imprimirCostos();
 	cout << "################### END PRINTING VERTIX COSTS #########################" << endl << endl;
 
-    int cantidadDeAristas = cantidadDeCasilleros * cantidadDeCasilleros;
-
-    Lista<Vertice<Casillero*, int>*>* listaDeVertices = grafoAgua->obtenerListaDeVertices();
-
-    /*int w = 0;*/
-    for(int i = 0; i < cantidadDeAristas; i++) {
-    	for(int j = 0; j < cantidadDeAristas; j++) {
-    		if(i != j) {
-    			Vertice<Casillero*, int>* vertice1 = listaDeVertices->consulta(i+1);
-    			Vertice<Casillero*, int>* vertice2 = listaDeVertices->consulta(j+1);
-    			// si son adyacentes, entonces inserto el peso
-    			if(grafoAgua->sonAdyacentes(vertice1, vertice2)) {
-    				grafoAgua->insertarArista(vertice1->getPeso(), i, j);  // dado 2 vertices del grafo, decidir si son adyacentes o no
-    			} else {
-    				grafoAgua->insertarArista(99999, i, j);
-    			}
-    		} else {
-    			grafoAgua->insertarArista(99999, i, j);
-    		}
-    		/*w++;*/
-    	}
-    	/*w = 0;*/
-    }
+    grafoAgua->generarMatrizDeAdyacencia();
 
     cout << "###################### PRINTING EDGES MATRIX #########################" << endl;
 

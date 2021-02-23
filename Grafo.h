@@ -61,6 +61,8 @@ public:
 
     void imprimirCostos();
 
+    void generarMatrizDeAdyacencia();
+
     void imprimirMatrizDeAristas();
 
     K** floydWarshall(int desde[], int hasta[]);
@@ -236,6 +238,28 @@ void Grafo<T, K>::imprimirCostos() {
 			cont = 0;
 		}
 	}
+}
+
+template<class T, class K>
+void Grafo<T, K>::generarMatrizDeAdyacencia() {
+
+	for(int i = 0; i < CANTIDAD_ARISTAS; i++) {
+		for(int j = 0; j < CANTIDAD_ARISTAS; j++) {
+			if(i != j) {
+				Vertice<T, K>* vertice1 = this->listaDeVertices->consulta(i+1);
+				Vertice<T, K>* vertice2 = this->listaDeVertices->consulta(j+1);
+				// si son adyacentes, entonces inserto el peso
+				if(sonAdyacentes(vertice1, vertice2)) {
+					insertarArista(vertice1->getPeso(), i, j);  // dado 2 vertices del grafo, decidir si son adyacentes o no
+				} else {
+					insertarArista(99999, i, j);
+				}
+			} else {
+				insertarArista(99999, i, j);
+			}
+		}
+	}
+
 }
 
 template<class T, class K>
