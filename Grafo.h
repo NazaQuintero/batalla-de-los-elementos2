@@ -119,6 +119,7 @@ Grafo<T, K>::Grafo(string nombreDeArchivoDeCostos) {
 
 
 // TODO: ver si se puede reutilizar la clase Coordenada
+/*
 template<class T, class K>
 void Grafo<T, K>:: floydWarshall() {
 
@@ -132,6 +133,20 @@ void Grafo<T, K>:: floydWarshall() {
 		}
 	}
 
+}*/
+
+template<class T, class K>
+void Grafo<T, K>::floydWarshall() {
+
+	for(int k = 0; k < CANTIDAD_VERTICES; k++) {
+		for(int i = 0; i < CANTIDAD_VERTICES; i++) {
+			for(int j = 0; j < CANTIDAD_VERTICES; j++){
+				int suma = this->matrizDeAdyacencia->obtener(i,k)->getPeso() + this->matrizDeAdyacencia->obtener(k,j)->getPeso();
+				if(suma < this->matrizDeAdyacencia->obtener(i,j)->getPeso()
+					this->matrizDeRecorridos->insertar(this->listaDeVertices()->obtener(k),i,j);
+			}
+		}
+	}
 }
 
 template<class T, class K>
