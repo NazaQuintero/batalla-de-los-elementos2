@@ -23,7 +23,7 @@ private:
 	Utilitario* utilitario;
 	Diccionario<string, int>* diccionarioDeCostos;
 	Lista<Vertice<T, K>*>* listaDeVertices; // es necesario tener la referencia a los vertices ?
-	Matriz<Arista<K>*>* matrizDeAyacencia; //relacion entre vertices
+	Matriz<Arista<K>*>* matrizDeAdyacencia; //relacion entre vertices
 	Matriz<Vertice<T, K>*>* matrizDeRecorridos;
 
 	void borrarVertices();
@@ -79,7 +79,7 @@ Grafo<T, K>::Grafo() {
 	this->utilitario = Utilitario::obtenerInstancia();
 	this->diccionarioDeCostos = new Diccionario<string, int>();
 	this->listaDeVertices = new Lista<Vertice<T, K>*>();
-	this->matrizDeAyacencia = new Matriz<Arista<K>*>(CANTIDAD_ARISTAS, CANTIDAD_ARISTAS);
+	this->matrizDeAdyacencia = new Matriz<Arista<K>*>(CANTIDAD_ARISTAS, CANTIDAD_ARISTAS);
 	this->matrizDeRecorridos = new Matriz<Vertice<T, K>*>(CANTIDAD_ARISTAS, CANTIDAD_ARISTAS);
 };
 
@@ -88,7 +88,7 @@ Grafo<T, K>::Grafo(string nombreDeArchivoDeCostos) {
 	this->utilitario = Utilitario::obtenerInstancia();
 	this->diccionarioDeCostos = new Diccionario<string, int>();
 	this->listaDeVertices = new Lista<Vertice<T, K>*>();
-	this->matrizDeAyacencia = new Matriz<Arista<K>*>(CANTIDAD_ARISTAS, CANTIDAD_ARISTAS);
+	this->matrizDeAdyacencia = new Matriz<Arista<K>*>(CANTIDAD_ARISTAS, CANTIDAD_ARISTAS);
 	this->matrizDeRecorridos = new Matriz<Vertice<T, K>*>(CANTIDAD_ARISTAS, CANTIDAD_ARISTAS);
 
 	fstream archivo_costos(nombreDeArchivoDeCostos, ios::in);
@@ -119,15 +119,14 @@ Grafo<T, K>::Grafo(string nombreDeArchivoDeCostos) {
 
 
 // TODO: ver si se puede reutilizar la clase Coordenada
-/*
-template<class T, class K>
+/*template<class T, class K>
 void Grafo<T, K>:: floydWarshall() {
 
 	for (int k = 0; k < CANTIDAD_VERTICES; k++){ //por cada nodo intermedio k
 		for (int i = 0; i < CANTIDAD_VERTICES; i++){
 			for (int j = 0; j < CANTIDAD_VERTICES; j++){ //miramos todas las parejas de nodos
-				int peso =  min(this->matrizDeAyacencia->obtener(i, j)->getPeso(), this->matrizDeAyacencia->obtener(i,k)->getPeso() + this->matrizDeAyacencia->obtener(k,j)->getPeso());
-				this->matrizDeAyacencia->obtener(i, j)->setPeso(peso);
+				int peso =  min(this->matrizDeAdyacencia->obtener(i, j)->getPeso(), this->matrizDeAdyacencia->obtener(i,k)->getPeso() + this->matrizDeAdyacencia->obtener(k,j)->getPeso());
+				this->matrizDeAdyacencia->obtener(i, j)->setPeso(peso);
 				//Si pasando por k mejoramos el resultado, lo actualizamos
 			}
 		}
@@ -138,12 +137,14 @@ void Grafo<T, K>:: floydWarshall() {
 template<class T, class K>
 void Grafo<T, K>::floydWarshall() {
 
-	for(int k = 0; k < CANTIDAD_VERTICES; k++) {
-		for(int i = 0; i < CANTIDAD_VERTICES; i++) {
-			for(int j = 0; j < CANTIDAD_VERTICES; j++){
+	for(int k = 0; k < CANTIDAD_ARISTAS; k++) {
+		for(int i = 0; i < CANTIDAD_ARISTAS; i++) {
+			for(int j = 0; j < CANTIDAD_ARISTAS; j++){
 				int suma = this->matrizDeAdyacencia->obtener(i,k)->getPeso() + this->matrizDeAdyacencia->obtener(k,j)->getPeso();
-				if(suma < this->matrizDeAdyacencia->obtener(i,j)->getPeso()
-					this->matrizDeRecorridos->insertar(this->listaDeVertices()->obtener(k),i,j);
+				if(suma < this->matrizDeAdyacencia->obtener(i,j)->getPeso()) {
+					this->matrizDeAdyacencia->obtener(i, j)->setPeso(suma);
+					this->matrizDeRecorridos->insertar(this->listaDeVertices->consulta(k+1),j,i);
+				}
 			}
 		}
 	}
@@ -184,19 +185,19 @@ template<class T, class K>
 void Grafo<T, K>::insertarArista(K peso, int posX, int posY) {
 	Arista<K>* arista = new Arista<K>(peso);
 	/*cout << "Peso al insertar Arista: " << arista->getPeso() << endl;*/
-	this->matrizDeAyacencia->insertar(arista, posX, posY);
+	this->matrizDeAdyacencia->insertar(arista, posX, posY);
 }
 
 template<class T, class K>
 bool Grafo<T, K>::existeArista(int posX, int posY) {
-	Arista<K>* arista = this->matrizDeAyacencia->obtener(posX, posY);
+	Arista<K>* arista = this->matrizDeAdyacencia->obtener(posX, posY);
 	return arista != 0;
 }
 
 template<class T, class K>
 void Grafo<T, K>::borrarArista(int posX, int posY) {
 	if(existeArista(posX, posY))
-		delete this->matrizDeAyacencia->obtener(posX, posY);
+		delete this->matrizDeAdyacencia->obtener(posX, posY);
 }
 
 template<class T, class K>
@@ -257,9 +258,9 @@ void Grafo<T, K>::inicializarMatrizDeRecorrido() {
 	for(int i = 0; i < CANTIDAD_ARISTAS; i++) {
 		for(int j = 0; j < CANTIDAD_ARISTAS; j++) {
 			if(i != j) {
-				this->matrizDeRecorridos->insertar(this->listaDeVertices->consulta(i+1), j, i);
+				this->matrizDeRecorridos->insertar(this->listaDeVertices->consulta(i), i, j);
 			} else {
-				this->matrizDeRecorridos->insertar(nullptr, j, i);
+				this->matrizDeRecorridos->insertar(nullptr, i, j);
 			}
 		}
 	}
@@ -291,7 +292,7 @@ template<class T, class K>
 void Grafo<T, K>::imprimirMatrizDeAristas() {
     for (int i = 0; i < CANTIDAD_ARISTAS; i++) {
         for (int j = 0; j < CANTIDAD_ARISTAS; j++) {
-            cout << this->matrizDeAyacencia->obtener(i, j)->getPeso() << " | ";
+            cout << this->matrizDeAdyacencia->obtener(i, j)->getPeso() << " | ";
         }
         cout << endl;
     }
@@ -302,9 +303,9 @@ void Grafo<T, K>::imprimirMatrizDeRecorridos() {
     for (int i = 0; i < CANTIDAD_ARISTAS; i++) {
         for (int j = 0; j < CANTIDAD_ARISTAS; j++) {
         	if(i != j) {
-        		cout << this->matrizDeRecorridos->obtener(i, j)->getData()->getTerreno() << " | ";
+        		cout << this->matrizDeRecorridos->obtener(i, j)->getData()->getPosString() << " | ";
         	} else {
-        		cout << this->matrizDeRecorridos->obtener(i, j) << " | ";
+        		cout /*<< this->matrizDeRecorridos->obtener(i, j)*/ << "----- | ";
         	}
         }
         cout << endl;
@@ -334,7 +335,7 @@ Grafo<T, K>::~Grafo(){
 	delete this->listaDeVertices;
 
 	/*this->borrarAristas();*/
-	delete this->matrizDeAyacencia;
+	delete this->matrizDeAdyacencia;
 
 	delete this->diccionarioDeCostos;
 

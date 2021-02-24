@@ -101,16 +101,26 @@ int main() {
 
     grafoAgua->imprimirMatrizDeRecorridos();
 
-    cout << "################### END PRINTING EDGES MATRIX #########################" << endl << endl;
+    cout << "################### END PRINTING PATHS MATRIX #########################" << endl << endl;
 
 
-    cout << "################### PRINTING FLOYD WARSHAKK RESULT #########################" << endl;
+    cout << "################### PRINTING FLOYD WARSHALL RESULT #########################" << endl;
 
     grafoAgua->floydWarshall();
 
     grafoAgua->imprimirMatrizDeAristas();
 
-    cout << "################### END PRINTING FLOYD WARSHAKK RESULT #########################" << endl << endl;
+    cout << "################### END PRINTING FLOYD WARSHALL RESULT #########################" << endl << endl;
+
+    cout << "################### PRINTING PATHS MATRIX AFTER WARSHALL #########################" << endl;
+
+    grafoAgua->imprimirMatrizDeAristas();
+
+    cout << "##################################################################################" << endl << endl;
+
+    grafoAgua->imprimirMatrizDeRecorridos();
+
+	cout << "################### END PRINTING PATHS MATRIX AFTER WARSHALL #########################" << endl << endl;
 
 
 	cout << "#################### END PRUEBA GRAFO AGUA ###########################" << endl << endl;

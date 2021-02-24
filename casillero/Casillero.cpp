@@ -57,6 +57,15 @@ int* Casillero::getPos() {
     return this->pos;
 }
 
+void Casillero::setPos(int posX, int posY) {
+	this->pos[0] = posX;
+	this->pos[1] = posY;
+}
+
+string Casillero::getPosString() {
+	return "(" + to_string(this->pos[0]) + "," + to_string(this->pos[1]) + ")";
+}
+
 void Casillero::setTerreno(Terreno terreno) {
     this->terreno = terreno;
 }
