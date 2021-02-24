@@ -63,30 +63,54 @@ Grafo<T, K>::Grafo() {
 
 
 // TODO: ver si se puede reutilizar la clase Coordenada
+//template<class T, class K>
+//K** Grafo<T, K>:: floydWarshall(int posDesde[], int posHasta[]) {
+//
+//    K* pesos [CANTIDAD_ARISTAS][CANTIDAD_ARISTAS];
+//
+//    for(int i = 0; i < CANTIDAD_ARISTAS; i++){
+//        //Inicializa diagonal principal en infinito
+//    	*(pesos[i][i]) == 999999;
+//    }
+//
+//    for(int k = 0; k < CANTIDAD_ARISTAS; k++){
+//        for(int i = 0; i < CANTIDAD_ARISTAS; i++){
+//            for(int j = 0; j < CANTIDAD_ARISTAS; j++){
+//                K peso = *(pesos[i][k]) + *(pesos[k][j]);
+//                //Compara si se encuentra un peso menor al de la matriz
+//                if (peso < pesos[i][j])
+//                    pesos[i][j] = peso;
+//            }
+//        }
+//    }
+//
+//    return pesos;
+// }
+
+// Dados el número de nodos del grafo (n), el grafo (G) como matriz de adyacencia y una
+// matriz dist (matriz dist = matriz peso), guarda en dist la distancia mínima entre cada par de nodos, de modo que
+// dist[i][j] es la distancia mínima para ir del nodo i al j
+// Fijarnos como pasar las matrices (con templates)
 template<class T, class K>
-K** Grafo<T, K>:: floydWarshall(int posDesde[], int posHasta[]) {
-
-    K* pesos [CANTIDAD_ARISTAS][CANTIDAD_ARISTAS];
-
-    for(int i = 0; i < CANTIDAD_ARISTAS; i++){
-        //Inicializa diagonal principal en infinito
-    	*(pesos[i][i]) == 999999;
-    }
-    
-    for(int k = 0; k < CANTIDAD_ARISTAS; k++){
-        for(int i = 0; i < CANTIDAD_ARISTAS; i++){
-            for(int j = 0; j < CANTIDAD_ARISTAS; j++){
-                K peso = *(pesos[i][k]) + *(pesos[k][j]);
-                //Compara si se encuentra un peso menor al de la matriz
-                if (peso < pesos[i][j])
-                    pesos[i][j] = peso;
-            }
+void Floyd_Warshall<T, K>::caminoMinimo (int CANTIDAD_VERTICES, matrizDeAyacencia& G, peso& dist){
+    dist = G;
+    for (int i = 0; i < CANTIDAD_VERTICES ; ++i){
+        for (int j = 0; j < CANTIDAD_VERTICES; ++j){
+            if (i != j and dist[i][j] == 0) dist[i][j] = 9999999;
+            //las parejas de nodos sin arco están a distancia 999999 (p.e. 1e9)
         }
     }
 
-    return pesos;
-
+    for (int k = 0; k < CANTIDAD_VERTICES; ++k){ //por cada nodo intermedio k
+        for (int i = 0; i < CANTIDAD_VERTICES; ++i){
+            for (int j = 0; j < CANTIDAD_VERTICES; ++j){ //miramos todas las parejas de nodos
+                dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
+                //Si pasando por k mejoramos el resultado, lo actualizamos
+            }
+        }
+    }
 }
+
 
 template<class T, class K>
 void Grafo<T, K>::insertarVertice(T data, int posX, int posY) {
