@@ -54,6 +54,10 @@ public:
 	// Devuelve la posicion del casillero
     int* getPos();
 
+    void setPos(int posX, int posY);
+
+    string getPosString();
+
 	// Inserta tipo de terreno pasado por parametro al casillero
 	void setTerreno(Terreno terreno);
 

@@ -297,19 +297,19 @@ void ABB<K, T>::borrarTodo(NodoABB<K, T> *nodo) {
 	if (!nodo)
 		return;
 	
-	this->borrarTodo(nodo->getIzquierdo());
-	this->borrarTodo(nodo->getDerecho());
+	borrarTodo(nodo->getIzquierdo());
+	borrarTodo(nodo->getDerecho());
 	delete nodo;
 }
 
 template<class K, class T>
 void ABB<K, T>::borrarTodo() {
-	this->borrarTodo(this->raiz);
+	borrarTodo(this->raiz);
 }
 
 template<class K, class T>
 ABB<K, T>::~ABB<K, T>() {
-	this->borrarTodo();
+	borrarTodo();
 }
 
 #endif /* SRC_ABB_H_ */

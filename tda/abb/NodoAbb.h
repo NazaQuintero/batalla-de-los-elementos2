@@ -126,7 +126,8 @@ bool NodoABB<K, T>::tieneSoloHijoIzquierdo() {
 
 template<class K, class T>
 NodoABB<K, T>::~NodoABB<K, T>() {
-	delete data;
+	/*if (data)
+		delete data;*/
 }
 
 #endif /* SRC_NODOABB_H_ */

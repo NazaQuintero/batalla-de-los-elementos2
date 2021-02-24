@@ -7,6 +7,7 @@
 #include "../casillero/Casillero.h"
 #include "../utilitario/Utilitario.h"
 #include "../personaje/Personaje.h"
+#include "../tda/matriz/Matriz.h"
 
 using namespace std;
 
@@ -16,7 +17,7 @@ const string NOMBRE_ARCHIVO_MAPA = "mapa.csv";
 
 class Tablero {
     private:
-        Casillero** matrizCasilleros;
+        Matriz<Casillero*>* matrizCasilleros;
         int cantidadDeCasilleros;
         Utilitario* utilitario;
 
@@ -31,7 +32,7 @@ class Tablero {
         void posicionarPersonaje(int posX, int posY, Personaje* personaje);
 
         // Retorna la matriz de casilleros
-        Casillero** getCasilleros();
+        Matriz<Casillero*>* getCasilleros();
 
         int getCantidadDeCasillerosPorFila();
 
