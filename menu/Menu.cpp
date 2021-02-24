@@ -10,7 +10,13 @@
 Menu::Menu() {
 	this->terminal = Terminal::obtenerInstancia();
 	this->utilitario = Utilitario::obtenerInstancia();
-	cargarOpciones();
+	cargarOpciones(NOMBRE_ARCHIVO_OPCIONES);
+}
+
+Menu::Menu(string nombreDeArchivo) {
+	this->terminal = Terminal::obtenerInstancia();
+	this->utilitario = Utilitario::obtenerInstancia();
+	cargarOpciones(nombreDeArchivo);
 }
 
 Menu::~Menu() {
@@ -27,43 +33,38 @@ int clearScreen() {
 	return result;
 }
 
-void Menu::cargarOpciones() {
-	fstream archivoDeOpciones(NOMBRE_ARCHIVO_OPCIONES, ios::in);
+void Menu::cargarOpciones(string nombreDeArchivo) {
+	fstream archivoDeOpciones(nombreDeArchivo, ios::in);
 
 	if(!archivoDeOpciones.is_open()) {
 
-		cout << "No se encontro un archivo con el nombre \"" << NOMBRE_ARCHIVO_OPCIONES << "\" ." << endl;
+		cout << "No se encontro un archivo con el nombre \"" << nombreDeArchivo << "\" ." << endl;
 
 	} else {
 
 		string linea;
 
-		int i = 0;
-		while(getline(archivoDeOpciones, linea) && i < CANTIDAD_DE_LINEAS) {
-			opciones[i] = linea;
-			i++;
+		int largo = this->listaDeOpciones->obtenerCantidad();
+		while(getline(archivoDeOpciones, linea)) {
+			this->listaDeOpciones->alta(linea, largo+1);
 		}
 
 	}
 	archivoDeOpciones.close();
 }
 
-Menu* Menu::obtenerInstancia() {
-
-	if(!menu)
-		menu = new Menu();
-
-	return menu;
-}
-
 void Menu::mostrarOpciones() {
 
-	for (int i = 0; i < CANTIDAD_DE_LINEAS; ++i) {
-		if(i == 0 || i == CANTIDAD_DE_LINEAS - 1) {
-			cout << opciones[i] << endl << endl;
-		} else {
-			cout << opciones[i] << endl;
-		}
+	// for (int i = 0; i < CANTIDAD_DE_LINEAS; ++i) {
+	// 	if(i == 0 || i == CANTIDAD_DE_LINEAS - 1) {
+	// 		cout << opciones[i] << endl << endl;
+	// 	} else {
+	// 		cout << opciones[i] << endl;
+	// 	}
+	// }
+	this->listaDeOpciones->reiniciar();
+	while(this->listaDeOpciones->haySiguiente()) {
+		cout << this->listaDeOpciones->siguiente() << endl;
 	}
 
 }

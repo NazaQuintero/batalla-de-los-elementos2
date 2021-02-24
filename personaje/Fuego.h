@@ -10,7 +10,8 @@
 
 #include "Personaje.h"
 
-const int RECUPERO_DE_VIDA_FUEGO = 15;
+const int RECUPERO_DE_VIDA_FUEGO = 5;
+const int RECUPERO_DE_ENERGIA_FUEGO = 10;
 
 class Fuego: public Personaje {
 public:

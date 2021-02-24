@@ -15,14 +15,15 @@
 
 #include "../terminal/Terminal.h"
 #include "../utilitario/Utilitario.h"
+#include "../tda/lista/lista.h"
 
 using namespace std;
 
-const string NOMBRE_ARCHIVO_OPCIONES = "opciones.txt";
+const string NOMBRE_ARCHIVO_OPCIONES = "opcionesPrincipal.txt"; // TODO: pasar el archivo por constructor
 
-const int CANTIDAD_DE_LINEAS = 8;
-const int PRIMER_OPCION = 1;
-const int ULTIMA_OPCION = 6;
+const int CANTIDAD_DE_LINEAS = 8; //TODO: Tratar de remover estas constantes utilizando las primitivas de la Lista<string>
+const int PRIMER_OPCION = 1; //
+const int ULTIMA_OPCION = 6; //
 
 class Menu {
 private:
@@ -30,19 +31,21 @@ private:
 
 	Terminal* terminal;
 	Utilitario* utilitario;
-	string opciones[CANTIDAD_DE_LINEAS];
-
-	//Constructor vacio
-	Menu();
+	string opciones[CANTIDAD_DE_LINEAS]; // TODO: Tratar de utilizar una Lista<string> para guardar las opciones en memoria
+	Lista<string>* listaDeOpciones;
+	
 
 	//Metodos privados
-	void cargarOpciones();
+	void cargarOpciones(string nombreDeArchivo);
 
 
 public:
 	//Atributos
-	static Menu* menu;
-	static Menu* obtenerInstancia();
+
+	//Constructor vacio
+	Menu();
+
+	Menu(string nombreDeArchivo);
 
 	//Metodos
 

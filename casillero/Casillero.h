@@ -17,7 +17,8 @@ private:
 	// Atributos
 	int pos [2];
 	Personaje* personaje;
-	string color;
+	string colorIni;
+	string colorFin;
 	Terreno terreno;
 
 public:
@@ -34,6 +35,10 @@ public:
 	*/ 
 
 	virtual string getTerreno() = 0;
+
+	virtual string getColorIni() = 0;
+
+    virtual string getColorFin() = 0;
 	
 	void setColor(string color);
 
@@ -63,6 +68,8 @@ public:
 
 	// Devuleve el tipo de terreno del casillero
 	// Terreno getTerreno();
+
+	string toString();
 
 
 	// Destructor

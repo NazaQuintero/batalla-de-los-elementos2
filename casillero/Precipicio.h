@@ -10,12 +10,19 @@ using namespace std;
 const Terreno TERRENO_PRECIPICIO = PRECIPICIO;
 
 class Precipicio: public Casillero {
-    public:
+    private:
+    string colorIni = "\x1B[1;37m";
+    string colorFin = "\033[0m\t\t";
 
+    public:
     // Constructor
     Precipicio(int posX, int posY);
 
     string getTerreno();
+
+    string getColorIni();
+
+    string getColorFin();
 
     // Destructor
     ~Precipicio();

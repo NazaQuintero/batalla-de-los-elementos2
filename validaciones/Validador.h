@@ -21,6 +21,7 @@ const int MAXIMO_VALOR_ESCUDO = 2;
 const int MINIMO_VALOR_VIDA = 10;
 const int MAXIMO_VALOR_VIDA = 100;
 
+
 const string NOMBRE_ARCHIVO_ELEMENTOS = "elementos.txt";
 const int CANTIDAD_DE_ELEMENTOS = 4;
 

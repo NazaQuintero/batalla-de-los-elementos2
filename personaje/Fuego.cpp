@@ -33,6 +33,8 @@ string Fuego::alimentar() {
 
 	int vidaRecuperada;
 
+	int energiaRecuperada;
+
 	if(this->obtenerVida() <= MAXIMO_VALOR_VIDA - RECUPERO_DE_VIDA_FUEGO) {
 
 		vidaRecuperada = RECUPERO_DE_VIDA_FUEGO;
@@ -47,7 +49,22 @@ string Fuego::alimentar() {
 
 	}
 
-	return "El personaje: " + this->obtenerNombre() + " fue alimentado con madera, y ha recuperado: " + to_string(vidaRecuperada) + " puntos de vida.";
+	if (this->obtenerEnergia() <= MAXIMO_VALOR_ENERGIA - RECUPERO_DE_ENERGIA_FUEGO){
+
+		energiaRecuperada = RECUPERO_DE_ENERGIA_FUEGO;
+
+		this->incrementarEnergia(RECUPERO_DE_ENERGIA_FUEGO);
+
+	} else {
+
+		energiaRecuperada = MAXIMO_VALOR_ENERGIA - this->obtenerEnergia();
+
+		this->asignarEnergia(MAXIMO_VALOR_ENERGIA);
+	
+	}
+
+	
+	return "El personaje: " + this->obtenerNombre() + " fue alimentado con madera, ha recuperado: " + to_string(vidaRecuperada) + " puntos de vida y " + to_string(energiaRecuperada) + " puntos de energia." ;
 
 }
 

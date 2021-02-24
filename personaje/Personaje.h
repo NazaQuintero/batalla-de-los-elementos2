@@ -37,9 +37,10 @@ public:
 
 	virtual string obtenerElemento() = 0;
 	virtual string alimentar() = 0;
-	/*virtual void atacar() = 0;
-	virtual void defender() = 0;
-	virtual void mover() = 0;*/
+	/*virtual void atacar() = 0; // El casillero se encarga de hacer daño?
+	virtual void defender() = 0; // Fijarse si hay escudo antes de descontar vida
+	virtual void mover() = 0;*/ // Charlar quien mueve al personaje
+
 
 	void asignarNombre(string nombre);
 	string obtenerNombre();

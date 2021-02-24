@@ -74,6 +74,10 @@ void Casillero::setTerreno(Terreno terreno) {
 //     return this->terreno;
 // }
 
+string Casillero::toString() {
+    
+}
+
 Casillero::~Casillero() {
 
 }
