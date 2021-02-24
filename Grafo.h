@@ -70,6 +70,10 @@ public:
 
     void imprimirMatrizDeAristas();
 
+	Matriz<Arista<K>*>* getMatrizDeAdyacencia();
+
+	Matriz<Vertice<T, K>*>* getMatrizDeRecorridos();
+
     void floydWarshall();
     
 };
@@ -310,6 +314,16 @@ void Grafo<T, K>::imprimirMatrizDeRecorridos() {
         }
         cout << endl;
     }
+}
+
+template<class T, class K>
+Matriz<Arista<K>*>* Grafo<T, K>::getMatrizDeAdyacencia() {
+	return this->matrizDeAdyacencia;
+}
+
+template<class T, class K>
+Matriz<Vertice<T, K>*>* Grafo<T, K>::getMatrizDeRecorridos() {
+	return this->matrizDeRecorridos;
 }
 
 template<class T, class K>
