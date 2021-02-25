@@ -6,7 +6,7 @@
 // Description : Batalla de los elementos C++, Ansi-style
 //============================================================================
 
-#include "./Grafo.h"
+#include "tda/grafo/Grafo.h"
 #include "tablero/Tablero.h"
 #include "casillero/Casillero.h"
 #include "tda/diccionario/Diccionario.h"
