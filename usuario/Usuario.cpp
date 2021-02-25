@@ -1,4 +1,17 @@
-#include "usuario.h"
+#include "Usuario.h"
+
+Usuario::Usuario(){
+    this->tablero = &Tablero();
+    this->personajesElegidos = &Diccionario<string, Personaje*>();
+    this->nombre = nombre;
+    this->esTurno = true;
+    this->utilitario = Utilitario::obtenerInstancia();
+    this->terminal = Terminal::obtenerInstancia();
+}
+
+Usuario::Usuario(string nombre){
+    this->nombre = nombre;
+}
 
 Usuario::Usuario(Tablero* tablero, Diccionario<string, Personaje*>* diccionario, string nombre) {
     this->tablero = tablero;

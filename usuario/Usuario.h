@@ -28,6 +28,10 @@ private:
 public:
 	// Constructor
 
+    Usuario();
+
+    Usuario(string nombre);
+
 	Usuario(Tablero* tablero, Diccionario<string, Personaje*>* diccionario, string nombre);
 
 	// Metodos

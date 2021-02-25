@@ -205,3 +205,7 @@ void Utilitario::guardarPersonajes(Diccionario<string, Personaje*>* diccionarioD
 
 	archivo_personajes.close();
 }
+
+void Utilitario::guardarJuego() {
+	
+}

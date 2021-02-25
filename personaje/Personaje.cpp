@@ -1,9 +1,3 @@
-/*
- * Personaje.cpp
- *
- *  Created on: Nov 15, 2020
- *      Author: nazaquintero
- */
 
 #include "Personaje.h"
 

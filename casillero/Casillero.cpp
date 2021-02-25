@@ -78,6 +78,10 @@ string Casillero::toString() {
     
 }
 
+void bajarVida(int cantidadVida, string elemento) {
+    // ...
+}
+
 Casillero::~Casillero() {
 
 }

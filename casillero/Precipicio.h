@@ -11,8 +11,8 @@ const Terreno TERRENO_PRECIPICIO = PRECIPICIO;
 
 class Precipicio: public Casillero {
     private:
-    string colorIni = "\x1B[1;37m";
-    string colorFin = "\033[0m\t\t";
+        string colorIni = "\x1B[1;37m";
+        string colorFin = "\033[0m\t\t";
 
     public:
     // Constructor

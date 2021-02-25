@@ -109,6 +109,8 @@ public:
 	 */
 	void guardarPersonajes(Diccionario<string, Personaje*>* diccionarioDePersonajes);
 
+	void guardarJuego();
+
 	void imprimirPersonaje(Personaje* personaje);
 
 	// Destructor

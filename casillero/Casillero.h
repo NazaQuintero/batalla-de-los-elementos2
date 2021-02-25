@@ -39,7 +39,7 @@ public:
 	virtual string getColorIni() = 0;
 
     virtual string getColorFin() = 0;
-	
+
 	void setColor(string color);
 
 	//Recibe una lista de coordenadas vacia que se cargara
@@ -51,7 +51,6 @@ public:
     
 	// Devuelve el personaje
 	Personaje* getPersonaje();
-
 
 	// Inserta al personaje en el casillero
     void setPersonaje(Personaje* personaje);
@@ -71,6 +70,7 @@ public:
 
 	string toString();
 
+	void bajarVida(int cantidadVida, string elemento);
 
 	// Destructor
 	virtual ~Casillero();

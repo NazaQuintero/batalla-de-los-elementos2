@@ -5,8 +5,8 @@
 #include <iostream>
 #include "../tablero/Tablero.h"
 #include "../tda/diccionario/Diccionario.h"
-#include "usuario/usuario.h"
-#include "menu/Menu.h"
+#include "../usuario/Usuario.h"
+#include "../menu/Menu.h"
 
 using namespace std;
 
