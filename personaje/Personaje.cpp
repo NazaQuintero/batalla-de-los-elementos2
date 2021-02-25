@@ -51,6 +51,10 @@ int Personaje::obtenerVida() {
 	return this->vida;
 }
 
+void Personaje::bajarVida(int cantidad) {
+	this->vida -= cantidad;
+}
+
 void Personaje::asignarEnergia() {
 	this->energia = obtenerNroRandom(MINIMO_VALOR_ENERGIA, MAXIMO_VALOR_ENERGIA);
 }

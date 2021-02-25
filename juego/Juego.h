@@ -21,9 +21,10 @@ private:
     Menu* turnoMenu[];
     Menu* menuOpciones[];
     Usuario* usuario[];
+    Terminal* terminal;
+    bool turnoActual;
 
 	// Metodos
-
 
 public:
 	// Constructor
@@ -43,6 +44,16 @@ public:
     void mostrarMenuSecundario();
 
     bool validarTurnos(); //bool?
+
+    void atacar(int* posAtacante);
+
+    void ataqueFuego();
+
+    void ataqueAgua();
+
+    void ataqueTierra();
+
+    void ataqueAire();
 
 	// Destructor
 

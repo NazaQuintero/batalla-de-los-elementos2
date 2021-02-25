@@ -53,6 +53,7 @@ public:
 	void asignarVida(int vida);
 	int obtenerVida();
 	void incrementarVida(int incremento);
+	void bajarVida(int cantidad);
 
 	void asignarEnergia();
 	void asignarEnergia(int energia);
