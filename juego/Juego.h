@@ -5,6 +5,7 @@
 #include <iostream>
 #include "../tablero/Tablero.h"
 #include "../tda/diccionario/Diccionario.h"
+#include "../tda/grafo/Grafo.h"
 #include "../usuario/Usuario.h"
 #include "../menu/Menu.h"
 #include "math.h"
@@ -23,6 +24,10 @@ private:
     Menu* menuOpciones[];
     Usuario* usuario[];
     Terminal* terminal;
+    Grafo<Casillero*, int>* grafoAgua;
+    Grafo<Casillero*, int>* grafoTierra;
+    Grafo<Casillero*, int>* grafoFuego;
+    Grafo<Casillero*, int>* grafoAire;
     int turnoActual;
     int contadorDeTurnos;
 
@@ -32,6 +37,8 @@ private:
     bool estaEnRangoDeFuego(int* posAtacante, int* posAtacado);
 
     int estaEnRangoDeTierra(int* posAtacante, int* posAtacado);
+
+    Matriz<Vertice<Casillero*, int>>* obtenerMatrizDeRecorrido(Personaje* personaje);
 
 public:
 	// Constructor

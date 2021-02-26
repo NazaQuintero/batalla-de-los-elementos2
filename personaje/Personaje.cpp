@@ -99,3 +99,4 @@ string Personaje::toString() {
 	return this->obtenerElemento() + "," + this->obtenerNombre() + "," + to_string(this->obtenerEscudo()) + "," + to_string(this->obtenerVida());
 }
 
+    

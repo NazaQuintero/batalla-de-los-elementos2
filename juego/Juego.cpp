@@ -279,19 +279,47 @@ int Juego::transcribirPosicion(int* posicion){
 }
 
 void Juego::mover(Personaje* personaje){
-    Lista<Casillero*> pilaCamino; 
+    Lista<Casillero*>* pilaCamino = new Lista<Casillero*>(); 
     cout << "Ingrese las coordenadas del casillero al que desea mover al personaje..." << endl;
     int posX = this->terminal->obtenerDatoEntero("X:","El valor ingresado debe ser un numero");
     int posY = this->terminal->obtenerDatoEntero("Y:","El valor ingresado debe ser un numero");
+
+    int* posFinal[2];
+    *posFinal[0] = posX;
+    *posFinal[1] = posY;
     
     int* posInicial = personaje->getPosicion();
     int costoEnergia;
     Matriz<Casillero*>* casilleros = this->tablero->getCasilleros();
+    Casillero* casilleroViejo = casilleros->obtener(posInicial[0], posInicial[1]);
     Casillero* casilleroNuevo = casilleros->obtener(posX, posY);
+    
     if(!casilleroNuevo->getPersonaje()){
-        
+        casilleroViejo->setPersonaje(nullptr);
+        obtenerCamino(personaje, pilaCamino, *posFinal, costoEnergia);
+        while (!pilaCamino->vacia() && personaje->obtenerEnergia() >= costoEnergia){
+            Casillero* casillero = pilaCamino->consulta(1); // Desapila un elemento
+            pilaCamino->baja(1);
+            //casillero->pintar();
+        }
+        personaje->setPosicion(posX, posY);
+        casilleroNuevo->setPersonaje(personaje);
+    }
+}
+
+Matriz<Vertice<Casillero*, int>>* Juego::obtenerMatrizDeRecorrido(Personaje* personaje) {
+    string elemento = personaje->obtenerElemento();
+    if(elemento == "agua") {
+        return this->grafoAgua->getMatrizDeRecorridos();
+    } else if () {
+        return this->grafoAire->getMatrizDeRecorridos();
     }
 
+    grafoAgua
+grafoTierra
+grafoFuego
+grafoAire
+    
 }
 
 void Juego::obtenerCamino(Personaje* personaje, Lista<Casillero*>* pilaCamino, int* posFinal, int &costoEnergia) {
