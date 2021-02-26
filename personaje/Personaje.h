@@ -56,13 +56,13 @@ public:
 	void incrementarVida(int incremento);
 	void bajarVida(int cantidad);
 
-	void setPosicion(int x, int y);
-	int* obtenerPosicion();
-
 	void asignarEnergia();
 	void asignarEnergia(int energia);
 	int obtenerEnergia();
 	void incrementarEnergia(int incremento);
+
+	void setPosicion(int x, int y);
+	int* getPosicion();
 
 	string toString();
 

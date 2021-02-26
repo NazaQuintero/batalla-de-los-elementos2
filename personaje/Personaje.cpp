@@ -76,7 +76,7 @@ void Personaje::setPosicion(int x, int y) {
 	this->pos[1] = y;
 }
 
-int* Personaje::obtenerPosicion() {
+int* Personaje::getPosicion() {
 	return this->pos;
 }
 

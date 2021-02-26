@@ -121,7 +121,7 @@ void Juego::ataqueFuego(int* posAtacante) {
 
     while(claves->haySiguiente()) {
 		Personaje* personajeAtacado = personajesOponente->obtenerDato(claves->siguiente());
-        int* posAtacado = personajeAtacado->obtenerPosicion();
+        int* posAtacado = personajeAtacado->getPosicion();
 
         if(estaEnRangoDeFuego(posAtacante, posAtacado)) {
             if(personajeAtacado->obtenerElemento() == "aire") {
@@ -163,7 +163,7 @@ void Juego::ataqueTierra(int *posAtacante) {
 
     while(claves->haySiguiente()) {
 		Personaje* personajeAtacado = personajesOponente->obtenerDato(claves->siguiente());
-        int* posAtacado = personajeAtacado->obtenerPosicion();
+        int* posAtacado = personajeAtacado->getPosicion();
 
         int rango = estaEnRangoDeTierra(posAtacante, posAtacado);
 
