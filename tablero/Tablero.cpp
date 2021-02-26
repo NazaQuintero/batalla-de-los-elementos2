@@ -57,7 +57,7 @@ int Tablero::getCantidadDeCasillerosPorFila() {
 void Tablero::mostrarTablero() {
     for (int i = 0; i < CANTIDAD_DE_CASILLEROS_X_FILA; i++) {
         for (int j = 0; j < CANTIDAD_DE_CASILLEROS_X_COLUMNA; j++) {
-            cout << this->matrizCasilleros->obtener(i, j)->getTerreno() << " | ";
+            cout << this->matrizCasilleros->obtener(i, j)->toString();
         }
         cout << endl;
     }    

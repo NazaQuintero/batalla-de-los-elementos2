@@ -11,6 +11,9 @@
 #include "Personaje.h"
 
 class Aire: public Personaje {
+	private:
+		string colorIni = "\x1B[1;92m";
+		string colorFin = "\033[0m\t\t";
 public:
 
 	// Constructores
@@ -20,6 +23,9 @@ public:
 	Aire(string nombre);
 
 	Aire(string nombre, int escudo, int vida);
+
+	string getColorIni();
+	string getColorFin();
 
 	// Destructor
 

@@ -10,6 +10,9 @@ using namespace std;
 const Terreno TERRENO_VACIO = VACIO;
 
 class Vacio: public Casillero {
+    private:
+        string colorIni = "\x1B[2;49;35m";
+        string colorFin = "\033[0m\t\t";
     public:
 
     // Constructor

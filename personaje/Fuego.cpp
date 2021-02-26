@@ -29,6 +29,14 @@ string Fuego::obtenerElemento() {
 	return "fuego";
 }
 
+string Fuego::getColorIni(){
+	return this->colorIni;
+}
+
+string Fuego::getColorFin(){
+	return this->colorFin;
+}
+
 string Fuego::alimentar() {
 
 	int vidaRecuperada;

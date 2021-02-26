@@ -30,6 +30,15 @@ string Agua::obtenerElemento() {
 	return "agua";
 }
 
+string Agua::getColorIni(){
+	return this->colorIni;
+}
+
+string Agua::getColorFin(){
+	return this->colorFin;
+}
+
+
 /*void Agua::atacar(int posX, int posY){
 		
 }*/

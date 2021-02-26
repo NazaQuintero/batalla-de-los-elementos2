@@ -21,6 +21,7 @@
 
 
 const string NOMBRE_ARCHIVO_PERSONAJES = "personajes.csv";
+const string NOMBRE_ARCHIVO_JUEGO = "mapa.csv";
 const int CANTIDAD_DE_DATOS = 4;
 
 const string TEXTO_SOLICITUD_ELEMENTO = "Por favor, ingrese el elemento del Personaje que desea generar (tierra / fuego / agua / aire):";
@@ -109,7 +110,7 @@ public:
 	 */
 	void guardarPersonajes(Diccionario<string, Personaje*>* diccionarioDePersonajes);
 
-	void guardarJuego();
+	void guardarJuego(Diccionario<string, Personaje*>* diccionarioDePersonajes, int turno);
 
 	void imprimirPersonaje(Personaje* personaje);
 

@@ -1,12 +1,12 @@
 Name            FG  BG
 Black           30  40
-Red             31  41
-Green           32  42
-Yellow          33  43
-Blue            34  44
-Magenta         35  45
-Cyan            36  46
-White           37  47
+Red             31  41  Volcan
+Green           32  42  Montaña
+Yellow          33  43  Camino
+Blue            34  44  Precipicio
+Magenta         35  45  Vacio
+Cyan            36  46  Lago
+White           37  47  
 Bright Black    90  100
 Bright Red      91  101
 Bright Green    92  102
@@ -15,3 +15,18 @@ Bright Blue     94  104
 Bright Magenta  95  105
 Bright Cyan     96  106
 Bright White    97  107
+
+reset             0  (everything back to normal)
+bold/bright       1  (often a brighter shade of the same colour)
+underline         4
+inverse           7  (swap foreground and background colours)
+bold/bright off  21
+underline off    24
+inverse off      27
+
+
+cout << "\x1B[2;49;31m" << "Montaña" << "\033[0m\t\t";
+
+Vacio 2;49;35
+
+Precipicio 2;49;39

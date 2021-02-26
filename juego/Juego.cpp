@@ -4,7 +4,7 @@
 Juego::Juego(){
     this->tablero = new Tablero();
     this->personajesDisponibles = new Diccionario<string, Personaje*>();
-    this-> personajesElegidos = new Diccionario<string, bool>();
+    this->personajesElegidos = new Diccionario<string, bool>();
     this->utilitario = Utilitario::obtenerInstancia();
     this->terminal = Terminal::obtenerInstancia();
     this->menuOpciones[0] = new Menu("opcionesPrincipal.txt");
@@ -17,10 +17,15 @@ Juego::Juego(){
 
     this->usuario[0] = new Usuario(nombreUsuario1);
     this->usuario[1] = new Usuario(nombreUsuario2);
+
+    this->grafoAgua = new Grafo<Casillero*, int>(COSTOS_AGUA);
+    this->grafoTierra = new Grafo<Casillero*, int>(COSTOS_TIERRA);
+    this->grafoFuego = new Grafo<Casillero*, int>(COSTOS_FUEGO);
+    this->grafoAire = new Grafo<Casillero*, int>(COSTOS_AIRE);
 }
 
 bool Juego::guardarJuego(){
-    
+    this->utilitario->guardarJuego(); // TODO: pasar parametros correspondientes;
 }
 
 void Juego::cargarJuego(){
@@ -307,19 +312,30 @@ void Juego::mover(Personaje* personaje){
     }
 }
 
-Matriz<Vertice<Casillero*, int>>* Juego::obtenerMatrizDeRecorrido(Personaje* personaje) {
+Matriz<Vertice<Casillero*, int>*>* Juego::obtenerMatrizDeRecorrido(Personaje* personaje) {
     string elemento = personaje->obtenerElemento();
     if(elemento == "agua") {
         return this->grafoAgua->getMatrizDeRecorridos();
-    } else if () {
+    } else if (elemento == "aire") {
         return this->grafoAire->getMatrizDeRecorridos();
+    } else if (elemento == "tierra") {
+        return this->grafoTierra->getMatrizDeRecorridos();
+    } else {
+        return this->grafoFuego->getMatrizDeRecorridos();
     }
+}
 
-    grafoAgua
-grafoTierra
-grafoFuego
-grafoAire
-    
+Matriz<Arista<int>*>* Juego::obtenerMatrizDeAdyacencia(Personaje* personaje) {
+    string elemento = personaje->obtenerElemento();
+    if(elemento == "agua") {
+        return this->grafoAgua->getMatrizDeAdyacencia();
+    } else if (elemento == "aire") {
+        return this->grafoAire->getMatrizDeAdyacencia();
+    } else if (elemento == "tierra") {
+        return this->grafoTierra->getMatrizDeAdyacencia();
+    } else {
+        return this->grafoFuego->getMatrizDeAdyacencia();
+    }
 }
 
 void Juego::obtenerCamino(Personaje* personaje, Lista<Casillero*>* pilaCamino, int* posFinal, int &costoEnergia) {
@@ -331,10 +347,15 @@ void Juego::obtenerCamino(Personaje* personaje, Lista<Casillero*>* pilaCamino, i
 
     Casillero* casillero = tablero->getCasilleros()->obtener(posFinal[0], posFinal[1]);
     pilaCamino->alta(casillero, 1);
-    Matriz<Casillero>* matrizDeRecorrido = 
+    Matriz<Vertice<Casillero*, int>*>* matrizDeRecorrido = obtenerMatrizDeRecorrido(personaje);
+    Matriz<Arista<int>*>* matrizDeAdyacencia = obtenerMatrizDeAdyacencia(personaje);
     
-
-
+    int posicionTranscriptaInicial = transcribirPosicion(posInicial);
+    int posicionTranscriptaFinal = transcribirPosicion(posFinal);
+    Casillero* casillero = matrizDeRecorrido->obtener(posicionTranscriptaInicial, posicionTranscriptaFinal)->getData();
+    int peso = matrizDeAdyacencia->obtener(posicionTranscriptaInicial, posicionTranscriptaFinal)->getPeso();
+    costoEnergia += peso;
+    return obtenerCamino(personaje, pilaCamino, casillero->getPos(), costoEnergia);
 }
 
 

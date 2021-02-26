@@ -13,6 +13,9 @@
 const int RECUPERO_DE_ENERGIA_TIERRA = 8;
 
 class Tierra: public Personaje {
+	private:
+		string colorIni = "\x1B[2;49;31m";
+		string colorFin = "\033[0m\t\t";
 public:
 
 	// Constructores
@@ -22,6 +25,9 @@ public:
 	Tierra(string nombre);
 
 	Tierra(string nombre, int escudo, int vida);
+
+	string getColorIni();
+	string getColorFin();
 
 	// Destructor
 

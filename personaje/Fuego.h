@@ -14,7 +14,11 @@ const int RECUPERO_DE_VIDA_FUEGO = 5;
 const int RECUPERO_DE_ENERGIA_FUEGO = 10;
 
 class Fuego: public Personaje {
-public:
+	private:
+		string colorIni = "\x1B[1;31m";
+		string colorFin = "\033[0m\t\t";
+
+	public:
 
 	// Constructores
 
@@ -23,6 +27,9 @@ public:
 	Fuego(string nombre);
 
 	Fuego(string nombre, int escudo, int vida);
+
+	string getColorIni();
+	string getColorFin();
 
 	// Destructor
 

@@ -206,6 +206,20 @@ void Utilitario::guardarPersonajes(Diccionario<string, Personaje*>* diccionarioD
 	archivo_personajes.close();
 }
 
-void Utilitario::guardarJuego() {
+void Utilitario::guardarJuego(Diccionario<string, Personaje*>* diccionarioDePersonajes, int turno) {
+	ofstream archivo_juego(NOMBRE_ARCHIVO_JUEGO, ofstream::trunc);
+
+	Lista<string>* claves = diccionarioDePersonajes->obtenerClaves();
+	claves->reiniciar();
+
+	Personaje* personaje;
 	
+	archivo_juego << turno << endl;
+
+	while(claves->haySiguiente()) {
+		personaje = diccionarioDePersonajes->obtenerDato(claves->siguiente());
+		archivo_juego << personaje->toString() << endl;
+	}
+
+	archivo_juego.close();
 }

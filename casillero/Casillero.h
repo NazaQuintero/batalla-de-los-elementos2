@@ -17,8 +17,6 @@ private:
 	// Atributos
 	int pos [2];
 	Personaje* personaje;
-	string colorIni;
-	string colorFin;
 	Terreno terreno;
 
 public:
@@ -39,15 +37,6 @@ public:
 	virtual string getColorIni() = 0;
 
     virtual string getColorFin() = 0;
-
-	void setColor(string color);
-
-	//Recibe una lista de coordenadas vacia que se cargara
-	//con las coordenadas de los casilleros adyacentes
-	void buscarAdyacentes(Lista<Coordenada>* listaCoordenadas);
-	 
-	// Devuelve la lista de coordenadas de los casilleros adyacentes
-	Lista<Coordenada>* getAdyacentes();
     
 	// Devuelve el personaje
 	Personaje* getPersonaje();
@@ -62,11 +51,7 @@ public:
 
     string getPosString();
 
-	// Inserta tipo de terreno pasado por parametro al casillero
-	void setTerreno(Terreno terreno);
-
-	// Devuleve el tipo de terreno del casillero
-	// Terreno getTerreno();
+	string imprimirPersonajeColor();
 
 	string toString();
 

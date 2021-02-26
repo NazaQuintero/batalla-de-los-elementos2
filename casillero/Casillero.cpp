@@ -7,46 +7,8 @@ Casillero::Casillero(int posX, int posY) {
     this->terreno = LAGO;
 }
 
-void Casillero::setColor(string color) {
-    this->color = color;
-}
-
 Personaje* Casillero::getPersonaje() {
     return this->personaje;
-}
-
-void Casillero::buscarAdyacentes(Lista<Coordenada>* listaCoordenadas){
-    int X = this->pos[0];
-    int Y = this->pos[1];
-
-    if(X - 1 >= 0){
-        Coordenada* coord = new Coordenada(X-1,Y);
-        listaCoordenadas->alta(*coord,1);
-    }
-
-    if(X + 1 < 8){
-        Coordenada* coord = new Coordenada(X+1,Y);
-        listaCoordenadas->alta(*coord,1);
-    }
-
-    if(Y - 1 >=0){
-        Coordenada* coord = new Coordenada(X,Y-1);
-        listaCoordenadas->alta(*coord,1);
-    }
-    
-    if(Y + 1 < 8){
-        Coordenada* coord = new Coordenada(X,Y + 1);
-        listaCoordenadas->alta(*coord,1);
-    }
-}
-
-Lista<Coordenada>* Casillero::getAdyacentes(){
-
-    Lista<Coordenada>* listaCoordenadas = new Lista<Coordenada>();
-
-    buscarAdyacentes(listaCoordenadas);
-
-    return listaCoordenadas;
 }
 
 void Casillero::setPersonaje(Personaje* personaje) {
@@ -66,16 +28,16 @@ string Casillero::getPosString() {
 	return "(" + to_string(this->pos[0]) + "," + to_string(this->pos[1]) + ")";
 }
 
-void Casillero::setTerreno(Terreno terreno) {
-    this->terreno = terreno;
+string Casillero::imprimirPersonajeColor() {
+    if(!this->getPersonaje()){
+        return "       ";
+    } else {
+        return this->getPersonaje()->getColorIni() + "   X   " + this->getPersonaje()->getColorFin();
+    }
 }
 
-// Terreno Casillero::getTerreno() {
-//     return this->terreno;
-// }
-
 string Casillero::toString() {
-    
+    return getColorIni() + "---------\n|       |\n|" + getColorFin() + imprimirPersonajeColor() + getColorIni() + "|\n|       |\n---------" + getColorFin();
 }
 
 void bajarVida(int cantidadVida, string elemento) {

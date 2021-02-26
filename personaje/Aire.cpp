@@ -33,6 +33,14 @@ string Aire::alimentar() {
 	return "Los Personajes de tipo Aire no necesitan alimentarse.";
 }
 
+string Aire::getColorIni(){
+	return this->colorIni;
+}
+
+string Aire::getColorFin(){
+	return this->colorFin;
+}
+
 Aire::~Aire() {
 
 }

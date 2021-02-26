@@ -10,12 +10,19 @@ using namespace std;
 const Terreno TERRENO_MONTANA = MONTANA;
 
 class Montana: public Casillero {
+    private:
+        string colorIni = "\x1B[2;49;31m";
+        string colorFin = "\033[0m\t\t";
+
     public:
 
     // Constructor
     Montana(int posX, int posY);
 
     string getTerreno();
+
+    string getColorIni();
+    string getColorFin();
 
     // Destructor
     ~Montana();

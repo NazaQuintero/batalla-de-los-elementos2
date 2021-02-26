@@ -12,12 +12,19 @@ const Terreno TERRENO_LAGO = LAGO;
 const string COLOR_LAGO = "celeste";
 
 class Lago: public Casillero {
+    private:
+        string colorIni = "\x1B[1;36m";
+        string colorFin = "\033[0m\t\t";
+
     public:
 
     // Constructor
     Lago(int posX, int posY);
 
     string getTerreno();
+
+    string getColorIni();
+    string getColorFin();
 
     // Destructor
     ~Lago();

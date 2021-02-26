@@ -29,6 +29,14 @@ string Tierra::obtenerElemento() {
 	return "tierra";
 }
 
+string Tierra::getColorIni(){
+	return this->colorIni;
+}
+
+string Tierra::getColorFin(){
+	return this->colorFin;
+}
+
 string Tierra::alimentar() {
 
 	int energiaRecuperada;

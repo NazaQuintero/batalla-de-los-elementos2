@@ -12,6 +12,11 @@
 
 using namespace std;
 
+const string COSTOS_AGUA = "costosAgua.csv";
+const string COSTOS_TIERRA = "costosTierra.csv";
+const string COSTOS_FUEGO = "costosFuego.csv";
+const string COSTOS_AIRE = "costosAire.csv";
+
 class Juego {
 
 private:
@@ -38,7 +43,9 @@ private:
 
     int estaEnRangoDeTierra(int* posAtacante, int* posAtacado);
 
-    Matriz<Vertice<Casillero*, int>>* obtenerMatrizDeRecorrido(Personaje* personaje);
+    Matriz<Vertice<Casillero*, int>*>* obtenerMatrizDeRecorrido(Personaje* personaje);
+
+    Matriz<Arista<int>*>* obtenerMatrizDeAdyacencia(Personaje* personaje);
 
 public:
 	// Constructor

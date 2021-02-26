@@ -96,7 +96,7 @@ int* Personaje::getPosicion() {
 }
 
 string Personaje::toString() {
-	return this->obtenerElemento() + "," + this->obtenerNombre() + "," + to_string(this->obtenerEscudo()) + "," + to_string(this->obtenerVida());
+	return this->obtenerElemento() + "," + this->obtenerNombre() + "," + to_string(this->obtenerEscudo()) + "," + to_string(this->obtenerVida()) + "," + to_string(this->obtenerEnergia()) + "," + to_string(this->getPosicion()[0]) + "," + to_string(this->getPosicion()[1]);
 }
 
     

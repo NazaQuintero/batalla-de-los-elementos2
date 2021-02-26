@@ -17,6 +17,8 @@ class Agua: public Personaje {
 private:
 
 	int vecesAlimentado = 0;
+	string colorIni = "\x1B[1;36m";
+	string colorFin = "\033[0m\t\t";
 
 public:
 
@@ -36,6 +38,9 @@ public:
 	string obtenerElemento();
 
 	string alimentar();
+
+	string getColorIni();
+	string getColorFin();
 
 	/*void defender();
 
