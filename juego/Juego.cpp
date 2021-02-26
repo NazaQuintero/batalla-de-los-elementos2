@@ -44,7 +44,7 @@ bool Juego::validarTurnos(){
 };
 
 void Juego::atacar(int* posAtacante) {
-    Usuario* usuarioAtacante = this->usuario[this->turnoActual];
+    //Usuario* usuarioAtacante = this->usuario[this->turnoActual];
     Casillero* casilleroAtacante = this->tablero->getCasilleros()->obtener(posAtacante[0],posAtacante[1]);
     string elemento = casilleroAtacante->getPersonaje()->obtenerElemento();
 
@@ -165,12 +165,13 @@ void Juego::ataqueTierra(int *posAtacante) {
             personajeAtacado->bajarVida(30);
         }else if(rango == 4) {
             personajeAtacado->bajarVida(20);
-        }else{
+        }else {
             personajeAtacado->bajarVida(10);
         }
-
-        if(personajeAtacado->obtenerElemento() == "agua")
+        
+        if(personajeAtacado->obtenerElemento() == "agua") {
             personajeAtacado->bajarVida(20);
+        }
     }
 }
 
