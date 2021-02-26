@@ -23,6 +23,7 @@ private:
 	int escudo;
 	int vida;
 	int energia;
+	int pos[2];
 
 	// Metodos
 
@@ -37,9 +38,9 @@ public:
 
 	virtual string obtenerElemento() = 0;
 	virtual string alimentar() = 0;
-	virtual void atacar() = 0; // El casillero se encarga de hacer daño?
-	virtual void defender() = 0; // Fijarse si hay escudo antes de descontar vida
-	virtual void mover() = 0; // Charlar quien mueve al personaje
+	// virtual void atacar() = 0; // El casillero se encarga de hacer daño?
+	// virtual void defender() = 0; // Fijarse si hay escudo antes de descontar vida
+	// virtual void mover() = 0; // Charlar quien mueve al personaje
 
 
 	void asignarNombre(string nombre);
@@ -54,6 +55,9 @@ public:
 	int obtenerVida();
 	void incrementarVida(int incremento);
 	void bajarVida(int cantidad);
+
+	void setPosicion(int x, int y);
+	int* obtenerPosicion();
 
 	void asignarEnergia();
 	void asignarEnergia(int energia);

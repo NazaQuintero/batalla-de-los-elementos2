@@ -71,6 +71,15 @@ int Personaje::obtenerEnergia() {
 	return this->energia;
 }
 
+void Personaje::setPosicion(int x, int y) {
+	this->pos[0] = x;
+	this->pos[1] = y;
+}
+
+int* Personaje::obtenerPosicion() {
+	return this->pos;
+}
+
 string Personaje::toString() {
 	return this->obtenerElemento() + "," + this->obtenerNombre() + "," + to_string(this->obtenerEscudo()) + "," + to_string(this->obtenerVida());
 }

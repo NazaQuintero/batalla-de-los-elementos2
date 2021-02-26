@@ -22,9 +22,15 @@ private:
     Menu* menuOpciones[];
     Usuario* usuario[];
     Terminal* terminal;
-    bool turnoActual;
+    int turnoActual;
 
 	// Metodos
+    bool estaEnRangoDeFuego(int* posAtacante, int* posAtacado);
+
+    bool estaEnRangoDeTierra1(int* posAtacante, int* posAtacado);
+
+    bool estaEnRangoDeTierra2(int* posAtacante, int* posAtacado);
+
 
 public:
 	// Constructor
@@ -47,11 +53,11 @@ public:
 
     void atacar(int* posAtacante);
 
-    void ataqueFuego();
+    void ataqueFuego(int* posAtacante);
 
     void ataqueAgua();
 
-    void ataqueTierra();
+    void ataqueTierra(int* posAtacante);
 
     void ataqueAire();
 

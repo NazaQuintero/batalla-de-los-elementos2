@@ -43,47 +43,151 @@ bool Juego::validarTurnos(){
 };
 
 void Juego::atacar(int* posAtacante) {
+    Usuario* usuarioAtacante = this->usuario[this->turnoActual];
     Casillero* casilleroAtacante = this->tablero->getCasilleros()->obtener(posAtacante[0],posAtacante[1]);
     string elemento = casilleroAtacante->getPersonaje()->obtenerElemento();
 
     if(elemento == "fuego") {
-        ataqueFuego();
+        ataqueFuego(posAtacante);
     } else if(elemento == "agua") {
-        //ataqueAgua();
+        ataqueAgua();
     } else if(elemento == "tierra") {
-        //ataqueTierra();
+        ataqueTierra(posAtacante);
     } else {
-        //ataqueAire();
+        ataqueAire();
     }
 }
 
-void Juego::ataqueFuego() {
+bool Juego::estaEnRangoDeFuego(int* posAtacante, int* posAtacado) {
+    bool estaEnRango = false;
+    int posAtacanteX, posAtacadoX;
+    posAtacanteX = posAtacante[0];
+    posAtacadoX = posAtacado[0];
 
+    if(posAtacadoX - 1 == posAtacanteX || posAtacadoX == posAtacanteX || posAtacadoX + 1 == posAtacadoX) {
+        estaEnRango = true;
+    }
+    return estaEnRango;
 }
 
-void Juego::ataqueAgua() {
-    cout << "Ingrese las coordenadas del casillero al que desea atacar..." << endl;
-    int posAtacarX = this->terminal->obtenerDatoEntero("X:","");
-    int posAtacarY = this->terminal->obtenerDatoEntero("Y:","");
+bool Juego::estaEnRangoDeTierra1(int* posAtacante, int* posAtacado) {
+    bool estaEnRango = false;
+    int posAtacanteX, posAtacadoX;
+    posAtacanteX = posAtacante[0];
+    posAtacadoX = posAtacado[0];
 
-    Personaje* personajeAtacar = this->tablero->getCasilleros()->obtener(posAtacarX,posAtacarY)->getPersonaje();
+    if() {
+        estaEnRango = true;
+    }
+    return estaEnRango;
+}
 
-    if(!this->personajesElegidos->pertenece(personajeAtacar->obtenerNombre())) {
-        if(personajeAtacar->obtenerElemento() == "fuego") {
-            personajeAtacar->bajarVida(30);
-        } else if(personajeAtacar->obtenerElemento() == "tierra") {
-            personajeAtacar->bajarVida(10);
-        } else {
-            personajeAtacar->bajarVida(20);
+bool Juego::estaEnRangoDeTierra2(int* posAtacante, int* posAtacado) {
+    bool estaEnRango = false;
+    int posAtacanteX, posAtacadoX;
+    posAtacanteX = posAtacante[0];
+    posAtacadoX = posAtacado[0];
+
+    if() {
+        estaEnRango = true;
+    }
+    return estaEnRango;
+}
+
+void Juego::ataqueFuego(int* posAtacante) {
+
+    int posAtacanteX, posAtacanteY;
+
+    posAtacanteX = posAtacante[0];
+    posAtacanteY = posAtacante[1];
+
+    Diccionario<string, Personaje*>* personajesOponente = this->usuario[!this->turnoActual]->obtenerPersonajesElegidos();
+
+    Lista<string>* claves = personajesOponente->obtenerClaves();
+	claves->reiniciar();
+
+    while(claves->haySiguiente()) {
+		Personaje* personajeAtacado = personajesOponente->obtenerDato(claves->siguiente());
+        int* posAtacado = personajeAtacado->obtenerPosicion();
+
+        if(estaEnRangoDeFuego(posAtacante, posAtacado)) {
+            if(personajeAtacado->obtenerElemento() == "aire") {
+		        personajeAtacado->bajarVida(30);
+            } else if(personajeAtacado->obtenerElemento() == "agua") {
+                personajeAtacado->bajarVida(10);
+            } else {
+                personajeAtacado->bajarVida(20);
+            }
         }
     }
 }
 
-void Juego::ataqueTierra() {
+void Juego::ataqueAgua() {
+    cout << "Ingrese las coordenadas del casillero al que desea atacar..." << endl;
+    int posAtacarX = this->terminal->obtenerDatoEntero("X:","El valor ingresado debe ser un numero");
+    int posAtacarY = this->terminal->obtenerDatoEntero("Y:","El valor ingresado debe ser un numero");
 
+    Personaje* personajeAtacado = this->tablero->getCasilleros()->obtener(posAtacarX,posAtacarY)->getPersonaje();
+    Diccionario<string, Personaje*>* personajesOponente = this->usuario[!this->turnoActual]->obtenerPersonajesElegidos();
+
+    if(personajesOponente->pertenece(personajeAtacado->obtenerNombre())) {
+        if(personajeAtacado->obtenerElemento() == "fuego") {
+            personajeAtacado->bajarVida(30);
+        } else if(personajeAtacado->obtenerElemento() == "tierra") {
+            personajeAtacado->bajarVida(10);
+        } else {
+            personajeAtacado->bajarVida(20);
+        }
+    }
+}
+
+void Juego::ataqueTierra(int *posAtacante) {
+
+    Diccionario<string, Personaje*>* personajesOponente = this->usuario[!this->turnoActual]->obtenerPersonajesElegidos();
+
+    Lista<string>* claves = personajesOponente->obtenerClaves();
+	claves->reiniciar();
+
+    while(claves->haySiguiente()) {
+		Personaje* personajeAtacado = personajesOponente->obtenerDato(claves->siguiente());
+        int* posAtacado = personajeAtacado->obtenerPosicion();
+
+        if(estaEnRangoDeTierra1(posAtacante, posAtacado)) {
+            if(personajeAtacado->obtenerElemento() == "agua")
+                personajeAtacado->bajarVida(50);
+            else
+                personajeAtacado->bajarVida(30);
+        }else if(estaEnRangoDeTierra2(posAtacante, posAtacado)) {
+            if(personajeAtacado->obtenerElemento() == "agua")
+                personajeAtacado->bajarVida(40);
+            else
+                personajeAtacado->bajarVida(20);
+        }else{ //rangoTierra3
+            if(personajeAtacado->obtenerElemento() == "agua")
+                personajeAtacado->bajarVida(30);
+            else
+                personajeAtacado->bajarVida(10);
+        }
+    }
 }
 
 void Juego::ataqueAire() {
+    Diccionario<string, Personaje*>* personajesOponente = this->usuario[!this->turnoActual]->obtenerPersonajesElegidos();
+
+    Lista<string>* claves = personajesOponente->obtenerClaves();
+	claves->reiniciar();
+
+	while(claves->haySiguiente()) {
+		Personaje* personajeAtacado = personajesOponente->obtenerDato(claves->siguiente());
+        if(personajeAtacado->obtenerElemento() == "tierra") {
+		    personajeAtacado->bajarVida(20);
+        } else if (personajeAtacado->obtenerElemento() == "fuego") {
+		    personajeAtacado->bajarVida(10);
+        } else {
+		    personajeAtacado->bajarVida(15);
+        }
+	}
+
 
 }
 

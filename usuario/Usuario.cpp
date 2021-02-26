@@ -22,6 +22,10 @@ Usuario::Usuario(Tablero* tablero, Diccionario<string, Personaje*>* diccionario,
     this->terminal = Terminal::obtenerInstancia();
 }
 
+Diccionario<string, Personaje*>* Usuario::obtenerPersonajesElegidos() {
+    return this->personajesElegidos;
+}
+
 void Usuario::ejecutarAlimentar(Personaje* personajeAlimentar) {
     personajeAlimentar->alimentar();
     

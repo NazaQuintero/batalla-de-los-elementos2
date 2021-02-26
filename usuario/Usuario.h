@@ -36,6 +36,8 @@ public:
 
 	// Metodos
 
+    Diccionario<string, Personaje*>* obtenerPersonajesElegidos();
+
     void ejecutarAtacar(Personaje* personajeAtacante);
 
     void ejecutarMover();
