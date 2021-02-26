@@ -31,7 +31,7 @@ Casillero* FabricaDeCasillero::obtenerCasillero(string terreno, int posX, int po
 
 	} else if (terreno == "Vacio") {
 
-		casillero = new Vacio( posX, posY);
+		casillero = new Vacio (posX, posY);
 
 	} else if (terreno == "Volcan") {
 

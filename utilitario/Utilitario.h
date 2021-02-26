@@ -53,11 +53,15 @@ public:
 
 	void split(string cadena, char separador, vector<string> &resultado);
 
+	int limpiarPantalla();
+
 	/**
 	 * PRE:
 	 * POS: Carga en 'diccionarioDePersonajes' la instancia del personajes correspondiente leido de 'personajes.csv'.
 	 */
 	void cargarPersonajes(Diccionario<string, Personaje*>* diccionarioDePersonajes);
+
+	void cargarJuego(Diccionario<string, Personaje*>* diccionarioDePersonajesElegidos);
 
 	/**
 	 * PRE: personaje != null

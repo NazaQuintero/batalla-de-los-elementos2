@@ -24,6 +24,8 @@ public:
 
 	Aire(string nombre, int escudo, int vida);
 
+	Aire(string nombre, int escudo, int vida, int posX, int posY);
+
 	string getColorIni();
 	string getColorFin();
 

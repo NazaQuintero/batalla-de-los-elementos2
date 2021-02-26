@@ -4,15 +4,22 @@ Casillero::Casillero(int posX, int posY) {
     this->pos [0] = posX;
     this->pos [1] = posY;
     this->personaje = 0;
-    this->terreno = LAGO;
 }
 
 Personaje* Casillero::getPersonaje() {
     return this->personaje;
 }
 
+Personaje* Casillero::getPersonajePasajero() {
+    return this->personajePasajero;
+}
+
 void Casillero::setPersonaje(Personaje* personaje) {
     this->personaje = personaje;
+}
+
+void Casillero::setPersonajePasajero(Personaje* personajePasajero) {
+    this->personajePasajero = personajePasajero;
 }
 
 int* Casillero::getPos() {
@@ -29,19 +36,23 @@ string Casillero::getPosString() {
 }
 
 string Casillero::imprimirPersonajeColor() {
-    if(!this->getPersonaje()){
-        return "       ";
-    } else {
-        return this->getPersonaje()->getColorIni() + "   X   " + this->getPersonaje()->getColorFin();
+    if(this->personajePasajero) {
+        return this->getPersonajePasajero()->getColorIni() + "X" + this->getPersonajePasajero()->getColorFin();
     }
+
+    if(this->getPersonaje()){
+        return this->getPersonaje()->getColorIni() + "X" + this->getPersonaje()->getColorFin();
+    }
+    
+    return " ";
 }
+
+// string Casillero::toString() {
+//     return getColorIni() + "---------\n|       |\n|" + getColorFin() + imprimirPersonajeColor() + getColorIni() + "|\n|       |\n---------" + getColorFin();
+// }
 
 string Casillero::toString() {
-    return getColorIni() + "---------\n|       |\n|" + getColorFin() + imprimirPersonajeColor() + getColorIni() + "|\n|       |\n---------" + getColorFin();
-}
-
-void bajarVida(int cantidadVida, string elemento) {
-    // ...
+    return getColorIni() + "[ " + getColorFin() + imprimirPersonajeColor() + getColorIni() + " ]" + getColorFin();
 }
 
 Casillero::~Casillero() {

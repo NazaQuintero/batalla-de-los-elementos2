@@ -35,6 +35,8 @@ public:
 	 * PRE: El elemento es un elemento valido.
 	 * POS: Devuelve un puntero que apuntara a una instancia de la clase correspondiente al elemento.
 	 */
+	Personaje* obtenerPersonaje(string elemento, string nombre, int escudo, int vida, int posX, int posY);
+
 	Personaje* obtenerPersonaje(string elemento, string nombre, int escudo, int vida);
 
 	Personaje* obtenerPersonaje(string elemento, string nombre);

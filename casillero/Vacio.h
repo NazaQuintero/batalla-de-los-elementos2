@@ -20,6 +20,10 @@ class Vacio: public Casillero {
 
     string getTerreno();
 
+    string getColorIni();
+
+    string getColorFin();
+
     // Destructor
     ~Vacio();
 };

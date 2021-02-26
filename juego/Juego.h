@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include <unistd.h>
 #include "../tablero/Tablero.h"
 #include "../tda/diccionario/Diccionario.h"
 #include "../tda/grafo/Grafo.h"
@@ -23,7 +24,7 @@ private:
 	// Atributos
     Tablero* tablero;
     Diccionario<string, Personaje*>* personajesDisponibles;
-    Diccionario<string, bool>* personajesElegidos;
+    Diccionario<string, Personaje*>* personajesElegidos;
     Utilitario* utilitario;
     Menu* turnoMenu[];
     Menu* menuOpciones[];
@@ -54,7 +55,7 @@ public:
 
 	// Metodos
 
-    bool guardarJuego(); //bool?
+    void guardarJuego();
 
     void cargarJuego();
 
@@ -63,8 +64,6 @@ public:
     void mostrarMenuPrincipal();
     
     void mostrarMenuSecundario();
-
-    bool validarTurnos(); //bool?
 
     void atacar(Personaje* personajeAtacante);
 

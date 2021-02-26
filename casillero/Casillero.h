@@ -17,6 +17,7 @@ private:
 	// Atributos
 	int pos [2];
 	Personaje* personaje;
+	Personaje* personajePasajero;
 	Terreno terreno;
 
 public:
@@ -38,11 +39,17 @@ public:
 
     virtual string getColorFin() = 0;
     
+	// Devuelve el personaje pasajero
+	Personaje* getPersonajePasajero();
+
 	// Devuelve el personaje
 	Personaje* getPersonaje();
 
 	// Inserta al personaje en el casillero
     void setPersonaje(Personaje* personaje);
+
+	// Inserta al personaje pasajero en el casillero
+	void setPersonajePasajero(Personaje* personajePasajero);
 
 	// Devuelve la posicion del casillero
     int* getPos();
@@ -54,8 +61,6 @@ public:
 	string imprimirPersonajeColor();
 
 	string toString();
-
-	void bajarVida(int cantidadVida, string elemento);
 
 	// Destructor
 	virtual ~Casillero();

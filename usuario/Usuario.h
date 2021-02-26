@@ -38,12 +38,6 @@ public:
 
     Diccionario<string, Personaje*>* obtenerPersonajesElegidos();
 
-    void ejecutarAtacar(Personaje* personajeAtacante);
-
-    void ejecutarMover();
-
-    void ejecutarDefender(Personaje* personajeDefender);
-
     void ejecutarAlimentar(Personaje* personajeAlimentar);
 
     void finalizarTurno();

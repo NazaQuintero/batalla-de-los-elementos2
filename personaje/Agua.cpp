@@ -26,6 +26,14 @@ Agua::Agua(string nombre, int escudo, int vida) {
 	this->asignarVida(vida);
 }
 
+Agua::Agua(string nombre, int escudo, int vida, int posX, int posY) {
+	this->asignarEnergia();
+	this->asignarNombre(nombre);
+	this->asignarEscudo(escudo);
+	this->asignarVida(vida);
+	this->setPosicion(posX, posY);
+}
+
 string Agua::obtenerElemento() {
 	return "agua";
 }

@@ -28,6 +28,8 @@ class Fuego: public Personaje {
 
 	Fuego(string nombre, int escudo, int vida);
 
+	Fuego(string nombre, int escudo, int vida, int posX, int posY);
+
 	string getColorIni();
 	string getColorFin();
 

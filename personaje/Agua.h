@@ -29,6 +29,8 @@ public:
 
 	Agua(string nombre, int escudo, int vida);
 
+	Agua(string nombre, int escudo, int vida, int posX, int posY);
+
 	// Destructor
 
 	virtual ~Agua();

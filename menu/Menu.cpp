@@ -22,17 +22,6 @@ Menu::Menu(string nombreDeArchivo) {
 Menu::~Menu() {
 }
 
-int clearScreen() {
-	int result;
-	#ifdef __linux__
-		result = system("clear");
-	#else
-		// Assume WINDOWS
-		result = system("cls");
-	#endif
-	return result;
-}
-
 void Menu::cargarOpciones(string nombreDeArchivo) {
 	fstream archivoDeOpciones(nombreDeArchivo, ios::in);
 
@@ -90,14 +79,14 @@ int Menu::ejecutarOpcion(int opcion, Diccionario<string, Personaje*> *diccionari
 	int systemResult = 0;
 	switch (opcion) {
 		case 1:
-			systemResult = clearScreen();
+			systemResult = this->utilitario->limpiarPantalla();
 			utilitario->agregarNuevoPersonaje(diccionarioDePersonajes);
 			break;
 		case 2:
 			utilitario->eliminarPersonaje(diccionarioDePersonajes);
 			break;
 		case 3:
-			systemResult = clearScreen();
+			systemResult = this->utilitario->limpiarPantalla();
 			utilitario->mostrarNombresDePersonajes(diccionarioDePersonajes);
 			break;
 		case 4:
@@ -107,7 +96,7 @@ int Menu::ejecutarOpcion(int opcion, Diccionario<string, Personaje*> *diccionari
 			utilitario->alimentarPersonaje(diccionarioDePersonajes);
 			break;
 		default:
-			systemResult = clearScreen();
+			systemResult = this->utilitario->limpiarPantalla();
 			cout << "La opcion ingresada no es correcta." << endl << endl;
 			break;
 	}

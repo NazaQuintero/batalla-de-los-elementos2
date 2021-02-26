@@ -1,10 +1,11 @@
 #include "Juego.h"
 #include <cmath>
 
+
 Juego::Juego(){
     this->tablero = new Tablero();
     this->personajesDisponibles = new Diccionario<string, Personaje*>();
-    this->personajesElegidos = new Diccionario<string, bool>();
+    this->personajesElegidos = new Diccionario<string, Personaje*>();
     this->utilitario = Utilitario::obtenerInstancia();
     this->terminal = Terminal::obtenerInstancia();
     this->menuOpciones[0] = new Menu("opcionesPrincipal.txt");
@@ -24,34 +25,30 @@ Juego::Juego(){
     this->grafoAire = new Grafo<Casillero*, int>(COSTOS_AIRE);
 }
 
-bool Juego::guardarJuego(){
-    this->utilitario->guardarJuego(); // TODO: pasar parametros correspondientes;
+void Juego::guardarJuego() {
+    this->utilitario->guardarJuego(this->personajesElegidos, this->turnoActual);
 }
 
+/**
+ * TERMINAR
+ * */
 void Juego::cargarJuego(){
-
+    
 };
 
 void Juego::cambiarTurno(){
-
+    this->turnoActual = !this->turnoActual;
 };
 
-void Juego::mostrarMenuSecundario(){
-
+void Juego::mostrarMenuPrincipal(){
+    this->menuOpciones[0]->mostrarOpciones();
 };
     
 void Juego::mostrarMenuSecundario(){
-
-};
-
-bool Juego::validarTurnos(){
-
+    this->menuOpciones[1]->mostrarOpciones();
 };
 
 void Juego::atacar(Personaje* personajeAtacante) {
-    //Usuario* usuarioAtacante = this->usuario[this->turnoActual];
-    // Casillero* casilleroAtacante = this->tablero->getCasilleros()->obtener(posAtacante[0],posAtacante[1]);
-    // Personaje* personaje = casilleroAtacante->getPersonaje();
     string elemento = personajeAtacante->obtenerElemento();
     int* posAtacante = personajeAtacante->getPosicion();
     
@@ -276,6 +273,7 @@ void Juego::defensaAire(Personaje* personaje) {
 // TODO: defensa tierra
 void Juego::defensaTierra(Personaje* personaje) {
     personaje->bajarEnergia(5);
+    
 }
 
 int Juego::transcribirPosicion(int* posicion){
@@ -289,9 +287,9 @@ void Juego::mover(Personaje* personaje){
     int posX = this->terminal->obtenerDatoEntero("X:","El valor ingresado debe ser un numero");
     int posY = this->terminal->obtenerDatoEntero("Y:","El valor ingresado debe ser un numero");
 
-    int* posFinal[2];
-    *posFinal[0] = posX;
-    *posFinal[1] = posY;
+    int posFinal[2];
+    posFinal[0] = posX;
+    posFinal[1] = posY;
     
     int* posInicial = personaje->getPosicion();
     int costoEnergia;
@@ -300,15 +298,21 @@ void Juego::mover(Personaje* personaje){
     Casillero* casilleroNuevo = casilleros->obtener(posX, posY);
     
     if(!casilleroNuevo->getPersonaje()){
-        casilleroViejo->setPersonaje(nullptr);
-        obtenerCamino(personaje, pilaCamino, *posFinal, costoEnergia);
-        while (!pilaCamino->vacia() && personaje->obtenerEnergia() >= costoEnergia){
-            Casillero* casillero = pilaCamino->consulta(1); // Desapila un elemento
-            pilaCamino->baja(1);
-            //casillero->pintar();
+        obtenerCamino(personaje, pilaCamino, posFinal, costoEnergia);
+        if(personaje->obtenerEnergia() >= costoEnergia){
+            casilleroViejo->setPersonaje(nullptr);
+            while (!pilaCamino->vacia()){
+                Casillero* casillero = pilaCamino->consulta(1); // Desapila un elemento
+                pilaCamino->baja(1);
+                casillero->setPersonajePasajero(personaje);
+                sleep(1);
+                this->utilitario->limpiarPantalla();
+                this->tablero->mostrarTablero();
+                casillero->setPersonajePasajero(nullptr);
+            }
+            personaje->setPosicion(posX, posY);
+            casilleroNuevo->setPersonaje(personaje);
         }
-        personaje->setPosicion(posX, posY);
-        casilleroNuevo->setPersonaje(personaje);
     }
 }
 

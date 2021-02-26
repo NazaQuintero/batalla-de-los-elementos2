@@ -31,16 +31,8 @@ void Usuario::ejecutarAlimentar(Personaje* personajeAlimentar) {
     
 }
 
-void Usuario::ejecutarDefender(Personaje* personajeDefender) {
-    //personajeDefender->defender();
-}
-
-void Usuario::ejecutarAtacar(Personaje* personajeAtacante) {
-    //personajeAtacante.atacar();
-}
-
 void Usuario::finalizarTurno() {
-    this->esTurno = false;
+    this->esTurno = false;diccionario
 }
 
 Usuario::~Usuario() {

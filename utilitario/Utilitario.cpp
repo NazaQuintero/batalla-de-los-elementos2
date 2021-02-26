@@ -35,6 +35,17 @@ void Utilitario::split(string str, char sep, vector<string> &resultado) {
 
 }
 
+int Utilitario::limpiarPantalla() {
+	int result;
+	#ifdef __linux__
+		result = system("clear");
+	#else
+		// Assume WINDOWS
+		result = system("cls");
+	#endif
+	return result;
+}
+
 void Utilitario::cargarPersonajes(Diccionario<string, Personaje*>* diccionarioDePersonajes) {
 
 	fstream archivo_personajes(NOMBRE_ARCHIVO_PERSONAJES, ios::in);
@@ -84,6 +95,64 @@ void Utilitario::cargarPersonajes(Diccionario<string, Personaje*>* diccionarioDe
 
 }
 
+
+void Utilitario::cargarJuego(Diccionario<string, Personaje*>* diccionarioDePersonajesElegidos) {
+
+	fstream archivo_juego(NOMBRE_ARCHIVO_JUEGO, ios::in);
+
+	if(!archivo_juego.is_open()) {
+		cout << "No se encontro un archivo con el nombre \"" << NOMBRE_ARCHIVO_JUEGO << "\", se va a crear el archivo" << endl;
+		archivo_juego.open(NOMBRE_ARCHIVO_JUEGO, ios::out);
+		archivo_juego.close();
+		archivo_juego.open(NOMBRE_ARCHIVO_JUEGO, ios::in);
+	}
+
+	string linea;
+	string elemento, nombre, escudoStr, vidaStr, turnoStr, posXStr, posYStr;
+	int escudo, vida, turno, posX, posY;
+
+	archivo_juego >> turnoStr;
+
+	turno = stol(turnoStr);
+
+	vector<string> datos;
+
+	while(archivo_juego >> linea) {
+
+		split(linea, ',', datos);
+
+		elemento = datos[0];
+		nombre = datos[1];
+		escudoStr = datos[2];
+		vidaStr = datos[3];
+		posXStr = datos[4];
+		posYStr = datos[5];
+
+		escudo = stol(escudoStr);
+		vida = stol(vidaStr);
+		posX = stol(posXStr);
+		posY = stol(posYStr);
+
+		FabricaDePersonaje fabricaDePersonaje;
+
+		Personaje* personaje = fabricaDePersonaje.obtenerPersonaje(elemento, nombre, escudo, vida, posX, posY);
+
+		datos.clear();
+
+		//diccionarioDePersonajes->alta(personaje, 1);
+		if(!diccionarioDePersonajesElegidos->pertenece(nombre)) {
+			diccionarioDePersonajesElegidos->guardar(nombre, personaje);
+		} else {
+			cout << "El personaje: " << nombre << " ya fue creado anteriormente." << endl;
+		}
+
+
+	}
+
+	archivo_juego.close();
+
+}
+
 void Utilitario::mostrarPersonaje(Personaje* personaje) {
 	cout << "~~~~ Personaje ~~~~" << endl;
 	cout << "Elemento: " << personaje->obtenerElemento() << "\nNombre: " << personaje->obtenerNombre() << "\nEscudo: " << personaje->obtenerEscudo() << "\nVida: " << personaje->obtenerVida() << "\nEnergia: " << personaje->obtenerEnergia() << endl;
@@ -94,17 +163,7 @@ void Utilitario::imprimirPersonaje(Personaje* personaje) {
 
 	string nombrePersonaje = personaje->obtenerNombre();
 
-	if(personaje->obtenerElemento() == "fuego")
-		cout << "\x1B[1;31m" << nombrePersonaje << "\033[0m\t\t";
-	
-	else if(personaje->obtenerElemento() == "agua")
-		cout << "\x1B[1;36m" << nombrePersonaje << "\033[0m\t\t";
-
-	else if(personaje->obtenerElemento() == "tierra")
-		cout << "\x1B[1;33m" << nombrePersonaje << "\033[0m\t\t";
-
-	else if(personaje->obtenerElemento() == "aire")
-		cout << "\x1B[1;92m" << nombrePersonaje << "\033[0m\t\t";
+	cout << personaje->getColorIni() << nombrePersonaje << personaje->getColorFin();
 }
 
 void Utilitario::mostrarNombresDePersonajes(Diccionario<string, Personaje*>* diccionarioDePersonajes) {

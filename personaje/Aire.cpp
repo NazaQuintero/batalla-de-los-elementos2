@@ -25,6 +25,14 @@ Aire::Aire(string nombre, int escudo, int vida) {
 	this->asignarVida(vida);
 }
 
+Aire::Aire(string nombre, int escudo, int vida, int posX, int posY) {
+	this->asignarEnergia();
+	this->asignarNombre(nombre);
+	this->asignarEscudo(escudo);
+	this->asignarVida(vida);
+	this->setPosicion(posX,posY);
+}
+
 string Aire::obtenerElemento() {
 	return "aire";
 }
