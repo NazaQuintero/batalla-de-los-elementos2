@@ -60,6 +60,7 @@ public:
 	void asignarEnergia(int energia);
 	int obtenerEnergia();
 	void incrementarEnergia(int incremento);
+	void bajarEnergia(int cantidad);
 
 	void setPosicion(int x, int y);
 	int* getPosicion();

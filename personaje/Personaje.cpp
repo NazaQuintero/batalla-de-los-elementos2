@@ -52,7 +52,18 @@ int Personaje::obtenerVida() {
 }
 
 void Personaje::bajarVida(int cantidad) {
-	this->vida -= cantidad;
+	if (this->escudo == 0){
+		this->vida -= cantidad;
+	}else if (this->escudo == 1){
+		cantidad == cantidad - (10*cantidad)/100;
+		this->vida -= cantidad;
+	}else if (this->escudo == 2){
+		cantidad == cantidad - (20*cantidad)/100;
+		this->vida -= cantidad;
+	}else{
+		cantidad == cantidad - (80*cantidad)/100;
+		this->vida -= cantidad;
+	}
 }
 
 void Personaje::asignarEnergia() {
@@ -61,6 +72,10 @@ void Personaje::asignarEnergia() {
 
 void Personaje::asignarEnergia(int energia) {
 	this->energia = energia;
+}
+
+void Personaje::bajarEnergia(int cantidad) {
+	this->energia -= cantidad;
 }
 
 void Personaje::incrementarEnergia(int incremento) {

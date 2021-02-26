@@ -53,12 +53,16 @@ void Juego::atacar(int* posAtacante) {
 
     if(elemento == "fuego" && energia >= 5) {
         ataqueFuego(posAtacante);
+        personaje->bajarEnergia(5);
     } else if(elemento == "agua" && energia >= 5) {
         ataqueAgua();
+        personaje->bajarEnergia(5);
     } else if(elemento == "tierra" && energia >= 6) {
         ataqueTierra(posAtacante);
+        personaje->bajarEnergia(6);
     } else if (energia >= 8) {
         ataqueAire();
+        personaje->bajarEnergia(8);
     } else {
         cout << "El personaje: " << personaje->obtenerNombre() << " no tiene energia suficiente para atacar." << endl;
     }
@@ -198,6 +202,37 @@ void Juego::ataqueAire() {
         }
 	}
 }
+
+void Juego::defensa(Personaje* personaje) {
+    string elemento = personaje->obtenerElemento();
+
+    int energia = personaje->obtenerEnergia(); 
+
+    if(elemento == "fuego" && energia >= 5) {
+        ataqueFuego(posAtacante);
+        personaje->bajarEnergia(5);
+    } else if(elemento == "agua" && energia >= 5) {
+        ataqueAgua();
+        personaje->bajarEnergia(5);
+    } else if(elemento == "tierra" && energia >= 6) {
+        ataqueTierra(posAtacante);
+        personaje->bajarEnergia(6);
+    } else if (energia >= 8) {
+        ataqueAire();
+        personaje->bajarEnergia(8);
+    } else {
+        cout << "El personaje: " << personaje->obtenerNombre() << " no tiene energia suficiente para atacar." << endl;
+    }
+
+}
+
+void Juego::defensaFuego(Personaje* Personaje) {}
+
+void Juego::defensaAgua(Personaje* Personajee) {}
+
+void Juego::defensaAire(Personaje* Personaje) {}
+
+void Juego::defensaTierra() {}
 
 Juego::~Juego() {
 

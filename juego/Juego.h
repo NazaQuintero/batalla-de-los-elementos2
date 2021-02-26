@@ -61,6 +61,17 @@ public:
 
     void ataqueAire();
 
+
+    void defensa(Personaje* Personaje);
+
+    void defensaFuego(Personaje* Personaje);
+
+    void defensaAgua(Personaje* Personaje);
+
+    void defensaTierra();
+
+    void defensaAire(Personaje* Personaje);
+
 	// Destructor
 
 	~Juego();
