@@ -7,6 +7,7 @@
 #include "../tda/diccionario/Diccionario.h"
 #include "../usuario/Usuario.h"
 #include "../menu/Menu.h"
+#include "math.h"
 
 using namespace std;
 
@@ -25,12 +26,11 @@ private:
     int turnoActual;
 
 	// Metodos
+    int modulo(int* posAtacante, int* posAtacado);
+
     bool estaEnRangoDeFuego(int* posAtacante, int* posAtacado);
 
-    bool estaEnRangoDeTierra1(int* posAtacante, int* posAtacado);
-
-    bool estaEnRangoDeTierra2(int* posAtacante, int* posAtacado);
-
+    int estaEnRangoDeTierra(int* posAtacante, int* posAtacado);
 
 public:
 	// Constructor

@@ -1,4 +1,5 @@
 #include "Juego.h"
+#include <cmath>
 
 Juego::Juego(){
     this->tablero = new Tablero();
@@ -58,6 +59,18 @@ void Juego::atacar(int* posAtacante) {
     }
 }
 
+int Juego::modulo(int* posAtacante, int* posAtacado){
+    int posAtacanteX, posAtacanteY, posAtacadoX, posAtacadoY;
+
+    posAtacanteX = posAtacante[0];
+    posAtacanteY = posAtacante[1];
+    posAtacadoX = posAtacado[0];
+    posAtacadoY = posAtacado[1];
+
+    return (int)sqrt(pow(posAtacanteX - posAtacadoX, 2) + pow(posAtacanteY - posAtacadoY, 2));
+
+}
+
 bool Juego::estaEnRangoDeFuego(int* posAtacante, int* posAtacado) {
     bool estaEnRango = false;
     int posAtacanteX, posAtacadoX;
@@ -70,27 +83,21 @@ bool Juego::estaEnRangoDeFuego(int* posAtacante, int* posAtacado) {
     return estaEnRango;
 }
 
-bool Juego::estaEnRangoDeTierra1(int* posAtacante, int* posAtacado) {
-    bool estaEnRango = false;
+int Juego::estaEnRangoDeTierra(int* posAtacante, int* posAtacado) {
+    int estaEnRango = 0;
     int posAtacanteX, posAtacadoX;
     posAtacanteX = posAtacante[0];
     posAtacadoX = posAtacado[0];
 
-    if() {
-        estaEnRango = true;
-    }
-    return estaEnRango;
-}
+    int resultadoModulo = modulo(posAtacante, posAtacado);
 
-bool Juego::estaEnRangoDeTierra2(int* posAtacante, int* posAtacado) {
-    bool estaEnRango = false;
-    int posAtacanteX, posAtacadoX;
-    posAtacanteX = posAtacante[0];
-    posAtacadoX = posAtacado[0];
+    if(resultadoModulo <= 2){
+        estaEnRango == 2;
+    }else if(2 < resultadoModulo <= 4){
+        estaEnRango = 4;
+    }else if(4 < resultadoModulo <= 6){
+        estaEnRango = 6;
 
-    if() {
-        estaEnRango = true;
-    }
     return estaEnRango;
 }
 
@@ -152,22 +159,18 @@ void Juego::ataqueTierra(int *posAtacante) {
 		Personaje* personajeAtacado = personajesOponente->obtenerDato(claves->siguiente());
         int* posAtacado = personajeAtacado->obtenerPosicion();
 
-        if(estaEnRangoDeTierra1(posAtacante, posAtacado)) {
-            if(personajeAtacado->obtenerElemento() == "agua")
-                personajeAtacado->bajarVida(50);
-            else
-                personajeAtacado->bajarVida(30);
-        }else if(estaEnRangoDeTierra2(posAtacante, posAtacado)) {
-            if(personajeAtacado->obtenerElemento() == "agua")
-                personajeAtacado->bajarVida(40);
-            else
-                personajeAtacado->bajarVida(20);
-        }else{ //rangoTierra3
-            if(personajeAtacado->obtenerElemento() == "agua")
-                personajeAtacado->bajarVida(30);
-            else
-                personajeAtacado->bajarVida(10);
+        int rango = estaEnRangoDeTierra(posAtacante, posAtacado);
+
+        if(rango == 2) {
+            personajeAtacado->bajarVida(30);
+        }else if(rango == 4) {
+            personajeAtacado->bajarVida(20);
+        }else{
+            personajeAtacado->bajarVida(10);
         }
+
+        if(personajeAtacado->obtenerElemento() == "agua")
+            personajeAtacado->bajarVida(20);
     }
 }
 
@@ -187,8 +190,6 @@ void Juego::ataqueAire() {
 		    personajeAtacado->bajarVida(15);
         }
 	}
-
-
 }
 
 Juego::~Juego() {
