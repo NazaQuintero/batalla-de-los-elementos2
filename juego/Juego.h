@@ -24,6 +24,7 @@ private:
     Usuario* usuario[];
     Terminal* terminal;
     int turnoActual;
+    int contadorDeTurnos;
 
 	// Metodos
     int modulo(int* posAtacante, int* posAtacado);
@@ -51,7 +52,7 @@ public:
 
     bool validarTurnos(); //bool?
 
-    void atacar(int* posAtacante);
+    void atacar(Personaje* personajeAtacante);
 
     void ataqueFuego(int* posAtacante);
 

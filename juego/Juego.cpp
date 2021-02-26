@@ -43,28 +43,32 @@ bool Juego::validarTurnos(){
 
 };
 
-void Juego::atacar(int* posAtacante) {
+
+//TODO: //AGREGAR PERDIDAS DE ENERGIA
+
+void Juego::atacar(Personaje* personajeAtacante) {
     //Usuario* usuarioAtacante = this->usuario[this->turnoActual];
-    Casillero* casilleroAtacante = this->tablero->getCasilleros()->obtener(posAtacante[0],posAtacante[1]);
-    Personaje* personaje = casilleroAtacante->getPersonaje();
-    string elemento = personaje->obtenerElemento();
+    // Casillero* casilleroAtacante = this->tablero->getCasilleros()->obtener(posAtacante[0],posAtacante[1]);
+    // Personaje* personaje = casilleroAtacante->getPersonaje();
+    string elemento = personajeAtacante->obtenerElemento();
+    int* posAtacante = personajeAtacante->getPosicion();
     
-    int energia = personaje->obtenerEnergia(); 
+    int energia = personajeAtacante->obtenerEnergia(); 
 
     if(elemento == "fuego" && energia >= 5) {
         ataqueFuego(posAtacante);
-        personaje->bajarEnergia(5);
+        personajeAtacante->bajarEnergia(5);
     } else if(elemento == "agua" && energia >= 5) {
         ataqueAgua();
-        personaje->bajarEnergia(5);
+        personajeAtacante->bajarEnergia(5);
     } else if(elemento == "tierra" && energia >= 6) {
         ataqueTierra(posAtacante);
-        personaje->bajarEnergia(6);
+        personajeAtacante->bajarEnergia(6);
     } else if (energia >= 8) {
         ataqueAire();
-        personaje->bajarEnergia(8);
+        personajeAtacante->bajarEnergia(8);
     } else {
-        cout << "El personaje: " << personaje->obtenerNombre() << " no tiene energia suficiente para atacar." << endl;
+        cout << "El personajeAtacante: " << personajeAtacante->obtenerNombre() << " no tiene energia suficiente para atacar." << endl;
     }
 }
 
