@@ -46,16 +46,21 @@ bool Juego::validarTurnos(){
 void Juego::atacar(int* posAtacante) {
     //Usuario* usuarioAtacante = this->usuario[this->turnoActual];
     Casillero* casilleroAtacante = this->tablero->getCasilleros()->obtener(posAtacante[0],posAtacante[1]);
-    string elemento = casilleroAtacante->getPersonaje()->obtenerElemento();
+    Personaje* personaje = casilleroAtacante->getPersonaje();
+    string elemento = personaje->obtenerElemento();
+    
+    int energia = personaje->obtenerEnergia(); 
 
-    if(elemento == "fuego") {
+    if(elemento == "fuego" && energia >= 5) {
         ataqueFuego(posAtacante);
-    } else if(elemento == "agua") {
+    } else if(elemento == "agua" && energia >= 5) {
         ataqueAgua();
-    } else if(elemento == "tierra") {
+    } else if(elemento == "tierra" && energia >= 6) {
         ataqueTierra(posAtacante);
-    } else {
+    } else if (energia >= 8) {
         ataqueAire();
+    } else {
+        cout << "El personaje: " << personaje->obtenerNombre() << " no tiene energia suficiente para atacar." << endl;
     }
 }
 
@@ -97,6 +102,7 @@ int Juego::estaEnRangoDeTierra(int* posAtacante, int* posAtacado) {
         estaEnRango = 4;
     }else if(4 < resultadoModulo <= 6){
         estaEnRango = 6;
+    }
 
     return estaEnRango;
 }
