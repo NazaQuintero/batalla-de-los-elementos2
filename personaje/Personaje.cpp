@@ -55,13 +55,13 @@ void Personaje::bajarVida(int cantidad) {
 	if (this->escudo == 0){
 		this->vida -= cantidad;
 	}else if (this->escudo == 1){
-		cantidad == cantidad - (10*cantidad)/100;
+		cantidad -= cantidad - (10*cantidad)/100;
 		this->vida -= cantidad;
 	}else if (this->escudo == 2){
-		cantidad == cantidad - (20*cantidad)/100;
+		cantidad -= cantidad - (20*cantidad)/100;
 		this->vida -= cantidad;
 	}else{
-		cantidad == cantidad - (80*cantidad)/100;
+		cantidad -= cantidad - (80*cantidad)/100;
 		this->vida -= cantidad;
 	}
 }

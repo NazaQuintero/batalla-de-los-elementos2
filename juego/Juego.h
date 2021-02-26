@@ -63,15 +63,21 @@ public:
     void ataqueAire();
 
 
-    void defensa(Personaje* Personaje);
+    void defensa(Personaje* personaje);
 
-    void defensaFuego(Personaje* Personaje);
+    void defensaFuego(Personaje* personaje);
 
-    void defensaAgua(Personaje* Personaje);
+    void defensaAgua(Personaje* personaje);
 
-    void defensaTierra();
+    void defensaTierra(Personaje* personaje);
 
-    void defensaAire(Personaje* Personaje);
+    void defensaAire(Personaje* personaje);
+
+    void mover(Personaje* personaje);
+
+    int transcribirPosicion(int* posicion);
+
+    void obtenerCamino(Personaje* personaje, Lista<Casillero*>* pilaCamino, int* posFinal, int &costoEnergia);
 
 	// Destructor
 

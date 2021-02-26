@@ -43,9 +43,6 @@ bool Juego::validarTurnos(){
 
 };
 
-
-//TODO: //AGREGAR PERDIDAS DE ENERGIA
-
 void Juego::atacar(Personaje* personajeAtacante) {
     //Usuario* usuarioAtacante = this->usuario[this->turnoActual];
     // Casillero* casilleroAtacante = this->tablero->getCasilleros()->obtener(posAtacante[0],posAtacante[1]);
@@ -212,31 +209,106 @@ void Juego::defensa(Personaje* personaje) {
 
     int energia = personaje->obtenerEnergia(); 
 
-    if(elemento == "fuego" && energia >= 5) {
-        ataqueFuego(posAtacante);
-        personaje->bajarEnergia(5);
-    } else if(elemento == "agua" && energia >= 5) {
-        ataqueAgua();
-        personaje->bajarEnergia(5);
-    } else if(elemento == "tierra" && energia >= 6) {
-        ataqueTierra(posAtacante);
-        personaje->bajarEnergia(6);
-    } else if (energia >= 8) {
-        ataqueAire();
-        personaje->bajarEnergia(8);
+    if(elemento == "fuego" && energia >= 10) {
+        defensaFuego(personaje);
+    } else if(elemento == "agua" && energia >= 12) {
+        defensaAgua(personaje);
+    } else if(elemento == "tierra" && energia >= 5) {
+        defensaTierra(personaje);
+    } else if (energia >= 15) {
+        defensaAire(personaje);
     } else {
-        cout << "El personaje: " << personaje->obtenerNombre() << " no tiene energia suficiente para atacar." << endl;
+        cout << "El personaje: " << personaje->obtenerNombre() << " no tiene energia suficiente para defenderse." << endl;
     }
 
 }
 
-void Juego::defensaFuego(Personaje* Personaje) {}
+void Juego::defensaFuego(Personaje* personaje) {
+    personaje->incrementarVida(10);
+    personaje->bajarEnergia(10);
+}
 
-void Juego::defensaAgua(Personaje* Personajee) {}
+void Juego::defensaAgua(Personaje* personaje) {
+    personaje->incrementarVida(50);
 
-void Juego::defensaAire(Personaje* Personaje) {}
+    Diccionario<string, Personaje*>* personajesAliados = this->usuario[this->turnoActual]->obtenerPersonajesElegidos();
 
-void Juego::defensaTierra() {}
+    Lista<string>* claves = personajesAliados->obtenerClaves();
+	claves->reiniciar();
+
+	while(claves->haySiguiente()) {
+		Personaje* personajeAliado = personajesAliados->obtenerDato(claves->siguiente());
+        if(personajeAliado != personaje && personajeAliado->obtenerVida() > 0) {
+		    personajeAliado->incrementarVida(10);
+        }
+    }
+
+    personaje->bajarEnergia(12);
+}
+
+void Juego::defensaAire(Personaje* personaje) {
+    cout << "Ingrese las coordenadas del casillero al que desea mover al personaje..." << endl;
+    int posX = this->terminal->obtenerDatoEntero("X:","El valor ingresado debe ser un numero");
+    int posY = this->terminal->obtenerDatoEntero("Y:","El valor ingresado debe ser un numero");
+    
+    int* posVieja = personaje->getPosicion();
+    
+    Matriz<Casillero*>* casilleros = this->tablero->getCasilleros();
+    
+    Casillero* casilleroViejo = casilleros->obtener(posVieja[0], posVieja[1]);
+
+    Casillero* casilleroNuevo = casilleros->obtener(posX, posY);
+
+    if (!casilleroNuevo->getPersonaje()) {
+        personaje->setPosicion(posX, posY);
+        casilleroNuevo->setPersonaje(personaje);
+        casilleroViejo->setPersonaje(nullptr);
+    }
+    
+    personaje->bajarEnergia(15);
+}
+
+// TODO: defensa tierra
+void Juego::defensaTierra(Personaje* personaje) {
+    personaje->bajarEnergia(5);
+}
+
+int Juego::transcribirPosicion(int* posicion){
+    int casilleroTranscripto = posicion[0]*8 + posicion[1];
+    return casilleroTranscripto;
+}
+
+void Juego::mover(Personaje* personaje){
+    Lista<Casillero*> pilaCamino; 
+    cout << "Ingrese las coordenadas del casillero al que desea mover al personaje..." << endl;
+    int posX = this->terminal->obtenerDatoEntero("X:","El valor ingresado debe ser un numero");
+    int posY = this->terminal->obtenerDatoEntero("Y:","El valor ingresado debe ser un numero");
+    
+    int* posInicial = personaje->getPosicion();
+    int costoEnergia;
+    Matriz<Casillero*>* casilleros = this->tablero->getCasilleros();
+    Casillero* casilleroNuevo = casilleros->obtener(posX, posY);
+    if(!casilleroNuevo->getPersonaje()){
+        
+    }
+
+}
+
+void Juego::obtenerCamino(Personaje* personaje, Lista<Casillero*>* pilaCamino, int* posFinal, int &costoEnergia) {
+    int* posInicial = personaje->getPosicion();
+
+    if(posInicial == posFinal){
+        return;
+    }
+
+    Casillero* casillero = tablero->getCasilleros()->obtener(posFinal[0], posFinal[1]);
+    pilaCamino->alta(casillero, 1);
+    Matriz<Casillero>* matrizDeRecorrido = 
+    
+
+
+}
+
 
 Juego::~Juego() {
 
