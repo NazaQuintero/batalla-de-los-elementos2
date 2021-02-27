@@ -8,6 +8,14 @@ string Camino::getTerreno() {
     return "Camino";
 }
 
+string Camino::getColorIni() {
+	return this->colorIni;
+}
+
+string Camino::getColorFin() {
+	return this->colorFin;
+}
+
 Camino::~Camino() {
     
 }

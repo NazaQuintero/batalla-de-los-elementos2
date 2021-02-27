@@ -14,7 +14,7 @@ const string COLOR_LAGO = "celeste";
 class Lago: public Casillero {
     private:
         string colorIni = "\x1B[1;36m";
-        string colorFin = "\033[0m\t\t";
+        string colorFin = "\033[0m";
 
     public:
 

@@ -109,11 +109,11 @@ void Utilitario::cargarJuego(Diccionario<string, Personaje*>* diccionarioDePerso
 
 	string linea;
 	string elemento, nombre, escudoStr, vidaStr, turnoStr, posXStr, posYStr;
-	int escudo, vida, turno, posX, posY;
+	int escudo, vida, /*turno,*/ posX, posY;
 
 	archivo_juego >> turnoStr;
 
-	turno = stol(turnoStr);
+	/*turno = stol(turnoStr);*/
 
 	vector<string> datos;
 
@@ -163,7 +163,7 @@ void Utilitario::imprimirPersonaje(Personaje* personaje) {
 
 	string nombrePersonaje = personaje->obtenerNombre();
 
-	cout << personaje->getColorIni() << nombrePersonaje << personaje->getColorFin();
+	cout << personaje->getColorIni() << nombrePersonaje << personaje->getColorFin() << endl;
 }
 
 void Utilitario::mostrarNombresDePersonajes(Diccionario<string, Personaje*>* diccionarioDePersonajes) {
@@ -183,8 +183,13 @@ void Utilitario::mostrarNombresDePersonajes(Diccionario<string, Personaje*>* dic
 Personaje* Utilitario::obtenerPersonaje(Diccionario<string, Personaje*>* diccionarioDePersonajes) {
 
 	string nombre = this->terminal->obtenerDato(TEXTO_SOLICITUD_NOMBRE);
-
-	return diccionarioDePersonajes->obtenerDato(nombre);
+	Personaje* personaje = diccionarioDePersonajes->obtenerDato(nombre);
+	while(!personaje) {
+		cout << "El Personaje: " << nombre << " no existe..." << endl;
+		nombre = this->terminal->obtenerDato(TEXTO_SOLICITUD_NOMBRE);
+		personaje = diccionarioDePersonajes->obtenerDato(nombre);
+	}
+	return personaje;
 
 }
 

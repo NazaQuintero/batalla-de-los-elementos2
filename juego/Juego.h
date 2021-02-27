@@ -26,9 +26,9 @@ private:
     Diccionario<string, Personaje*>* personajesDisponibles;
     Diccionario<string, Personaje*>* personajesElegidos;
     Utilitario* utilitario;
-    Menu* turnoMenu[];
-    Menu* menuOpciones[];
-    Usuario* usuario[];
+    Menu* turnoMenu[2];
+    Menu* menuOpciones[2];
+    Usuario* usuario[2];
     Terminal* terminal;
     Grafo<Casillero*, int>* grafoAgua;
     Grafo<Casillero*, int>* grafoTierra;
@@ -61,9 +61,45 @@ public:
 
     void cambiarTurno();
 
+    Menu* getMenuPrincipal();
+
+    Menu* getMenuSecundario();
+
+    Menu* getMenuTurno1();
+
+    Menu* getMenuTurno2();
+
+    Diccionario<string, Personaje*>* getPersonajesDisponibles();
+
+    int ejecutarOpcionPrincipal(int opcion, Diccionario<string, Personaje*> *diccionarioDePersonajes);
+
+    int validarOpcionPrincipal(int opcion, Diccionario<string, Personaje*> *diccionarioDePersonajes, string textoSolicitud, Menu* menu);
+
+    int ejecutarOpcionSecundario(int opcion, Diccionario<string, Personaje*> *diccionarioDePersonajes);
+
+	int validarOpcionSecundario(int opcion, Diccionario<string, Personaje*> *diccionarioDePersonajes, string textoSolicitud, Menu* menu);
+
+    void iniciarJuego();
+
     void mostrarMenuPrincipal();
     
     void mostrarMenuSecundario();
+
+    void mostrarMenuTurno1();
+
+    void mostrarMenuTurno2();
+
+    void mostrarTablero();
+
+    void mostrarNombrePersonajes();
+
+    void seleccionarPersonaje(Diccionario<string, Personaje*> *diccionarioDePersonajes, Usuario** usuarios, int turnoActual);
+
+    void posicionarPersonaje(Usuario** usuarios, int turnoActual);
+
+    void inicializarGrafos(Tablero* tablero, Grafo<Casillero*, int>* grafoAgua, Grafo<Casillero*, int>* grafoTierra , Grafo<Casillero*, int>* grafoAire, Grafo<Casillero*, int>* grafoFuego);
+
+    void insertarVerticesGrafo(Tablero* tablero, Grafo<Casillero*, int>* grafo);
 
     void atacar(Personaje* personajeAtacante);
 
@@ -74,7 +110,6 @@ public:
     void ataqueTierra(int* posAtacante);
 
     void ataqueAire();
-
 
     void defensa(Personaje* personaje);
 

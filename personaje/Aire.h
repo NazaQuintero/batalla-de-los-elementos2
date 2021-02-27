@@ -13,7 +13,7 @@
 class Aire: public Personaje {
 	private:
 		string colorIni = "\x1B[1;92m";
-		string colorFin = "\033[0m\t\t";
+		string colorFin = "\033[0m";
 public:
 
 	// Constructores

@@ -73,7 +73,7 @@ public:
 	 * PRE: listaDePersonajes != null
 	 * POS: Ejecuta la opcion.
 	 */
-	int ejecutarOpcion(int opcion, Diccionario<string, Personaje*> *diccionarioDePersonajes);
+	/*int ejecutarOpcion(int opcion, Diccionario<string, Personaje*> *diccionarioDePersonajes);*/
 
 
 

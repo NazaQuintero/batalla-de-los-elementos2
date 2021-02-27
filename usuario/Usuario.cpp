@@ -1,25 +1,26 @@
 #include "Usuario.h"
 
 Usuario::Usuario(){
-    this->tablero = &Tablero();
-    this->personajesElegidos = &Diccionario<string, Personaje*>();
     this->nombre = nombre;
-    this->esTurno = true;
     this->utilitario = Utilitario::obtenerInstancia();
     this->terminal = Terminal::obtenerInstancia();
+    this->personajesElegidos = new Diccionario<string, Personaje*>();
 }
 
 Usuario::Usuario(string nombre){
     this->nombre = nombre;
+    this->utilitario = Utilitario::obtenerInstancia();
+    this->terminal = Terminal::obtenerInstancia();
+    this->personajesElegidos = new Diccionario<string, Personaje*>();
 }
 
 Usuario::Usuario(Tablero* tablero, Diccionario<string, Personaje*>* diccionario, string nombre) {
     this->tablero = tablero;
     this->personajesElegidos = diccionario;
     this->nombre = nombre;
-    this->esTurno = true;
     this->utilitario = Utilitario::obtenerInstancia();
     this->terminal = Terminal::obtenerInstancia();
+    this->personajesElegidos = new Diccionario<string, Personaje*>();
 }
 
 Diccionario<string, Personaje*>* Usuario::obtenerPersonajesElegidos() {
@@ -31,8 +32,12 @@ void Usuario::ejecutarAlimentar(Personaje* personajeAlimentar) {
     
 }
 
+string Usuario::getNombre() {
+	return this->nombre;
+}
+
 void Usuario::finalizarTurno() {
-    this->esTurno = false;diccionario
+    /*this->esTurno = false;*/
 }
 
 Usuario::~Usuario() {

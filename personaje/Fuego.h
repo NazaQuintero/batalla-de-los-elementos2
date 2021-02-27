@@ -16,7 +16,7 @@ const int RECUPERO_DE_ENERGIA_FUEGO = 10;
 class Fuego: public Personaje {
 	private:
 		string colorIni = "\x1B[1;31m";
-		string colorFin = "\033[0m\t\t";
+		string colorFin = "\033[0m";
 
 	public:
 

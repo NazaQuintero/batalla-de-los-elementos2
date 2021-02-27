@@ -13,16 +13,27 @@ Juego::Juego(){
     this->turnoMenu[0] = new Menu("opcionesTurno1.txt");
     this->turnoMenu[1] = new Menu("opcionesTurno2.txt");
 
+    this->utilitario->cargarPersonajes(personajesDisponibles);
+
     string nombreUsuario1 = this->terminal->obtenerDato("Ingrese el nombre del Jugador 1");
     string nombreUsuario2 = this->terminal->obtenerDato("Ingrese el nombre del Jugador 2");
 
-    this->usuario[0] = new Usuario(nombreUsuario1);
-    this->usuario[1] = new Usuario(nombreUsuario2);
+    this->usuario[0] = new Usuario(tablero, personajesDisponibles, nombreUsuario1);
+    this->usuario[1] = new Usuario(tablero, personajesDisponibles, nombreUsuario2);
+
+    cout << "User1: " + this->usuario[0]->getNombre() << endl;
+    cout << "User2: " + this->usuario[1]->getNombre() << endl;
+
+    this->turnoActual = 0; // TODO: Hacer que sea random
+    this->contadorDeTurnos = 0;
 
     this->grafoAgua = new Grafo<Casillero*, int>(COSTOS_AGUA);
     this->grafoTierra = new Grafo<Casillero*, int>(COSTOS_TIERRA);
     this->grafoFuego = new Grafo<Casillero*, int>(COSTOS_FUEGO);
     this->grafoAire = new Grafo<Casillero*, int>(COSTOS_AIRE);
+
+    inicializarGrafos(tablero, grafoAgua, grafoTierra, grafoAire, grafoFuego);
+
 }
 
 void Juego::guardarJuego() {
@@ -40,6 +51,152 @@ void Juego::cambiarTurno(){
     this->turnoActual = !this->turnoActual;
 };
 
+Menu* Juego::getMenuPrincipal() {
+	return this->menuOpciones[0];
+}
+
+Menu* Juego::getMenuSecundario() {
+	return this->menuOpciones[1];
+}
+
+Menu* Juego::getMenuTurno1() {
+	return this->turnoMenu[0];
+}
+
+Menu* Juego::getMenuTurno2() {
+	return this->turnoMenu[1];
+}
+
+Diccionario<string, Personaje*>* Juego::getPersonajesDisponibles() {
+	return this->personajesDisponibles;
+}
+
+void Juego::iniciarJuego() {
+	Menu* menuSecundario = this->getMenuSecundario();
+	menuSecundario->mostrarOpciones();
+	int opcion = menuSecundario->obtenerOpcion("Elija una opcion:");
+	validarOpcionSecundario(opcion, this->personajesDisponibles, "Por favor, ingrese una opcion para continuar:", this->menuOpciones[1]);
+	ejecutarOpcionSecundario(opcion, personajesDisponibles);
+}
+
+int Juego::ejecutarOpcionPrincipal(int opcion, Diccionario<string, Personaje*> *diccionarioDePersonajes) {
+	int systemResult = 0;
+	switch (opcion) {
+		case 1:
+			systemResult = this->utilitario->limpiarPantalla();
+			utilitario->agregarNuevoPersonaje(diccionarioDePersonajes);
+			break;
+		case 2:
+			utilitario->eliminarPersonaje(diccionarioDePersonajes);
+			break;
+		case 3:
+			systemResult = this->utilitario->limpiarPantalla();
+			utilitario->mostrarNombresDePersonajes(diccionarioDePersonajes);
+			break;
+		case 4:
+			utilitario->buscarPersonajePorNombre(diccionarioDePersonajes);
+			break;
+		case 5:
+			iniciarJuego();
+			break;
+		default:
+			systemResult = this->utilitario->limpiarPantalla();
+			cout << "La opcion ingresada no es correcta." << endl << endl;
+			break;
+	}
+	return systemResult;
+}
+
+int Juego::validarOpcionPrincipal(int opcion, Diccionario<string, Personaje*> *diccionarioDePersonajes, string textoSolicitud, Menu* menu) {
+	int systemResult = 0;
+	while(opcion != ULTIMA_OPCION) {
+
+		systemResult = ejecutarOpcionPrincipal(opcion, diccionarioDePersonajes);
+
+		menu->mostrarOpciones();
+
+		opcion = menu->obtenerOpcion(textoSolicitud);
+	}
+	return systemResult;
+}
+
+int Juego::ejecutarOpcionSecundario(int opcion, Diccionario<string, Personaje*> *diccionarioDePersonajes) {
+	int systemResult = 0;
+		switch (opcion) {
+			case 1:
+				systemResult = this->utilitario->limpiarPantalla();
+				utilitario->buscarPersonajePorNombre(diccionarioDePersonajes);
+				break;
+			case 2:
+				utilitario->mostrarNombresDePersonajes(diccionarioDePersonajes);
+				break;
+			case 3:
+				systemResult = this->utilitario->limpiarPantalla();
+				for (int i = 0; i < 3; i++) {
+					seleccionarPersonaje(diccionarioDePersonajes, this->usuario, turnoActual);
+					seleccionarPersonaje(diccionarioDePersonajes, this->usuario, !turnoActual);
+				}
+				for (int i = 0; i < 3; i++) {
+					posicionarPersonaje(this->usuario, turnoActual);
+					posicionarPersonaje(this->usuario, !turnoActual);
+				}
+				this->tablero->mostrarTablero(); // HASTA ACA NOS DIO EL TIEMPO
+				return systemResult;
+			default:
+				systemResult = this->utilitario->limpiarPantalla();
+				cout << "La opcion ingresada no es correcta." << endl << endl;
+				break;
+		}
+		return systemResult;
+}
+
+void Juego::posicionarPersonaje(Usuario** usuarios, int turnoActual) {
+	cout << "Ingrese las coordenadas del casillero en que desea posicionar su personaje:" << endl;
+	int posX = this->terminal->obtenerDatoEntero("X:","El valor ingresado debe ser un numero");
+	int posY = this->terminal->obtenerDatoEntero("Y:","El valor ingresado debe ser un numero");
+
+	utilitario->mostrarNombresDePersonajes(usuarios[turnoActual]->obtenerPersonajesElegidos());
+
+	string nombre =this->terminal->obtenerDato("Ingrese el nombre del personaje que desea posicionar: ");
+
+	Personaje* personaje = usuarios[turnoActual]->obtenerPersonajesElegidos()->obtenerDato(nombre);
+
+	while (!personaje) {
+		string nombre =this->terminal->obtenerDato("Ingrese el nombre del personaje que desea posicionar: ");
+
+		personaje = usuarios[turnoActual]->obtenerPersonajesElegidos()->obtenerDato(nombre);
+	}
+
+	bool corte = false;
+	while (!corte) {
+
+		if(!this->tablero->getCasilleros()->obtener(posX, posY)->getPersonaje()) {
+			personaje->setPosicion(posX, posY);
+			this->tablero->posicionarPersonaje(posX, posY, personaje);
+			corte = true;
+		} else {
+			cout << "Ingrese otras coordenadas del casillero para posicionar a :" << personaje->obtenerNombre() << endl;
+			posX = this->terminal->obtenerDatoEntero("X:","El valor ingresado debe ser un numero");
+			posY = this->terminal->obtenerDatoEntero("Y:","El valor ingresado debe ser un numero");
+		}
+
+	}
+
+}
+
+int Juego::validarOpcionSecundario(int opcion, Diccionario<string, Personaje*> *diccionarioDePersonajes, string textoSolicitud, Menu* menu) {
+	int systemResult = 0;
+		while(opcion != 4 && systemResult != 666) {
+
+			systemResult = ejecutarOpcionSecundario(opcion, diccionarioDePersonajes);
+
+			menu->mostrarOpciones();
+
+			opcion = menu->obtenerOpcion(textoSolicitud);
+		}
+	return systemResult;
+}
+
 void Juego::mostrarMenuPrincipal(){
     this->menuOpciones[0]->mostrarOpciones();
 };
@@ -47,6 +204,91 @@ void Juego::mostrarMenuPrincipal(){
 void Juego::mostrarMenuSecundario(){
     this->menuOpciones[1]->mostrarOpciones();
 };
+
+void Juego::mostrarMenuTurno1() {
+	this->turnoMenu[0]->mostrarOpciones();
+}
+
+void Juego::mostrarMenuTurno2() {
+	this->turnoMenu[1]->mostrarOpciones();
+}
+
+void Juego::mostrarTablero() {
+	this->tablero->mostrarTablero();
+}
+
+void Juego::mostrarNombrePersonajes() {
+	this->utilitario->mostrarNombresDePersonajes(personajesDisponibles);
+}
+
+void Juego::insertarVerticesGrafo(Tablero* tablero, Grafo<Casillero*, int>* grafo) {
+
+	Matriz<Casillero*>* casilleros = tablero->getCasilleros();
+
+	Diccionario<string, int>* costosAgua = grafo->obtenerCostos();
+
+	for(int i = 0; i < tablero->getCantidadDeCasillerosPorFila(); i++) {
+		for(int j = 0; j < tablero->getCantidadDeCasillerosPorFila(); j++) {
+			string terreno = casilleros->obtener(i, j)->getTerreno();
+			int peso = costosAgua->obtenerDato(terreno);
+			grafo->insertarVertice(casilleros->obtener(i, j), peso);
+		}
+	}
+}
+
+void Juego::inicializarGrafos(Tablero* tablero, Grafo<Casillero*, int>* grafoAgua, Grafo<Casillero*, int>* grafoTierra , Grafo<Casillero*, int>* grafoAire, Grafo<Casillero*, int>* grafoFuego) {
+	insertarVerticesGrafo(this->tablero, this->grafoAgua);
+	insertarVerticesGrafo(this->tablero, this->grafoTierra);
+	insertarVerticesGrafo(this->tablero, this->grafoFuego);
+	insertarVerticesGrafo(this->tablero, this->grafoAire);
+
+	this->grafoAgua->generarMatrizDeAdyacencia();
+	this->grafoAgua->inicializarMatrizDeRecorrido();
+
+	this->grafoTierra->generarMatrizDeAdyacencia();
+	this->grafoTierra->inicializarMatrizDeRecorrido();
+
+	this->grafoFuego->generarMatrizDeAdyacencia();
+	this->grafoFuego->inicializarMatrizDeRecorrido();
+
+	this->grafoAire->generarMatrizDeAdyacencia();
+	this->grafoAire->inicializarMatrizDeRecorrido();
+
+
+	this->grafoAgua->floydWarshall();
+	this->grafoTierra->floydWarshall();
+	this->grafoFuego->floydWarshall();
+	this->grafoAire->floydWarshall();
+}
+
+void Juego::seleccionarPersonaje(Diccionario<string, Personaje*> *diccionarioDePersonajes, Usuario** usuarios, int turnoActual) {
+	Usuario* usuario = usuarios[turnoActual];
+	cout << "Es el turno de: " << usuario->getNombre() << endl;
+	this->utilitario->mostrarNombresDePersonajes(diccionarioDePersonajes);
+	Personaje* personajeElegido = this->utilitario->obtenerPersonaje(diccionarioDePersonajes);
+	/*cout << personajeElegido->toString() << endl;*/
+	string nombre = personajeElegido->obtenerNombre();
+/*	diccionarioDePersonajes->borrar(nombre);*/
+
+	bool corte = false;
+	while (!corte) {
+		bool lePerteneceAlContrincante = usuarios[!turnoActual]->obtenerPersonajesElegidos()->pertenece(nombre);
+		bool mePertenece = usuarios[turnoActual]->obtenerPersonajesElegidos()->pertenece(nombre);
+		if(!mePertenece && !lePerteneceAlContrincante) {
+			usuario->obtenerPersonajesElegidos()->guardar(nombre, personajeElegido);
+			this->personajesElegidos->guardar(nombre, personajeElegido);
+			corte = true;
+		} else {
+			cout << "El personaje " << nombre << " ya fue seleccionado" << endl;
+			cout << "Por favor " << usuario->getNombre() << " seleccione otro personaje:" << endl;
+			this->utilitario->mostrarNombresDePersonajes(diccionarioDePersonajes);
+			personajeElegido = this->utilitario->obtenerPersonaje(diccionarioDePersonajes);
+			nombre = personajeElegido->obtenerNombre();
+		}
+	}
+
+
+}
 
 void Juego::atacar(Personaje* personajeAtacante) {
     string elemento = personajeAtacante->obtenerElemento();
@@ -97,17 +339,14 @@ bool Juego::estaEnRangoDeFuego(int* posAtacante, int* posAtacado) {
 
 int Juego::estaEnRangoDeTierra(int* posAtacante, int* posAtacado) {
     int estaEnRango = 0;
-    int posAtacanteX, posAtacadoX;
-    posAtacanteX = posAtacante[0];
-    posAtacadoX = posAtacado[0];
 
     int resultadoModulo = modulo(posAtacante, posAtacado);
 
     if(resultadoModulo <= 2){
-        estaEnRango == 2;
-    }else if(2 < resultadoModulo <= 4){
+        estaEnRango = 2;
+    }else if(2 < resultadoModulo && resultadoModulo <= 4){
         estaEnRango = 4;
-    }else if(4 < resultadoModulo <= 6){
+    }else if(4 < resultadoModulo && resultadoModulo <= 6){
         estaEnRango = 6;
     }
 
@@ -115,11 +354,6 @@ int Juego::estaEnRangoDeTierra(int* posAtacante, int* posAtacado) {
 }
 
 void Juego::ataqueFuego(int* posAtacante) {
-
-    int posAtacanteX, posAtacanteY;
-
-    posAtacanteX = posAtacante[0];
-    posAtacanteY = posAtacante[1];
 
     Diccionario<string, Personaje*>* personajesOponente = this->usuario[!this->turnoActual]->obtenerPersonajesElegidos();
 
@@ -356,7 +590,7 @@ void Juego::obtenerCamino(Personaje* personaje, Lista<Casillero*>* pilaCamino, i
     
     int posicionTranscriptaInicial = transcribirPosicion(posInicial);
     int posicionTranscriptaFinal = transcribirPosicion(posFinal);
-    Casillero* casillero = matrizDeRecorrido->obtener(posicionTranscriptaInicial, posicionTranscriptaFinal)->getData();
+    casillero = matrizDeRecorrido->obtener(posicionTranscriptaInicial, posicionTranscriptaFinal)->getData();
     int peso = matrizDeAdyacencia->obtener(posicionTranscriptaInicial, posicionTranscriptaFinal)->getPeso();
     costoEnergia += peso;
     return obtenerCamino(personaje, pilaCamino, casillero->getPos(), costoEnergia);

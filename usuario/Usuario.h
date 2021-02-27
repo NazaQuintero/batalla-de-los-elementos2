@@ -6,8 +6,8 @@
 #include "../validaciones/Validador.h"
 #include "../tablero/Tablero.h"
 #include "../tda/diccionario/Diccionario.h"
-#include "personaje/Personaje.h"
-#include "utilitario/Utilitario.h"
+#include "../personaje/Personaje.h"
+#include "../utilitario/Utilitario.h"
 
 using namespace std;
 
@@ -20,7 +20,7 @@ private:
     Terminal* terminal;
     Diccionario<string, Personaje*>* personajesElegidos;
     string nombre;
-    bool esTurno;
+    /*bool esTurno;*/
 
 	// Metodos
 
@@ -43,6 +43,8 @@ public:
     void finalizarTurno();
     
     void seleccionarPersonaje();
+
+    string getNombre();
 	
 	// string toString();
 

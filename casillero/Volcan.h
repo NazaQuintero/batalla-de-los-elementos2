@@ -12,7 +12,7 @@ const Terreno TERRENO_VOLCAN = VOLCAN;
 class Volcan: public Casillero {
     private:
         string colorIni = "\x1B[1;31m";
-        string colorFin = "\033[0m\t\t";
+        string colorFin = "\033[0m";
 
     public:
 

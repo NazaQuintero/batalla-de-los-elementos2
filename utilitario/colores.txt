@@ -25,7 +25,7 @@ underline off    24
 inverse off      27
 
 
-cout << "\x1B[2;49;31m" << "Montaña" << "\033[0m\t\t";
+cout << "\x1B[2;49;31m" << "Montaña" << "\033[0m";
 
 Vacio 2;49;35
 

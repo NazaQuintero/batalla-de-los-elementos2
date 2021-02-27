@@ -12,7 +12,7 @@ const Terreno TERRENO_CAMINO = CAMINO;
 class Camino: public Casillero {
     private:
         string colorIni = "\x1B[1;37m";
-        string colorFin = "\033[0m\t\t";
+        string colorFin = "\033[0m";
 
     public:
 

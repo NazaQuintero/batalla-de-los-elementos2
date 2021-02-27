@@ -18,7 +18,7 @@ private:
 
 	int vecesAlimentado = 0;
 	string colorIni = "\x1B[1;36m";
-	string colorFin = "\033[0m\t\t";
+	string colorFin = "\033[0m";
 
 public:
 
