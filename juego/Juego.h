@@ -81,6 +81,8 @@ public:
 
     void iniciarJuego();
 
+    int jugar(Usuario** usuarios, int turnoActual);
+
     void mostrarMenuPrincipal();
     
     void mostrarMenuSecundario();

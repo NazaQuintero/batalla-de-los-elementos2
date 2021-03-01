@@ -108,6 +108,8 @@ public:
 	 */
 	void alimentarPersonaje(Diccionario<string, Personaje*>* diccionarioDePersonajes);
 
+	void alimentarPersonaje(Personaje* personaje);
+
 	/**
 	 * PRE:
 	 * POS: Escribe en 'personajes.csv' los personajes contenidos en 'diccionarioDePersonajes'.

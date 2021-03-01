@@ -52,7 +52,7 @@ string Casillero::imprimirPersonajeColor() {
 // }
 
 string Casillero::toString() {
-    return getColorIni() + "[ " +/* getColorFin() + imprimirPersonajeColor() + getColorIni() +*/ " ]" + getColorFin();
+    return getColorIni() + "[ " + getColorFin() + imprimirPersonajeColor() + getColorIni() + " ]" + getColorFin();
 }
 
 Casillero::~Casillero() {

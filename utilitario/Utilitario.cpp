@@ -243,6 +243,10 @@ void Utilitario::eliminarPersonaje(Diccionario<string, Personaje*>* diccionarioD
 
 }
 
+void Utilitario::alimentarPersonaje(Personaje* personaje) {
+	cout << personaje->alimentar() << endl << endl;
+}
+
 void Utilitario::alimentarPersonaje(Diccionario<string, Personaje*>* diccionarioDePersonajes) {
 
 	Personaje* personaje = obtenerPersonaje(diccionarioDePersonajes);
