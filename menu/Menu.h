@@ -19,7 +19,7 @@
 
 using namespace std;
 
-const string NOMBRE_ARCHIVO_OPCIONES = "opcionesPrincipal.txt"; // TODO: pasar el archivo por constructor
+const string NOMBRE_ARCHIVO_OPCIONES = "../opcionesPrincipal.txt"; // TODO: pasar el archivo por constructor
 
 const int CANTIDAD_DE_LINEAS = 8; //TODO: Tratar de remover estas constantes utilizando las primitivas de la Lista<string>
 const int PRIMER_OPCION = 1; //

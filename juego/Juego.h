@@ -83,6 +83,8 @@ public:
 
     int jugar(Usuario** usuarios, int turnoActual);
 
+    void validarRangoMatriz(int pos);
+
     void mostrarMenuPrincipal();
     
     void mostrarMenuSecundario();

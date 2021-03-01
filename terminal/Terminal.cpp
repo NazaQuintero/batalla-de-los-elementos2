@@ -60,13 +60,20 @@ string Terminal::obtenerDato(string texto) {
 int Terminal::obtenerDatoEntero(string texto_solicitud, string formatoDelDato) {
 	string datoIngresado = obtenerDato(texto_solicitud);
 
-	while(!this->validador->esNumeroValido(datoIngresado)) {
+	while(!this->validador->esNumeroValido(datoIngresado) ) {
 		cout << "El valor ingresado no es un numero. " << formatoDelDato << endl;
 		cin >> datoIngresado;
 	}
 
-	return stol(datoIngresado);
+	while (stol(datoIngresado) < 0 || stol(datoIngresado) > 7){
 
+		cout << " Las coordenadas estan fuera del rango" << endl;
+		cout << " Ingrese nuevas coordenadas: " << endl;
+		cin >> datoIngresado;
+
+	}
+
+	return stol(datoIngresado);
 }
 
 void Terminal::validarDatoEntero(string casoAValidar, int &datoAValidar, string textoSolicitud, string formatoDelDato) {

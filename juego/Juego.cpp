@@ -45,14 +45,25 @@ int Juego::jugar(Usuario** usuarios, int turnoActual) {
 	int opcion1;
 	int opcion2;
 
-	string textoSolicitud = "Por favor " + usuarios[turnoActual]->getNombre() + ", elija una opcion:";
 
-	for(int i = 0; i < 3; i++) {
+
+	for(int i = 0; i < 3; i++){
+
 		this->utilitario->limpiarPantalla();
+
+		Usuario* usuario = usuarios[turnoActual];
+		cout << "Es el turno de: " << usuario->getNombre() << endl << endl;
 		utilitario->mostrarNombresDePersonajes(usuarios[turnoActual]->obtenerPersonajesElegidos());
-		menuTurno1->mostrarOpciones();
-		opcion1 = menuTurno1->obtenerOpcion(textoSolicitud);
 		Personaje* personaje = this->utilitario->obtenerPersonaje(usuarios[turnoActual]->obtenerPersonajesElegidos());
+
+		utilitario->mostrarPersonaje(personaje);
+
+		menuTurno1->mostrarOpciones();
+
+		string textoSolicitud = "Por favor " + usuarios[turnoActual]->getNombre() + ", elija una opcion:";
+
+		opcion1 = menuTurno1->obtenerOpcion(textoSolicitud);
+
 		switch(opcion1) {
 			case 1:
 				systemResult = this->utilitario->limpiarPantalla();
@@ -67,10 +78,12 @@ int Juego::jugar(Usuario** usuarios, int turnoActual) {
 			default:
 				systemResult = this->utilitario->limpiarPantalla();
 				cout << "Usted ha saltado estas opciones ..." << endl << endl;
+				sleep(3);
 				break;
 		}
 		this->utilitario->limpiarPantalla();
 		utilitario->mostrarNombresDePersonajes(usuarios[turnoActual]->obtenerPersonajesElegidos());
+		utilitario->mostrarPersonaje(personaje);
 		menuTurno2->mostrarOpciones();
 		opcion2 = menuTurno2->obtenerOpcion(textoSolicitud);
 		switch(opcion2) {
@@ -83,10 +96,12 @@ int Juego::jugar(Usuario** usuarios, int turnoActual) {
 				systemResult = this->utilitario->limpiarPantalla();
 				cout << "Usted esta a punto de atacar" << endl;
 				atacar(personaje);
+				sleep (3);
 				break;
 			default:
 				systemResult = this->utilitario->limpiarPantalla();
 				cout << "Han finalizado sus turnos por este personaje" << endl << endl;
+				sleep(3);
 				break;
 		}
 
@@ -245,6 +260,7 @@ void Juego::posicionarPersonaje(Usuario** usuarios, int turnoActual) {
 
 }
 
+
 int Juego::validarOpcionSecundario(int opcion, Diccionario<string, Personaje*> *diccionarioDePersonajes, string textoSolicitud, Menu* menu) {
 	int systemResult = 0;
 		while(opcion != 4 && systemResult != 666) {
@@ -328,9 +344,8 @@ void Juego::seleccionarPersonaje(Diccionario<string, Personaje*> *diccionarioDeP
 	cout << "Es el turno de: " << usuario->getNombre() << endl << endl;
 	this->utilitario->mostrarNombresDePersonajes(diccionarioDePersonajes);
 	Personaje* personajeElegido = this->utilitario->obtenerPersonaje(diccionarioDePersonajes);
-	/*cout << personajeElegido->toString() << endl;*/
 	string nombre = personajeElegido->obtenerNombre();
-/*	diccionarioDePersonajes->borrar(nombre);*/
+
 
 	bool corte = false;
 	while (!corte) {
@@ -524,6 +539,7 @@ void Juego::defensa(Personaje* personaje) {
 void Juego::defensaFuego(Personaje* personaje) {
     personaje->incrementarVida(10);
     personaje->bajarEnergia(10);
+    cout << "Me estoy defendindo por lo tanto recupero 10 de vida" << endl;
 }
 
 void Juego::defensaAgua(Personaje* personaje) {
@@ -569,6 +585,7 @@ void Juego::defensaAire(Personaje* personaje) {
 // TODO: defensa tierra
 void Juego::defensaTierra(Personaje* personaje) {
     personaje->bajarEnergia(5);
+    cout << "Me defendi :( " << endl;
     
 }
 
@@ -644,6 +661,8 @@ void Juego::obtenerCamino(Personaje* personaje, Lista<Casillero*>* pilaCamino, i
     if(posInicial == posFinal){
         return;
     }
+
+    cout << "NO PROBLEM" << endl;
 
     Casillero* casillero = tablero->getCasilleros()->obtener(posFinal[0], posFinal[1]);
     pilaCamino->alta(casillero, 1);

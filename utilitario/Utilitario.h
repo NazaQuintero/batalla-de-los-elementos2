@@ -25,7 +25,7 @@ const string NOMBRE_ARCHIVO_JUEGO = "mapa.csv";
 const int CANTIDAD_DE_DATOS = 4;
 
 const string TEXTO_SOLICITUD_ELEMENTO = "Por favor, ingrese el elemento del Personaje que desea generar (tierra / fuego / agua / aire):";
-const string TEXTO_SOLICITUD_NOMBRE = "Ingrese el nombre del Personaje:";
+const string TEXTO_SOLICITUD_NOMBRE = "Ingrese el nombre del Personaje :";
 const string TEXTO_SOLICITUD_ESCUDO = "Ingrese el valor del escudo del Personaje (Entero entre " + to_string(MINIMO_VALOR_ESCUDO) + " y " + to_string(MAXIMO_VALOR_ESCUDO) + " inclusive):";
 const string FORMATO_DE_ESCUDO = "Por favor, ingrese el valor del escudo (Entero entre " + to_string(MINIMO_VALOR_ESCUDO) + " y " + to_string(MAXIMO_VALOR_ESCUDO) + " inclusive):";
 const string TEXTO_SOLICITUD_VIDA = "Ingrese el valor de la vida del Personaje (Entero entre " + to_string(MINIMO_VALOR_VIDA) + " y " + to_string(MAXIMO_VALOR_VIDA) + " inclusive):";
